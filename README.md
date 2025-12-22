@@ -81,6 +81,7 @@ portfolio_2512/
 - [02_requirements.md](./02_requirements.md) - 要件定義
 - [03_tech-stack.md](./03_tech-stack.md) - 技術スタック・アーキテクチャ
 - [04_works-content.md](./04_works-content.md) - 掲載実績コンテンツ
+- [05_github-vercel-setup.md](./05_github-vercel-setup.md) - GitHub & Vercel セットアップ手順
 
 ## Phase 2 完了項目
 
