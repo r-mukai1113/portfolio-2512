@@ -18,14 +18,32 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitStatus("idle");
 
-    // TODO: API実装後に実際の送信処理を追加
-    // 現在はモックとして3秒待機
-    setTimeout(() => {
-      setSubmitStatus("success");
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSubmitStatus("success");
+        setFormData({ name: "", email: "", subject: "", message: "" });
+      } else {
+        setSubmitStatus("error");
+        console.error("Error:", data.error);
+      }
+    } catch (error) {
+      setSubmitStatus("error");
+      console.error("Submission error:", error);
+    } finally {
       setIsSubmitting(false);
-      setFormData({ name: "", email: "", subject: "", message: "" });
-    }, 3000);
+    }
   };
 
   const handleChange = (
@@ -64,6 +82,18 @@ export default function ContactPage() {
             </p>
             <p className="text-green-700 mt-2">
               内容を確認次第、ご連絡させていただきます。
+            </p>
+          </div>
+        )}
+
+        {/* Error Message */}
+        {submitStatus === "error" && (
+          <div className="mb-8 p-6 bg-red-50 border-2 border-red-200 rounded-lg">
+            <p className="text-red-800 font-bold">
+              送信中にエラーが発生しました
+            </p>
+            <p className="text-red-700 mt-2">
+              お手数ですが、しばらく時間をおいて再度お試しください。
             </p>
           </div>
         )}
