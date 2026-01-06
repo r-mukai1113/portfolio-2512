@@ -1,9 +1,22 @@
 import type { Metadata } from "next";
+import { Noto_Sans_JP, Inter } from "next/font/google";
 import "./globals.css";
 
+const notoSansJP = Noto_Sans_JP({
+  subsets: ["latin"],
+  variable: "--font-noto-sans-jp",
+  display: "swap",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "Portfolio | Web Designer & Frontend Developer",
-  description: "個人事業主向けのWebデザイン・フロントエンド開発を提供",
+  title: "Ryuta Mukai | Web Designer & Frontend Developer",
+  description: "Web Designer based in Yokohama",
 };
 
 export default function RootLayout({
@@ -12,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja">
+    <html lang="ja" className={`${notoSansJP.variable} ${inter.variable}`}>
       <body>{children}</body>
     </html>
   );

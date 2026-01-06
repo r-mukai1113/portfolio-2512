@@ -56,170 +56,163 @@ export default function ContactPage() {
   };
 
   return (
-    <main className="min-h-screen py-20 px-6">
-      <div className="max-w-3xl mx-auto">
-        {/* Header */}
-        <div className="mb-12">
-          <Link
-            href="/"
-            className="inline-flex items-center text-gray-600 hover:text-black mb-8"
-          >
-            ← トップページに戻る
-          </Link>
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Contact</h1>
-          <p className="text-lg text-gray-700">
-            Webサイト制作・リニューアルのご相談を承ります。
-            <br />
-            お気軽にお問い合わせください。
-          </p>
-        </div>
+    <main className="min-h-screen">
+      {/* Header */}
+      <header className="px-6 py-8 md:px-12 md:py-12">
+        <Link
+          href="/"
+          className="inline-flex items-center text-gray-600 hover:text-black mb-6 text-sm"
+        >
+          ← Back
+        </Link>
+        <h1 className="text-3xl md:text-4xl font-bold">
+          <span className="font-en">Contact</span>
+        </h1>
+      </header>
 
-        {/* Success Message */}
-        {submitStatus === "success" && (
-          <div className="mb-8 p-6 bg-green-50 border-2 border-green-200 rounded-lg">
-            <p className="text-green-800 font-bold">
-              お問い合わせありがとうございます！
-            </p>
-            <p className="text-green-700 mt-2">
-              内容を確認次第、ご連絡させていただきます。
-            </p>
-          </div>
-        )}
+      {/* Contact Form Section */}
+      <section className="px-6 pb-20 md:px-12 md:pb-32">
+        <div className="max-w-2xl mx-auto">
+          {/* Success Message */}
+          {submitStatus === "success" && (
+            <div className="mb-8 p-6 bg-green-50 border border-green-200 rounded-lg">
+              <p className="text-green-800 font-bold">
+                お問い合わせありがとうございます！
+              </p>
+              <p className="text-green-700 mt-2 text-sm">
+                内容を確認次第、ご連絡させていただきます。
+              </p>
+            </div>
+          )}
 
-        {/* Error Message */}
-        {submitStatus === "error" && (
-          <div className="mb-8 p-6 bg-red-50 border-2 border-red-200 rounded-lg">
-            <p className="text-red-800 font-bold">
-              送信中にエラーが発生しました
-            </p>
-            <p className="text-red-700 mt-2">
-              お手数ですが、しばらく時間をおいて再度お試しください。
-            </p>
-          </div>
-        )}
+          {/* Error Message */}
+          {submitStatus === "error" && (
+            <div className="mb-8 p-6 bg-red-50 border border-red-200 rounded-lg">
+              <p className="text-red-800 font-bold">
+                送信中にエラーが発生しました
+              </p>
+              <p className="text-red-700 mt-2 text-sm">
+                お手数ですが、しばらく時間をおいて再度お試しください。
+              </p>
+            </div>
+          )}
 
-        {/* Contact Form */}
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Name */}
-          <div>
-            <label
-              htmlFor="name"
-              className="block text-sm font-bold mb-2"
-            >
-              お名前 <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              required
-              value={formData.name}
-              onChange={handleChange}
-              className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-black transition-colors"
-              placeholder="山田 太郎"
-            />
-          </div>
+          {/* Contact Form */}
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Name */}
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium mb-2">
+                お名前 <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                value={formData.name}
+                onChange={handleChange}
+                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-gray-400 transition-colors"
+                placeholder="山田 太郎"
+              />
+            </div>
 
-          {/* Email */}
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-bold mb-2"
-            >
-              メールアドレス <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              required
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-black transition-colors"
-              placeholder="example@email.com"
-            />
-          </div>
-
-          {/* Subject */}
-          <div>
-            <label
-              htmlFor="subject"
-              className="block text-sm font-bold mb-2"
-            >
-              件名 <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="text"
-              id="subject"
-              name="subject"
-              required
-              value={formData.subject}
-              onChange={handleChange}
-              className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-black transition-colors"
-              placeholder="Webサイト制作のご相談"
-            />
-          </div>
-
-          {/* Message */}
-          <div>
-            <label
-              htmlFor="message"
-              className="block text-sm font-bold mb-2"
-            >
-              お問い合わせ内容 <span className="text-red-500">*</span>
-            </label>
-            <textarea
-              id="message"
-              name="message"
-              required
-              value={formData.message}
-              onChange={handleChange}
-              rows={8}
-              className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-black transition-colors resize-none"
-              placeholder="ご相談内容をご記入ください"
-            />
-          </div>
-
-          {/* Submit Button */}
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="w-full px-8 py-4 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
-          >
-            {isSubmitting ? "送信中..." : "送信する"}
-          </button>
-        </form>
-
-        {/* Additional Contact Info */}
-        <div className="mt-16 pt-8 border-t border-gray-200">
-          <h2 className="text-2xl font-bold mb-4">その他の連絡先</h2>
-          <div className="space-y-2 text-gray-700">
-            <p>
-              <strong>メール:</strong>{" "}
-              <a
-                href="mailto:your-email@example.com"
-                className="text-blue-600 hover:underline"
+            {/* Email */}
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium mb-2"
               >
-                your-email@example.com
-              </a>
-            </p>
-            <p>
-              <strong>GitHub:</strong>{" "}
-              <a
-                href="https://github.com/r-mukai1113"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 hover:underline"
+                メールアドレス <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-gray-400 transition-colors"
+                placeholder="example@email.com"
+              />
+            </div>
+
+            {/* Subject */}
+            <div>
+              <label
+                htmlFor="subject"
+                className="block text-sm font-medium mb-2"
               >
-                https://github.com/r-mukai1113
-              </a>
-            </p>
-          </div>
-          <p className="mt-4 text-sm text-gray-600">
-            ※ 返信は1-2営業日以内に行います
-          </p>
+                件名 <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                id="subject"
+                name="subject"
+                required
+                value={formData.subject}
+                onChange={handleChange}
+                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-gray-400 transition-colors"
+                placeholder="Webサイト制作のご相談"
+              />
+            </div>
+
+            {/* Message */}
+            <div>
+              <label
+                htmlFor="message"
+                className="block text-sm font-medium mb-2"
+              >
+                お問い合わせ内容 <span className="text-red-500">*</span>
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                required
+                value={formData.message}
+                onChange={handleChange}
+                rows={8}
+                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-gray-400 transition-colors resize-none"
+                placeholder="ご相談内容をご記入ください"
+              />
+            </div>
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full px-8 py-4 bg-black text-white font-en rounded-lg hover:bg-gray-800 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed text-sm md:text-base"
+            >
+              {isSubmitting ? "送信中..." : "送信する"}
+            </button>
+          </form>
         </div>
-      </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-black text-white py-8 px-6 md:px-12">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-sm font-en">©2025 Ryuta Mukai</p>
+          <div className="flex gap-6">
+            <Link
+              href="/contact"
+              className="text-sm hover:underline font-en"
+            >
+              Contact
+            </Link>
+            <Link href="#" className="text-sm hover:underline font-en">
+              プロフィール
+            </Link>
+            <a
+              href="https://github.com/r-mukai1113"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm hover:underline font-en"
+            >
+              お問い合わせ
+            </a>
+          </div>
+        </div>
+      </footer>
     </main>
   );
 }
