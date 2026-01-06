@@ -31,23 +31,19 @@ export default function Home() {
       {/* Works Section */}
       <section
         id="works"
-        className="w-full max-w-[1600px] mx-auto px-[20px] md:px-[48px] lg:px-[80px] py-32"
+        className="w-full max-w-[1600px] mx-auto px-[20px] md:px-[48px] lg:px-[80px] mt-[40px] md:mt-[64px]"
       >
-        <h2 className="text-2xl font-bold mb-16 font-inter">Selected Works</h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-32">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-y-[40px] md:gap-y-[48px] md:gap-x-[48px]">
           {works.map((work) => (
             <div key={work.id} className="group cursor-pointer">
               <div className="aspect-[4/3] bg-slate-200 rounded-lg mb-4 overflow-hidden relative">
                 <div className="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/5 transition-colors duration-300" />
               </div>
 
-              {/* 事例タイトル: 16px, 2%, Noto Sans Regular */}
               <h3 className="font-noto font-normal text-[16px] tracking-[0.02em] group-hover:underline decoration-1 underline-offset-4">
                 {work.title}
               </h3>
 
-              {/* カテゴリー: 10px, 2%, Noto Sans Regular */}
               <p className="font-noto font-normal text-[10px] tracking-[0.02em] text-slate-500 mt-2">
                 {work.client}
               </p>
@@ -57,7 +53,7 @@ export default function Home() {
       </section>
 
       {/* Footer (Copyright) */}
-      <footer className="w-full max-w-[1600px] mx-auto px-[20px] md:px-[48px] lg:px-[80px] mt-[100px] pb-[120px]">
+      <footer className="w-full max-w-[1600px] mx-auto px-[20px] md:px-[48px] lg:px-[80px] mt-[40px] md:mt-[100px] pb-[120px]">
         <p className="text-center text-xs text-slate-400 font-inter">
           ©2025 Ryuta Mukai
         </p>
