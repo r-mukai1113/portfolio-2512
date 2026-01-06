@@ -20,10 +20,10 @@ export const BottomNav = () => {
       <div
         className={clsx(
           "bg-slate-900/72 backdrop-blur-md text-white shadow-2xl flex items-center justify-center border border-slate-700/50",
-          "h-[44px] md:h-[56px]",
+          "h-[48px] md:h-[56px]",
           "rounded-[6px] md:rounded-[8px]",
           "px-[20px] md:px-[28px]",
-          "gap-[20px]"
+          "gap-[16px] md:gap-[20px]"
         )}
       >
         {NAV_ITEMS.map((item) => (
@@ -33,7 +33,7 @@ export const BottomNav = () => {
             onClick={() => setActiveTab(item.name)}
             onMouseEnter={() => setHoveredTab(item.name)}
             onMouseLeave={() => setHoveredTab(null)}
-            className="relative flex flex-col items-center justify-center h-full"
+            className="relative flex flex-col items-center justify-center h-full group"
           >
             <span
               className={clsx(
@@ -41,6 +41,7 @@ export const BottomNav = () => {
                 "text-[11px] md:text-[14px]",
                 "tracking-[0.02em]",
                 "gap-[4px]",
+                "mb-[3px]",
                 activeTab === item.name
                   ? "text-white"
                   : "text-slate-400 hover:text-white"
@@ -53,7 +54,7 @@ export const BottomNav = () => {
             {(activeTab === item.name || hoveredTab === item.name) && (
               <motion.div
                 layoutId="underline"
-                className="absolute bottom-[2px] left-0 right-0 h-[2px] bg-white rounded-full"
+                className="absolute bottom-[10px] md:bottom-[13px] left-0 right-0 h-[1px] bg-white rounded-full"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.2 }}

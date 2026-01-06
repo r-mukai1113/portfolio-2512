@@ -9,20 +9,20 @@ export default function Home() {
       <Header />
 
       {/* First View (Hero) */}
-      <section className="w-full max-w-[1600px] mx-auto px-[20px] md:px-[48px] lg:px-[80px] pt-[164px]">
+      <section className="w-full max-w-[1600px] mx-auto px-[20px] md:px-[48px] lg:px-[80px] pt-[100px] md:pt-[164px]">
         <div className="flex flex-col lg:flex-row lg:justify-between lg:items-end w-full">
           {/* 名前 + 絵文字エリア */}
           <div className="flex items-center">
-            <h1 className="font-inter font-light text-[40px] md:text-[80px] lg:text-[110px] tracking-[-0.01em] leading-tight">
+            <h1 className="font-inter font-light text-[40px] md:text-[88px] tracking-[-0.01em] leading-tight text-slate-900">
               Ryuta Mukai
             </h1>
-            <div className="ml-[20px] text-[40px] md:text-[60px] lg:text-[80px]">
+            <div className="ml-[12px] md:ml-[20px] text-[40px] md:text-[88px] flex items-center">
               <EmojiSwitcher />
             </div>
           </div>
 
           {/* 右側のテキスト */}
-          <p className="mt-4 lg:mt-0 text-sm md:text-base text-slate-500 font-medium font-noto">
+          <p className="mt-4 lg:mt-0 text-sm md:text-base text-[#565656] font-medium font-noto">
             🏡 Web Designer based in Yokohama
           </p>
         </div>
