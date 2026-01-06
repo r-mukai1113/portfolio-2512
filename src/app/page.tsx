@@ -1,76 +1,49 @@
-import Link from "next/link";
+import { Header } from "@/components/Header";
+import { EmojiSwitcher } from "@/components/EmojiSwitcher";
+import { BottomNav } from "@/components/BottomNav";
 import { works } from "@/data/works";
 
 export default function Home() {
   return (
-    <main className="min-h-screen">
-      {/* Header */}
-      <header className="px-6 py-8 md:px-12 md:py-12">
-        <h1 className="text-3xl md:text-4xl font-bold">
-          <span className="font-en">Ryuta Mukai</span> 👨🏻‍💻
-        </h1>
-        <p className="mt-2 text-sm md:text-base text-gray-600">
-          <span className="font-en">Web Designer based in Yokohama</span>
-        </p>
-      </header>
+    <main className="relative min-h-screen bg-[#FCFCFC] font-sans text-slate-900 selection:bg-yellow-200 selection:text-slate-900">
+      <Header />
 
-      {/* Works Section */}
-      <section className="px-6 pb-20 md:px-12 md:pb-32">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-6 md:gap-8">
-            {works.map((work) => (
-              <div
-                key={work.id}
-                className="bg-gray-100 rounded-lg overflow-hidden"
-              >
-                {/* Image Placeholder */}
-                <div className="w-full aspect-[4/3] bg-gray-200 flex items-center justify-center">
-                  <span className="text-gray-400 text-sm">🖼️</span>
-                </div>
-
-                {/* Content */}
-                <div className="p-6">
-                  <h3 className="text-lg md:text-xl font-bold mb-2">
-                    {work.title}
-                  </h3>
-                  <p className="text-sm text-gray-600">{work.client}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+      {/* First View (Hero) */}
+      <section className="h-screen w-full flex flex-col justify-center px-6 md:px-20 max-w-7xl mx-auto">
+        <div className="relative z-10">
+          <h1 className="text-5xl md:text-8xl font-bold tracking-tight leading-tight font-en">
+            Ryuta Mukai
+            <EmojiSwitcher />
+          </h1>
+          <p className="mt-6 text-sm md:text-base text-slate-500 font-medium flex items-center gap-2 font-en">
+            🏡 Web Designer based in Yokohama
+          </p>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-black text-white py-8 px-6 md:px-12">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-sm font-en">
-            ©2025 Ryuta Mukai
-          </p>
-          <div className="flex gap-6">
-            <Link
-              href="/contact"
-              className="text-sm hover:underline font-en"
-            >
-              Contact
-            </Link>
-            <Link
-              href="#"
-              className="text-sm hover:underline font-en"
-            >
-              プロフィール
-            </Link>
-            <a
-              href="https://github.com/r-mukai1113"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm hover:underline font-en"
-            >
-              お問い合わせ
-            </a>
-          </div>
+      {/* Works Section */}
+      <section
+        id="works"
+        className="py-20 px-6 md:px-20 max-w-7xl mx-auto min-h-screen"
+      >
+        <h2 className="text-2xl font-bold mb-10 font-en">Selected Works</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-20">
+          {works.map((work) => (
+            <div key={work.id} className="group cursor-pointer">
+              <div className="aspect-[4/3] bg-slate-200 rounded-lg mb-4 overflow-hidden relative">
+                <div className="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/5 transition-colors duration-300" />
+              </div>
+              <h3 className="text-lg font-bold group-hover:underline decoration-1 underline-offset-4">
+                {work.title}
+              </h3>
+              <p className="text-xs text-slate-500 mt-1">{work.client}</p>
+            </div>
+          ))}
         </div>
-      </footer>
+      </section>
+
+      {/* ナビゲーション */}
+      <BottomNav />
     </main>
   );
 }

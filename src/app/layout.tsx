@@ -15,7 +15,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Ryuta Mukai | Web Designer & Frontend Developer",
+  title: "Ryuta Mukai | Web Designer",
   description: "Web Designer based in Yokohama",
 };
 
