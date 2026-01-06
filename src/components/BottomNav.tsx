@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { clsx } from "clsx";
 
 const NAV_ITEMS = [
-  { name: "制作実例", href: "#works", icon: "👨‍💻" },
+  { name: "制作実例", href: "/", icon: "👨‍💻" },
   { name: "プロフィール", href: "#", icon: "🎨" },
   { name: "お問い合せ", href: "/contact", icon: "🖐️" },
 ];
