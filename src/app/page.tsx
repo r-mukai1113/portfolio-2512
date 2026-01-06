@@ -53,7 +53,7 @@ export default function Home() {
       </section>
 
       {/* Footer (Copyright) */}
-      <footer className="w-full max-w-[1600px] mx-auto px-[20px] md:px-[48px] lg:px-[80px] mt-[40px] md:mt-[100px] pb-[120px]">
+      <footer className="w-full max-w-[1600px] mx-auto px-[20px] md:px-[48px] lg:px-[80px] mt-[40px] md:mt-[100px] pb-[88px] md:pb-[120px]">
         <p className="text-center text-xs text-slate-400 font-inter">
           ©2025 Ryuta Mukai
         </p>

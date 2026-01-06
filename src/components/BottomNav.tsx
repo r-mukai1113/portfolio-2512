@@ -1,19 +1,31 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { clsx } from "clsx";
 
 const NAV_ITEMS = [
   { name: "制作実例", href: "/", icon: "👨‍💻" },
-  { name: "プロフィール", href: "#", icon: "🎨" },
+  { name: "プロフィール", href: "/about", icon: "🎨" },
   { name: "お問い合せ", href: "/contact", icon: "🖐️" },
 ];
 
 export const BottomNav = () => {
+  const pathname = usePathname();
   const [activeTab, setActiveTab] = useState("制作実例");
   const [hoveredTab, setHoveredTab] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (pathname === "/contact") {
+      setActiveTab("お問い合せ");
+    } else if (pathname === "/about") {
+      setActiveTab("プロフィール");
+    } else {
+      setActiveTab("制作実例");
+    }
+  }, [pathname]);
 
   return (
     <nav className="fixed bottom-4 md:bottom-6 left-1/2 -translate-x-1/2 z-50">

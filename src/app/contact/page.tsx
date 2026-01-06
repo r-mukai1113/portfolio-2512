@@ -195,7 +195,7 @@ export default function Contact() {
       </div>
 
       {/* Footer (Copyright) */}
-      <footer className="w-full max-w-[1600px] mx-auto px-[20px] md:px-[48px] lg:px-[80px] pb-[120px]">
+      <footer className="w-full max-w-[1600px] mx-auto px-[20px] md:px-[48px] lg:px-[80px] pb-[88px] md:pb-[120px]">
         <p className="text-center text-xs text-slate-400 font-inter">
           ©2025 Ryuta Mukai
         </p>
