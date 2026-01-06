@@ -34,7 +34,15 @@ body {
   font-family: var(--font-ja);
 }
 
-/* 英数字用フォント */
+/* フォントクラス */
+.font-inter {
+  font-family: var(--font-inter);
+}
+
+.font-noto {
+  font-family: var(--font-noto-sans-jp);
+}
+
 :lang(en),
 .font-en {
   font-family: var(--font-en);

@@ -17,7 +17,7 @@ export const BottomNav = () => {
 
   return (
     <nav className="fixed bottom-4 md:bottom-6 left-1/2 -translate-x-1/2 z-50">
-      <div className="bg-slate-900/90 backdrop-blur-md text-white px-8 py-3 rounded-full shadow-2xl flex gap-8 items-center border border-slate-700/50">
+      <div className="bg-slate-900/90 backdrop-blur-md text-white px-8 py-3 rounded-full shadow-2xl flex gap-[20px] items-center border border-slate-700/50">
         {NAV_ITEMS.map((item) => (
           <Link
             key={item.name}
@@ -29,7 +29,7 @@ export const BottomNav = () => {
           >
             <span
               className={clsx(
-                "text-xs md:text-sm font-medium transition-colors duration-200 flex gap-2 items-center whitespace-nowrap",
+                "text-xs md:text-sm font-medium transition-colors duration-200 flex gap-2 items-center whitespace-nowrap font-noto",
                 activeTab === item.name
                   ? "text-white"
                   : "text-slate-400 hover:text-white"

@@ -2,15 +2,17 @@ import type { Metadata } from "next";
 import { Noto_Sans_JP, Inter } from "next/font/google";
 import "./globals.css";
 
-const notoSansJP = Noto_Sans_JP({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-noto-sans-jp",
+  weight: ["300"],
+  variable: "--font-inter",
   display: "swap",
 });
 
-const inter = Inter({
+const notoSansJP = Noto_Sans_JP({
   subsets: ["latin"],
-  variable: "--font-inter",
+  weight: ["400"],
+  variable: "--font-noto-sans-jp",
   display: "swap",
 });
 
@@ -25,8 +27,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja" className={`${notoSansJP.variable} ${inter.variable}`}>
-      <body>{children}</body>
+    <html lang="ja" className={`${inter.variable} ${notoSansJP.variable}`}>
+      <body className="font-sans antialiased">{children}</body>
     </html>
   );
 }
