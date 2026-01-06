@@ -5,11 +5,11 @@ import { works } from "@/data/works";
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen bg-[#FCFCFC] font-sans text-slate-900 selection:bg-yellow-200 selection:text-slate-900">
+    <main className="relative min-h-screen bg-[#FCFCFC] font-sans text-slate-900 selection:bg-yellow-200 selection:text-slate-900 pb-32 md:pb-40">
       <Header />
 
-      {/* First View (Hero) */}
-      <section className="h-screen w-full flex flex-col justify-center px-6 md:px-20 max-w-7xl mx-auto">
+      {/* First View (Hero) - 余白拡大 */}
+      <section className="h-screen w-full flex flex-col justify-center px-6 md:px-20 max-w-7xl mx-auto py-32 md:py-40">
         <div className="relative z-10">
           <h1 className="text-5xl md:text-8xl font-bold tracking-tight leading-tight font-en">
             Ryuta Mukai
@@ -21,13 +21,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Works Section */}
-      <section
-        id="works"
-        className="py-20 px-6 md:px-20 max-w-7xl mx-auto min-h-screen"
-      >
-        <h2 className="text-2xl font-bold mb-10 font-en">Selected Works</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-20">
+      {/* Works Section - 余白拡大 */}
+      <section id="works" className="px-6 md:px-20 max-w-7xl mx-auto">
+        <h2 className="text-2xl font-bold mb-10 md:mb-16 font-en">
+          Selected Works
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-24 md:gap-y-32">
           {works.map((work) => (
             <div key={work.id} className="group cursor-pointer">
               <div className="aspect-[4/3] bg-slate-200 rounded-lg mb-4 overflow-hidden relative">
@@ -42,7 +41,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ナビゲーション */}
+      {/* コピーライト */}
+      <footer className="py-10 text-center text-xs text-slate-400 mt-20 md:mt-32 font-en">
+        ©2025 Ryuta Mukai
+      </footer>
+
       <BottomNav />
     </main>
   );
