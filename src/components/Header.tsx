@@ -23,7 +23,7 @@ export const Header = () => {
   }, []);
 
   return (
-    <header className="hidden md:block fixed top-0 left-0 z-50 w-full pointer-events-none">
+    <header className="hidden fixed top-0 left-0 z-50 w-full pointer-events-none">
       <div className="max-w-[1600px] mx-auto px-[20px] md:px-[48px] lg:px-[80px] h-[64px] flex items-center">
         <AnimatePresence>
           {isVisible && (
