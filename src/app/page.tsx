@@ -35,7 +35,13 @@ export default function Home() {
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-y-[40px] md:gap-y-[48px] md:gap-x-[48px]">
           {works.map((work) => (
-            <div key={work.id} className="group cursor-pointer">
+            <a
+              key={work.id}
+              href={work.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group cursor-pointer"
+            >
               <div className="aspect-[16/9] bg-slate-200 rounded-lg mb-4 overflow-hidden relative">
                 <div className="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/5 transition-colors duration-300" />
               </div>
@@ -47,7 +53,7 @@ export default function Home() {
               <p className="font-noto font-normal text-[10px] tracking-[0.02em] text-slate-500 mt-2">
                 {work.client}
               </p>
-            </div>
+            </a>
           ))}
         </div>
       </section>
