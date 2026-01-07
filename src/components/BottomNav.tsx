@@ -9,7 +9,7 @@ import { clsx } from "clsx";
 const NAV_ITEMS = [
   { name: "制作実例", href: "/", icon: "👨‍💻" },
   { name: "プロフィール", href: "/about", icon: "🎨" },
-  { name: "お問い合せ", href: "/contact", icon: "🖐️" },
+  { name: "お問い合わせ", href: "/contact", icon: "🖐️" },
 ];
 
 export const BottomNav = () => {
@@ -19,7 +19,7 @@ export const BottomNav = () => {
 
   useEffect(() => {
     if (pathname === "/contact") {
-      setActiveTab("お問い合せ");
+      setActiveTab("お問い合わせ");
     } else if (pathname === "/about") {
       setActiveTab("プロフィール");
     } else {
