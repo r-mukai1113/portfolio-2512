@@ -9,18 +9,18 @@ export default function Home() {
       <section className="w-full max-w-[1600px] mx-auto px-[20px] md:px-[48px] lg:px-[80px] pt-[88px] md:pt-[120px]">
         <div className="flex flex-col lg:flex-row lg:justify-between lg:items-end w-full">
           {/* 名前 + 絵文字エリア */}
-          <div className="flex items-start md:items-center gap-[12px] md:gap-[16px]">
+          <div className="flex items-start md:items-center gap-[8px] md:gap-[12px]">
             <h1 className="font-inter font-light text-[40px] md:text-[88px] tracking-[-0.01em] leading-tight text-slate-900">
               Ryuta Mukai
             </h1>
-            <div className="text-[40px] md:text-[88px] flex items-center">
+            <div className="text-[40px] md:text-[96px] flex items-center mt-[3px] md:mt-0">
               <EmojiSwitcher />
             </div>
           </div>
 
           {/* 右側のテキスト */}
           <p className="mt-4 lg:mt-0 text-sm md:text-base text-[#565656] font-medium font-noto flex items-start md:items-center gap-1">
-            <span className="text-[10px] md:text-[1em] inline-block mt-[2px] md:mt-0">🏡</span>
+            <span className="text-[11px] md:text-[1em] inline-block mt-[2px] md:mt-0">🏡</span>
             <span>Web Designer based in Yokohama</span>
           </p>
         </div>

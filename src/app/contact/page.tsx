@@ -65,7 +65,7 @@ export default function Contact() {
                 <h1 className="font-inter font-normal text-[40px] md:text-[88px] tracking-tight leading-none">
                   Contact
                 </h1>
-                <div className="text-[32px] md:text-[80px] flex items-center">
+                <div className="text-[28px] md:text-[64px] flex items-center">
                   🖐️
                 </div>
               </div>
