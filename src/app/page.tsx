@@ -9,7 +9,7 @@ export default function Home() {
       <section className="w-full max-w-[1600px] mx-auto px-[20px] md:px-[48px] lg:px-[80px] pt-[88px] md:pt-[120px]">
         <div className="flex flex-col lg:flex-row lg:justify-between lg:items-end w-full">
           {/* 名前 + 絵文字エリア */}
-          <div className="flex items-center gap-[12px] md:gap-[16px]">
+          <div className="flex items-start md:items-center gap-[12px] md:gap-[16px]">
             <h1 className="font-inter font-light text-[40px] md:text-[88px] tracking-[-0.01em] leading-tight text-slate-900">
               Ryuta Mukai
             </h1>
@@ -19,8 +19,9 @@ export default function Home() {
           </div>
 
           {/* 右側のテキスト */}
-          <p className="mt-4 lg:mt-0 text-sm md:text-base text-[#565656] font-medium font-noto">
-            🏡 Web Designer based in Yokohama
+          <p className="mt-4 lg:mt-0 text-sm md:text-base text-[#565656] font-medium font-noto flex items-start md:items-center gap-1">
+            <span className="text-[10px] md:text-[1em] inline-block mt-[2px] md:mt-0">🏡</span>
+            <span>Web Designer based in Yokohama</span>
           </p>
         </div>
       </section>
