@@ -13,7 +13,7 @@ export default function Home() {
             <h1 className="font-inter font-light text-[40px] md:text-[88px] tracking-[-0.01em] leading-tight text-slate-900">
               Ryuta Mukai
             </h1>
-            <div className="text-[40px] md:text-[96px] flex items-center mt-[3px] md:mt-0">
+            <div className="text-[40px] md:text-[96px] flex items-center mt-[4px] md:mt-0">
               <EmojiSwitcher />
             </div>
           </div>
