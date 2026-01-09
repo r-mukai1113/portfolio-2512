@@ -1,7 +1,6 @@
 "use client";
 
 import { BottomNav } from "@/components/BottomNav";
-import { EmojiSwitcher } from "@/components/EmojiSwitcher";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -63,11 +62,11 @@ export default function Contact() {
           <div className="lg:col-span-5">
             <div className="lg:sticky lg:top-[120px]">
               <div className="flex items-center gap-[12px] md:gap-[16px] mb-8 md:mb-12">
-                <h1 className="font-inter font-light text-[44px] md:text-[110px] tracking-tight leading-none">
+                <h1 className="font-inter font-normal text-[48px] md:text-[80px] tracking-tight leading-none">
                   Contact
                 </h1>
-                <div className="text-[40px] md:text-[100px] flex items-center">
-                  <EmojiSwitcher />
+                <div className="text-[40px] md:text-[88px] flex items-center">
+                  🖐️
                 </div>
               </div>
 

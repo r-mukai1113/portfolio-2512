@@ -10,10 +10,10 @@ export default function Home() {
         <div className="flex flex-col lg:flex-row lg:justify-between lg:items-end w-full">
           {/* 名前 + 絵文字エリア */}
           <div className="flex items-center gap-[12px] md:gap-[16px]">
-            <h1 className="font-inter font-light text-[44px] md:text-[110px] tracking-[-0.01em] leading-tight text-slate-900">
+            <h1 className="font-inter font-light text-[40px] md:text-[88px] tracking-[-0.01em] leading-tight text-slate-900">
               Ryuta Mukai
             </h1>
-            <div className="text-[40px] md:text-[100px] flex items-center">
+            <div className="text-[40px] md:text-[88px] flex items-center">
               <EmojiSwitcher />
             </div>
           </div>
