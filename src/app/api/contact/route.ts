@@ -7,27 +7,35 @@ const resend = new Resend(process.env.RESEND_API_KEY || "re_placeholder");
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, email, subject, message } = body;
+    const { name, company, email, type, message } = body;
 
     // バリデーション
-    if (!name || !email || !subject || !message) {
+    if (!name || !email || !type || !message) {
       return NextResponse.json(
-        { error: "すべての項目を入力してください" },
+        { error: "必須項目を入力してください" },
         { status: 400 }
       );
     }
+
+    // お問い合わせ種別の日本語化
+    const typeLabels: { [key: string]: string } = {
+      production: "Web制作のご依頼",
+      consulting: "ご相談・お見積り",
+      other: "その他",
+    };
 
     // メール送信
     const data = await resend.emails.send({
       from: "Portfolio Contact <onboarding@resend.dev>", // Resendの検証済みドメイン
       to: [process.env.CONTACT_EMAIL_TO || "your-email@example.com"],
-      subject: `【お問い合わせ】${subject}`,
+      subject: `【${typeLabels[type] || type}】${name}様からのお問い合わせ`,
       html: `
         <h2>ポートフォリオサイトからお問い合わせがありました</h2>
-        <p><strong>名前:</strong> ${name}</p>
+        <p><strong>お名前:</strong> ${name}</p>
+        ${company ? `<p><strong>企業名・屋号:</strong> ${company}</p>` : ""}
         <p><strong>メールアドレス:</strong> ${email}</p>
-        <p><strong>件名:</strong> ${subject}</p>
-        <h3>お問い合わせ内容:</h3>
+        <p><strong>お問い合わせ種別:</strong> ${typeLabels[type] || type}</p>
+        <h3>相談したい内容:</h3>
         <p>${message.replace(/\n/g, "<br>")}</p>
       `,
       replyTo: email,

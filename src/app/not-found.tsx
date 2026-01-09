@@ -15,7 +15,7 @@ export default function NotFound() {
 
           <p className="font-noto font-normal text-[12px] md:text-[14px] leading-relaxed text-slate-600">
             お探しのページは見つかりません。<br />
-            お腹が空いていたので、僕が美味しくいただきました。
+            お腹が空いていたので、僕が美味しくいただきました🤤
           </p>
         </div>
       </div>

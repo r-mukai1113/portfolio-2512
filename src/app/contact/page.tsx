@@ -3,8 +3,10 @@
 import { Header } from "@/components/Header";
 import { BottomNav } from "@/components/BottomNav";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Contact() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     name: "",
     company: "",
@@ -12,6 +14,7 @@ export default function Contact() {
     type: "",
     message: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -24,10 +27,32 @@ export default function Contact() {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // フォーム送信処理はここに実装
-    console.log(formData);
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        // サンクスページに遷移
+        router.push("/contact/thank-you");
+      } else {
+        // エラー処理
+        alert("送信に失敗しました。もう一度お試しください。");
+        setIsSubmitting(false);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("送信に失敗しました。もう一度お試しください。");
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -184,9 +209,10 @@ export default function Contact() {
               <div className="pt-4">
                 <button
                   type="submit"
-                  className="w-full bg-[#1a1a1a] text-white font-bold font-noto py-4 rounded-[6px] hover:bg-slate-800 transition-colors duration-200"
+                  disabled={isSubmitting}
+                  className="w-full bg-[#1a1a1a] text-white font-bold font-noto py-4 rounded-[6px] hover:bg-slate-800 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  送信する
+                  {isSubmitting ? "送信中..." : "送信する"}
                 </button>
               </div>
             </form>
