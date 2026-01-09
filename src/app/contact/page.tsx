@@ -1,7 +1,7 @@
 "use client";
 
-import { Header } from "@/components/Header";
 import { BottomNav } from "@/components/BottomNav";
+import { EmojiSwitcher } from "@/components/EmojiSwitcher";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -57,16 +57,19 @@ export default function Contact() {
 
   return (
     <main className="relative min-h-screen bg-[#FCFCFC] text-slate-900">
-      <Header />
-
-      <div className="w-full max-w-[1600px] mx-auto px-[20px] md:px-[48px] lg:px-[80px] pt-[100px] md:pt-[180px] pb-[120px]">
+      <div className="w-full max-w-[1600px] mx-auto px-[20px] md:px-[48px] lg:px-[80px] pt-[88px] md:pt-[120px] pb-[120px]">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-12 lg:gap-x-20">
           {/* 左カラム：タイトル & 説明文 */}
           <div className="lg:col-span-5">
             <div className="lg:sticky lg:top-[120px]">
-              <h1 className="font-inter font-normal text-[48px] md:text-[80px] tracking-tight leading-none mb-8 md:mb-12">
-                Contact
-              </h1>
+              <div className="flex items-center gap-[12px] md:gap-[16px] mb-8 md:mb-12">
+                <h1 className="font-inter font-light text-[44px] md:text-[110px] tracking-tight leading-none">
+                  Contact
+                </h1>
+                <div className="text-[40px] md:text-[100px] flex items-center">
+                  <EmojiSwitcher />
+                </div>
+              </div>
 
               <div className="font-noto text-sm md:text-base leading-relaxed text-slate-700 space-y-6">
                 <p>
