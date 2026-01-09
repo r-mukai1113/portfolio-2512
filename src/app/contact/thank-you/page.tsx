@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function ThankYou() {
   return (
-    <main className="relative min-h-screen bg-[#FCFCFC] text-slate-900 selection:bg-yellow-200 selection:text-slate-900">
+    <main className="relative min-h-screen bg-[#FCFCFC] text-slate-900">
       <div className="flex flex-col items-center justify-center min-h-screen px-[20px]">
         <div className="text-center max-w-[600px]">
           <h1 className="font-inter font-bold text-[64px] md:text-[96px] leading-none tracking-[-0.02em] mb-[10px]">

@@ -5,7 +5,7 @@ import { works } from "@/data/works";
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen bg-[#FCFCFC] text-slate-900 selection:bg-yellow-200 selection:text-slate-900">
+    <main className="relative min-h-screen bg-[#FCFCFC] text-slate-900">
       <Header />
 
       {/* First View (Hero) */}

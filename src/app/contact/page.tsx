@@ -56,7 +56,7 @@ export default function Contact() {
   };
 
   return (
-    <main className="relative min-h-screen bg-[#FCFCFC] text-slate-900 selection:bg-yellow-200 selection:text-slate-900">
+    <main className="relative min-h-screen bg-[#FCFCFC] text-slate-900">
       <Header />
 
       <div className="w-full max-w-[1600px] mx-auto px-[20px] md:px-[48px] lg:px-[80px] pt-[100px] md:pt-[180px] pb-[120px]">
@@ -98,7 +98,6 @@ export default function Contact() {
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="例) 山田 太郎"
-                  className="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 md:py-4 text-sm md:text-base outline-none focus:border-slate-400 transition-colors placeholder:text-slate-300"
                   required
                 />
               </div>
@@ -118,7 +117,6 @@ export default function Contact() {
                   value={formData.company}
                   onChange={handleChange}
                   placeholder="例) 株式会社〇〇"
-                  className="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 md:py-4 text-sm md:text-base outline-none focus:border-slate-400 transition-colors placeholder:text-slate-300"
                 />
               </div>
 
@@ -137,7 +135,6 @@ export default function Contact() {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="例) xxx@sample.com"
-                  className="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 md:py-4 text-sm md:text-base outline-none focus:border-slate-400 transition-colors placeholder:text-slate-300"
                   required
                 />
               </div>
@@ -156,7 +153,7 @@ export default function Contact() {
                     name="type"
                     value={formData.type}
                     onChange={handleChange}
-                    className="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 md:py-4 text-sm md:text-base outline-none focus:border-slate-400 transition-colors appearance-none cursor-pointer text-slate-800"
+                    className="cursor-pointer text-slate-800"
                     required
                   >
                     <option value="" disabled className="text-slate-300">
@@ -200,7 +197,7 @@ export default function Contact() {
                   onChange={handleChange}
                   rows={8}
                   placeholder="ご要望や参考サイトなどございましたらご記入ください。"
-                  className="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 md:py-4 text-sm md:text-base outline-none focus:border-slate-400 transition-colors placeholder:text-slate-300 resize-none"
+                  className="resize-none"
                   required
                 />
               </div>

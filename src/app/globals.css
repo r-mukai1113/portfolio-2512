@@ -27,6 +27,12 @@ body {
   font-family: var(--font-ja);
 }
 
+/* テキスト選択時の色（黒背景 + 白文字） */
+::selection {
+  background: #333;
+  color: #fff;
+}
+
 /* フォントクラス */
 .font-inter {
   font-family: var(--font-inter);
@@ -39,4 +45,58 @@ body {
 :lang(en),
 .font-en {
   font-family: var(--font-en);
+}
+
+/* --------------------------------------------------
+   フォームスタイルの微調整
+-------------------------------------------------- */
+
+/* テキスト入力、メールアドレス、電話番号、テキストエリアなどを対象 */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+textarea,
+select {
+  /* 1. 枠線の設定 */
+  border: 1px solid #D0D7DE;
+  border-radius: 4px;
+
+  /* 2. 文字の太さ */
+  font-weight: 500;
+
+  /* 3. フォントサイズ（モバイル・基本） */
+  font-size: 14px;
+
+  /* 見た目の調整 */
+  color: #333;
+  background: #fff;
+  padding: 12px;
+  width: 100%;
+  box-sizing: border-box;
+  appearance: none;
+}
+
+/* 4. プレースホルダー（入力前のガイド文字）の色 */
+::placeholder {
+  color: #8C959F;
+  opacity: 1;
+}
+
+/* 5. PC表示（画面幅768px以上）でのフォントサイズ上書き */
+@media screen and (min-width: 768px) {
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  textarea,
+  select {
+    font-size: 16px;
+  }
+}
+
+/* フォーカス時（クリックした時）のスタイル */
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #333;
 }

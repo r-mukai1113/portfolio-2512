@@ -2,7 +2,7 @@ import { BottomNav } from "@/components/BottomNav";
 
 export default function NotFound() {
   return (
-    <main className="relative min-h-screen bg-[#FCFCFC] text-slate-900 selection:bg-yellow-200 selection:text-slate-900">
+    <main className="relative min-h-screen bg-[#FCFCFC] text-slate-900">
       <div className="flex flex-col items-center justify-center min-h-screen px-[20px]">
         <div className="text-center">
           <h1 className="font-inter font-bold text-[80px] md:text-[128px] leading-none tracking-[-0.02em] mb-[10px]">
