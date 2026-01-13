@@ -3,7 +3,7 @@ import { BottomNav } from "@/components/BottomNav";
 export default function About() {
   return (
     <main className="relative min-h-screen bg-[#FCFCFC] text-slate-900">
-      <div className="w-full max-w-[1600px] mx-auto px-[20px] md:px-[48px] lg:px-[80px] pt-[88px] md:pt-[120px] pb-[120px]">
+      <div className="w-full max-w-[1600px] mx-auto px-[20px] md:px-[48px] lg:px-[80px] pt-[88px] md:pt-[120px] pb-[120px] min-h-[calc(100vh-200px)]">
         {/* ページタイトル */}
         <div className="flex items-center gap-[12px] md:gap-[16px] mb-12 md:mb-16">
           <h1 className="font-inter font-normal text-[40px] md:text-[88px] tracking-tight leading-none">
