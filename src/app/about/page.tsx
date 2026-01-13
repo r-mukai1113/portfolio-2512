@@ -10,7 +10,7 @@ export default function About() {
             Profile
           </h1>
           <div className="text-[28px] md:text-[56px] flex items-center mb-[3px] md:mb-0">
-            🎨
+            👟
           </div>
         </div>
 

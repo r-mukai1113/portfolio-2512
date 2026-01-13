@@ -8,7 +8,7 @@ import { clsx } from "clsx";
 
 const NAV_ITEMS = [
   { name: "制作実例", href: "/", icon: "👨‍💻" },
-  { name: "プロフィール", href: "/about", icon: "🎨" },
+  { name: "プロフィール", href: "/about", icon: "👟" },
   { name: "お問い合わせ", href: "/contact", icon: "🖐️" },
 ];
 
