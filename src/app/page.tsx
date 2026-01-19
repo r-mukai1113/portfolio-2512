@@ -24,19 +24,17 @@ export default function Home() {
       if (e.deltaY > 0) {
         // 下スクロール: 次へ
         if (currentIndex < works.length - 1) {
-             setCurrentIndex((prev) => prev + 1);
+          setCurrentIndex((prev) => prev + 1);
         } else {
-             // ループさせる場合はこちら (今回は1枚目の上に表示させないため、ループ挙動を自然にするなら0に戻すアニメーションが必要ですが、
-             // 要件の「1枚目の上に表示しない」を優先し、単純なリスト遷移としています。
-             // 完全な無限ループが必要な場合は配列を複製するロジックになります)
-             setCurrentIndex(0);
+          // ループせず0に戻す（1枚目の上に表示させないため）
+          setCurrentIndex(0);
         }
       } else {
         // 上スクロール: 前へ
         if (currentIndex > 0) {
-            setCurrentIndex((prev) => prev - 1);
+          setCurrentIndex((prev) => prev - 1);
         } else {
-            setCurrentIndex(works.length - 1);
+          setCurrentIndex(works.length - 1);
         }
       }
 
@@ -98,8 +96,10 @@ export default function Home() {
         className="hidden md:flex h-screen w-full pt-[72px]"
         style={{ color: textColor }}
       >
-        {/* 左カラム: テキスト */}
-        {/* テキストとサムネイルの間を48px空けるため、pr-12 (48px) を指定 */}
+        {/* 左カラム: テキスト
+            - pl-20 (80px)
+            - pr-12 (48px) -> サムネイルとのGap
+        */}
         <div className="w-1/2 h-full flex items-center pl-20 pr-12">
           <div className="max-w-[520px] w-full">
             {/* 1. タイトル (Bold 700) */}
@@ -129,42 +129,36 @@ export default function Home() {
               style={{ color: textColor }}
             >
               View Project
-              {/* アイコン変更: › */}
+              {/* アイコン変更: › , サイズ16px */}
               <span className="text-[16px] leading-none pb-[2px]">›</span>
             </a>
           </div>
         </div>
 
-        {/* 右カラム: 画像 + ドット */}
-        {/* サムネイルサイズをflexにするため、コンテナ全体をflex化 */}
-        {/* 画面右端から120pxあける (サムネイル-ボタン間32px + ボタン8px + 右余白80px = 120px) */}
-        {/* そのため pr-20 (80px) を指定し、内部で gap-8 (32px) を作る */}
-        <div className="w-1/2 h-full flex pr-20 relative">
-
-          {/* 画像リストコンテナ (Flexで可変サイズ) */}
+        {/* 右カラム: 画像 + ドット
+            - 画像サイズをFlexで可変にする構成
+            - 左(テキスト)とのGapは左カラムのpr-12で確保済み
+        */}
+        <div className="w-1/2 h-full flex">
+          
+          {/* 画像リストコンテナ (Flex-1: 残りの幅を埋める) */}
           <div className="flex-1 h-full relative overflow-hidden">
             <div
               className="absolute left-0 w-full transition-transform duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
               style={{
                 /* 中央配置の計算ロジック:
-                   画面の高さ(100vh)の半分 - 画像の高さ(100%)の半分 = 画像のスタート位置(画面中央)
-                   そこから、現在のインデックス * (画像の高さ + マージン) 分だけ上にずらす
-                   ※ マージンは80pxとして計算
-                   ※ 1枚目(index 0)の時は、画面中央に配置され、上部には何もない状態になる
+                   「画面中央(50%)」に「画像の中心」を合わせる
+                   - currentIndex * (100% + 80px) でスライド
+                   - 1枚目(index 0)の時は、画面中央に配置され、その上に画像は存在しない
                 */
                 top: "50%",
-                transform: `translateY(calc(-50% - ${currentIndex * (100 + 80)}px))`, // 100%は画像の高さとみなされる(親依存だとずれる可能性があるため注意が必要だが、aspect比固定なら概ね機能する)
-                /* 補足: translateYの%は「要素自身の高さ」基準。
-                   top: 50% で要素の頭が画面中央に来る。
-                   -50% で要素の真ん中が画面中央に来る。
-                   そこから index分 ずらす。
-                */
+                transform: `translateY(calc(-50% - ${currentIndex * (100 + 80)}px))`, 
               }}
             >
               {works.map((work, index) => (
                 <div
                     key={work.id}
-                    className="w-full mb-[80px] last:mb-0" // 画像間の余白 80px (上部余白も兼ねる)
+                    className="w-full mb-[80px] last:mb-0" // 画像間の余白 80px
                 >
                     <img
                         src={work.thumbnail}
@@ -180,9 +174,13 @@ export default function Home() {
             </div>
           </div>
 
-          {/* ドットナビゲーション & 余白 */}
-          {/* 左(画像)との余白: ml-8 (32px) */}
-          <div className="ml-8 flex flex-col justify-center items-center gap-4 z-50 w-2">
+          {/* ドットナビゲーション & 右余白エリア 
+             - Gap: 32px (ml-8) -> 画像との間
+             - Button Width: 8px (w-2)
+             - Right Margin: 80px (mr-20)
+             => 合計で画面右端から120px程度の空間を確保
+          */}
+          <div className="ml-8 mr-20 h-full flex flex-col justify-center items-center gap-4 z-10 w-2 shrink-0">
             {works.map((work, index) => (
               <button
                 key={work.id}
@@ -214,11 +212,11 @@ export default function Home() {
           <div
             key={work.id}
             className="sp-card-section h-screen w-full snap-start flex items-start justify-center"
-            // カードのパディング変更: 縦48px(py-12), 横20px(px-5)
-            // カード自体の余白: px-5 (画面左右20px)
           >
-            <div className="w-full h-full px-5 pb-5 pt-4"> {/* コンテナ側の余白調整 */}
+            {/* コンテナ余白: 画面左右20px (px-5) */}
+            <div className="w-full h-full px-5 pb-5 pt-4"> 
                 <div
+                // カード内余白: 縦48px(py-12), 横20px(px-5)
                 className={`w-full h-[90%] rounded-xl flex flex-col justify-between transition-all duration-500 py-12 px-5 ${
                     work.theme.isLight
                     ? "bg-white/50 border border-white/60 shadow-[0_10px_40px_rgba(0,0,0,0.05)]"
