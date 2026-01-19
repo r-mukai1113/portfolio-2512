@@ -88,7 +88,7 @@ export default function Home() {
         <div className="w-1/2 h-full flex items-center pl-20">
           <div className="max-w-[520px] w-full">
             {/* 1. タイトル */}
-            <h1 className="font-inter text-[72px] leading-[1.1] tracking-[0.04em] font-semibold mb-8">
+            <h1 className="font-inter text-[72px] leading-[1.1] tracking-[0.04em] font-bold mb-8">
               {currentWork.title}
             </h1>
 
@@ -114,9 +114,7 @@ export default function Home() {
               style={{ color: textColor }}
             >
               View Project
-              <span className="flex items-center justify-center w-6 h-6 border border-current rounded-full text-[10px]">
-                →
-              </span>
+              <span className="text-[14px]">›</span>
             </a>
           </div>
         </div>
@@ -140,8 +138,8 @@ export default function Home() {
                 alt={work.title}
                 className={`block w-full aspect-[16/10] object-cover mb-20 rounded-sm transition-all duration-[800ms] ${
                   index === currentIndex
-                    ? "opacity-100 grayscale-0 scale-100 shadow-[0_20px_60px_rgba(0,0,0,0.3)]"
-                    : "opacity-30 grayscale scale-95 shadow-[0_10px_40px_rgba(0,0,0,0.2)]"
+                    ? "opacity-100 grayscale-0 scale-100"
+                    : "opacity-30 grayscale scale-95"
                 }`}
               />
             ))}
@@ -169,7 +167,7 @@ export default function Home() {
       {/* SP View */}
       <main
         ref={spContainerRef}
-        className="md:hidden h-screen overflow-y-scroll snap-y snap-mandatory pt-[72px]"
+        className="md:hidden h-screen overflow-y-scroll snap-y snap-mandatory"
         style={{
           WebkitOverflowScrolling: "touch",
         }}
@@ -177,7 +175,7 @@ export default function Home() {
         {works.map((work) => (
           <div
             key={work.id}
-            className="sp-card-section h-screen w-full snap-start px-5 pt-4 flex items-start"
+            className="sp-card-section h-screen w-full snap-start px-5 pt-20 flex items-start"
           >
             <div
               className={`w-full h-[90%] rounded-xl p-6 flex flex-col justify-between transition-all duration-500 ${
@@ -190,12 +188,12 @@ export default function Home() {
               <img
                 src={work.thumbnail}
                 alt={work.title}
-                className="w-full aspect-[16/10] object-cover rounded mb-6 shadow-[0_4px_12px_rgba(0,0,0,0.1)]"
+                className="w-full aspect-[16/10] object-cover rounded mb-6"
               />
 
               <div className="mt-auto">
                 {/* 1. タイトル */}
-                <h2 className="font-inter text-[44px] leading-[1.05] font-semibold mb-6">
+                <h2 className="font-inter text-[44px] leading-[1.05] font-bold mb-6">
                   {work.title}
                 </h2>
 
@@ -219,9 +217,7 @@ export default function Home() {
                   style={{ color: work.theme.isLight ? "#333" : "#FFF" }}
                 >
                   View Project
-                  <span className="flex items-center justify-center w-6 h-6 border border-current rounded-full text-[10px]">
-                    →
-                  </span>
+                  <span className="text-[14px]">›</span>
                 </a>
               </div>
             </div>
