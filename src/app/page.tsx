@@ -147,10 +147,7 @@ export default function Home() {
         className="hidden md:flex h-screen w-full pt-[72px]"
         style={{ color: textColor }}
       >
-        {/* 左カラム: 幅を600pxに固定 (shrink-0で縮まないようにする)
-            pl-20 (80px): 画面左端との余白
-            pr-12 (48px): ★右カラム（画像）とのGap
-        */}
+        {/* 左カラム: 幅を600pxに修正 */}
         <div className="w-[600px] shrink-0 h-full flex items-center pl-20 pr-12 relative z-10">
           <div className="w-full break-words">
             <h1 className="font-inter text-[72px] leading-[1.1] tracking-[0.04em] font-bold mb-8 break-words">
@@ -181,7 +178,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* 右カラム: flex-1 で残りのスペース全てを使う (50%以上になる) */}
+        {/* 右カラム */}
         <div className="flex-1 h-full flex pr-20 relative min-w-0">
           
           <div className="flex-1 h-full relative overflow-hidden">
@@ -189,7 +186,6 @@ export default function Home() {
               className="absolute left-0 w-full transition-transform duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
               style={{
                 top: "50%",
-                // 画像の中心を画面中心に合わせる
                 transform: `translateY(-${currentIndex * (imgHeight + CARD_GAP) + (imgHeight / 2)}px)`,
               }}
             >
@@ -245,11 +241,12 @@ export default function Home() {
         {works.map((work) => (
           <div
             key={work.id}
-            // ★ここを変更: min-h-screen (最低100vh、長ければ伸びる = autoの挙動)
+            // min-h-screen: 最低でも画面高さ（snapのため）。長い場合は伸びる。
             className="sp-card-section min-h-screen w-full snap-start flex flex-col pt-[80px] pb-5 px-5"
           >
             <div
-                className={`w-full flex-1 rounded-xl flex flex-col transition-all duration-500 py-12 px-5 ${
+                // ★修正: flex-1 を h-auto に変更（中身の量に合わせる）
+                className={`w-full h-auto rounded-xl flex flex-col transition-all duration-500 py-12 px-5 ${
                     work.theme.isLight
                     ? "bg-white/50 border border-white/60"
                     : "bg-white/[0.04] backdrop-blur-[20px] border border-white/10"
