@@ -27,9 +27,7 @@ export default function Home() {
       }
     };
 
-    // 初回実行
     updateHeight();
-    // 画像読み込み完了時にも実行（念のため）
     const img = imgRef.current;
     if (img) {
         img.onload = updateHeight;
@@ -48,18 +46,16 @@ export default function Home() {
       setIsScrolling(true);
 
       if (e.deltaY > 0) {
-        // 下スクロール
         if (currentIndex < works.length - 1) {
           setCurrentIndex((prev) => prev + 1);
         } else {
-          setCurrentIndex(0); // ループ
+          setCurrentIndex(0);
         }
       } else {
-        // 上スクロール
         if (currentIndex > 0) {
           setCurrentIndex((prev) => prev - 1);
         } else {
-          setCurrentIndex(works.length - 1); // ループ
+          setCurrentIndex(works.length - 1);
         }
       }
 
@@ -121,9 +117,14 @@ export default function Home() {
         className="hidden md:flex h-screen w-full pt-[72px]"
         style={{ color: textColor }}
       >
-        {/* 左カラム: テキスト */}
-        <div className="w-1/2 h-full flex items-center pl-20 pr-12">
-          <div className="max-w-[520px] w-full">
+        {/* 左カラム: テキスト (固定幅に変更) 
+            w-[500px]: テキストエリアの固定幅
+            shrink-0: 縮まないようにする
+            pl-20 (80px): 左の余白
+            pr-12 (48px): 画像とのGap
+        */}
+        <div className="w-[500px] shrink-0 h-full flex items-center pl-20 pr-12">
+          <div className="w-full">
             <h1 className="font-inter text-[72px] leading-[1.1] tracking-[0.04em] font-bold mb-8">
               {currentWork.title}
             </h1>
@@ -152,8 +153,10 @@ export default function Home() {
           </div>
         </div>
 
-        {/* 右カラム: 画像 + ドット */}
-        <div className="w-1/2 h-full flex pr-20 relative">
+        {/* 右カラム: 画像 + ドット 
+            flex-1: 残りのスペース全てを使う (これにより画像が大きくなる)
+        */}
+        <div className="flex-1 h-full flex pr-20 relative min-w-0">
           
           {/* 画像リストコンテナ */}
           <div className="flex-1 h-full relative overflow-hidden">
@@ -161,9 +164,7 @@ export default function Home() {
               className="absolute left-0 w-full transition-transform duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
               style={{
                 top: "50%",
-                // ★修正ロジック:
-                // 現在のインデックスまでの高さ合計 (index * (画像高さ + gap))
-                // さらに、自分の画像の高さの半分 (imgHeight / 2) を引くことで、画像の中心を画面中心に合わせる
+                // 画像の中心を画面中心に合わせる計算
                 transform: `translateY(-${currentIndex * (imgHeight + CARD_GAP) + (imgHeight / 2)}px)`,
               }}
             >
@@ -171,10 +172,9 @@ export default function Home() {
                 <div
                     key={work.id}
                     className="w-full"
-                    style={{ marginBottom: `${CARD_GAP}px` }} // 80px
+                    style={{ marginBottom: `${CARD_GAP}px` }}
                 >
                     <img
-                        // 1枚目にRefを設定して高さを計測させる
                         ref={index === 0 ? imgRef : null}
                         src={work.thumbnail}
                         alt={work.title}
@@ -209,10 +209,11 @@ export default function Home() {
       </main>
 
       {/* ==============================================
-          SP View (変更なし)
+          SP View
       ============================================== */}
       <main
         ref={spContainerRef}
+        // h-screen を min-h-screen に変更 (autoの挙動)
         className="md:hidden h-screen overflow-y-scroll snap-y snap-mandatory"
         style={{
           WebkitOverflowScrolling: "touch",
@@ -221,7 +222,8 @@ export default function Home() {
         {works.map((work) => (
           <div
             key={work.id}
-            className="sp-card-section h-screen w-full snap-start flex flex-col pt-[80px] pb-5 px-5"
+            // min-h-screen: 最低でも画面の高さを持つが、中身が多ければ伸びる
+            className="sp-card-section min-h-screen w-full snap-start flex flex-col pt-[80px] pb-5 px-5"
           >
             <div
                 className={`w-full flex-1 rounded-xl flex flex-col transition-all duration-500 py-12 px-5 ${
