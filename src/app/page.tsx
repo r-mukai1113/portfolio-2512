@@ -18,6 +18,7 @@ export default function Home() {
   const currentWork = works[currentIndex];
   const CARD_GAP = 80;
 
+  // 画像高さ取得
   useEffect(() => {
     const updateHeight = () => {
       if (imgRef.current) {
@@ -35,6 +36,7 @@ export default function Home() {
     return () => window.removeEventListener("resize", updateHeight);
   }, []);
 
+  // マウスホイール操作
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
       if (window.innerWidth <= 768) return;
@@ -63,11 +65,45 @@ export default function Home() {
     return () => window.removeEventListener("wheel", handleWheel);
   }, [isScrolling, currentIndex]);
 
+  // キーボード操作
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (window.innerWidth <= 768) return;
+      if (isScrolling) return;
+
+      if (e.key === "ArrowDown" || e.key === "ArrowRight") {
+        e.preventDefault();
+        setIsScrolling(true);
+        if (currentIndex < works.length - 1) {
+          setCurrentIndex((prev) => prev + 1);
+        } else {
+          setCurrentIndex(0);
+        }
+        setTimeout(() => setIsScrolling(false), 800);
+      } 
+      else if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
+        e.preventDefault();
+        setIsScrolling(true);
+        if (currentIndex > 0) {
+          setCurrentIndex((prev) => prev - 1);
+        } else {
+          setCurrentIndex(works.length - 1);
+        }
+        setTimeout(() => setIsScrolling(false), 800);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isScrolling, currentIndex]);
+
+  // テーマカラー更新
   useEffect(() => {
     setBgColor(works[currentIndex].theme.bg);
     setTextColor(works[currentIndex].theme.text);
   }, [currentIndex]);
 
+  // SP: スクロール検知
   useEffect(() => {
     const handleScroll = () => {
       if (!spContainerRef.current) return;
@@ -111,17 +147,13 @@ export default function Home() {
         className="hidden md:flex h-screen w-full pt-[72px]"
         style={{ color: textColor }}
       >
-        {/* 左カラム: 幅600px
-            relative z-10: 重なり順の制御
+        {/* 左カラム: 幅を600pxに固定 (shrink-0で縮まないようにする)
+            pl-20 (80px): 画面左端との余白
+            pr-12 (48px): ★右カラム（画像）とのGap
         */}
         <div className="w-[600px] shrink-0 h-full flex items-center pl-20 pr-12 relative z-10">
-          
-          {/* ★修正: ボックス自体に break-words を追加
-              これで中の要素（タイトル、説明文）すべてにおいて、
-              幅を超えたら自動で改行されるようになります。
-          */}
           <div className="w-full break-words">
-            <h1 className="font-inter text-[72px] leading-[1.1] tracking-[0.04em] font-bold mb-8">
+            <h1 className="font-inter text-[72px] leading-[1.1] tracking-[0.04em] font-bold mb-8 break-words">
               {currentWork.title}
             </h1>
 
@@ -131,9 +163,6 @@ export default function Home() {
               <span className="mx-2">{currentWork.year}</span>
             </div>
 
-            {/* 説明文にも念のため break-words は継承されますが、
-                長文対応のために whitespace-pre-wrap (改行コード維持+自動折返し) もあると便利です
-            */}
             <p
               className="font-noto text-[14px] leading-[2.0] tracking-[0.04em] opacity-80 mb-10 font-normal break-words"
               dangerouslySetInnerHTML={{ __html: currentWork.desc }}
@@ -152,13 +181,15 @@ export default function Home() {
           </div>
         </div>
 
-        {/* 右カラム */}
+        {/* 右カラム: flex-1 で残りのスペース全てを使う (50%以上になる) */}
         <div className="flex-1 h-full flex pr-20 relative min-w-0">
+          
           <div className="flex-1 h-full relative overflow-hidden">
             <div
               className="absolute left-0 w-full transition-transform duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
               style={{
                 top: "50%",
+                // 画像の中心を画面中心に合わせる
                 transform: `translateY(-${currentIndex * (imgHeight + CARD_GAP) + (imgHeight / 2)}px)`,
               }}
             >
@@ -214,6 +245,7 @@ export default function Home() {
         {works.map((work) => (
           <div
             key={work.id}
+            // ★ここを変更: min-h-screen (最低100vh、長ければ伸びる = autoの挙動)
             className="sp-card-section min-h-screen w-full snap-start flex flex-col pt-[80px] pb-5 px-5"
           >
             <div
@@ -230,7 +262,6 @@ export default function Home() {
                     className="w-full aspect-[16/10] object-cover rounded mb-8"
                 />
 
-                {/* ★修正: SP版のテキストボックスにも break-words を追加 */}
                 <div className="break-words">
                     <h2 className="font-inter text-[44px] leading-[1.05] font-bold mb-6">
                     {work.title}
