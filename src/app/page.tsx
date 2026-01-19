@@ -10,16 +10,14 @@ export default function Home() {
   const [bgColor, setBgColor] = useState(works[0].theme.bg);
   const [textColor, setTextColor] = useState(works[0].theme.text);
   
-  // 画像の高さを取得するためのStateとRef
   const [imgHeight, setImgHeight] = useState(0);
   const imgRef = useRef<HTMLImageElement>(null);
   
   const spContainerRef = useRef<HTMLDivElement>(null);
 
   const currentWork = works[currentIndex];
-  const CARD_GAP = 80; // PC版のカード間の余白
+  const CARD_GAP = 80;
 
-  // PC: 画像の高さを測定してStateに保存（リサイズ対応）
   useEffect(() => {
     const updateHeight = () => {
       if (imgRef.current) {
@@ -37,7 +35,6 @@ export default function Home() {
     return () => window.removeEventListener("resize", updateHeight);
   }, []);
 
-  // PC: ホイールスクロールハンドラー
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
       if (window.innerWidth <= 768) return;
@@ -66,13 +63,11 @@ export default function Home() {
     return () => window.removeEventListener("wheel", handleWheel);
   }, [isScrolling, currentIndex]);
 
-  // PC: テーマカラー更新
   useEffect(() => {
     setBgColor(works[currentIndex].theme.bg);
     setTextColor(works[currentIndex].theme.text);
   }, [currentIndex]);
 
-  // SP: スクロール検知
   useEffect(() => {
     const handleScroll = () => {
       if (!spContainerRef.current) return;
@@ -102,7 +97,6 @@ export default function Home() {
 
   return (
     <>
-      {/* 背景色レイヤー */}
       <div
         className="fixed top-0 left-0 w-full h-full -z-10 transition-colors duration-[800ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
         style={{ backgroundColor: bgColor }}
@@ -117,14 +111,16 @@ export default function Home() {
         className="hidden md:flex h-screen w-full pt-[72px]"
         style={{ color: textColor }}
       >
-        {/* 左カラム: テキスト (固定幅に変更) 
-            w-[500px]: テキストエリアの固定幅
-            shrink-0: 縮まないようにする
-            pl-20 (80px): 左の余白
-            pr-12 (48px): 画像とのGap
+        {/* 左カラム: 幅600px
+            relative z-10: 重なり順の制御
         */}
-        <div className="w-[500px] shrink-0 h-full flex items-center pl-20 pr-12">
-          <div className="w-full">
+        <div className="w-[600px] shrink-0 h-full flex items-center pl-20 pr-12 relative z-10">
+          
+          {/* ★修正: ボックス自体に break-words を追加
+              これで中の要素（タイトル、説明文）すべてにおいて、
+              幅を超えたら自動で改行されるようになります。
+          */}
+          <div className="w-full break-words">
             <h1 className="font-inter text-[72px] leading-[1.1] tracking-[0.04em] font-bold mb-8">
               {currentWork.title}
             </h1>
@@ -135,8 +131,11 @@ export default function Home() {
               <span className="mx-2">{currentWork.year}</span>
             </div>
 
+            {/* 説明文にも念のため break-words は継承されますが、
+                長文対応のために whitespace-pre-wrap (改行コード維持+自動折返し) もあると便利です
+            */}
             <p
-              className="font-noto text-[14px] leading-[2.0] tracking-[0.04em] opacity-80 mb-10 font-normal"
+              className="font-noto text-[14px] leading-[2.0] tracking-[0.04em] opacity-80 mb-10 font-normal break-words"
               dangerouslySetInnerHTML={{ __html: currentWork.desc }}
             />
 
@@ -153,18 +152,13 @@ export default function Home() {
           </div>
         </div>
 
-        {/* 右カラム: 画像 + ドット 
-            flex-1: 残りのスペース全てを使う (これにより画像が大きくなる)
-        */}
+        {/* 右カラム */}
         <div className="flex-1 h-full flex pr-20 relative min-w-0">
-          
-          {/* 画像リストコンテナ */}
           <div className="flex-1 h-full relative overflow-hidden">
             <div
               className="absolute left-0 w-full transition-transform duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
               style={{
                 top: "50%",
-                // 画像の中心を画面中心に合わせる計算
                 transform: `translateY(-${currentIndex * (imgHeight + CARD_GAP) + (imgHeight / 2)}px)`,
               }}
             >
@@ -189,7 +183,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* ドットナビゲーション */}
           <div className="ml-8 h-full flex flex-col justify-center items-center gap-4 z-10 w-2 shrink-0">
             {works.map((work, index) => (
               <button
@@ -213,7 +206,6 @@ export default function Home() {
       ============================================== */}
       <main
         ref={spContainerRef}
-        // h-screen を min-h-screen に変更 (autoの挙動)
         className="md:hidden h-screen overflow-y-scroll snap-y snap-mandatory"
         style={{
           WebkitOverflowScrolling: "touch",
@@ -222,7 +214,6 @@ export default function Home() {
         {works.map((work) => (
           <div
             key={work.id}
-            // min-h-screen: 最低でも画面の高さを持つが、中身が多ければ伸びる
             className="sp-card-section min-h-screen w-full snap-start flex flex-col pt-[80px] pb-5 px-5"
           >
             <div
@@ -239,7 +230,8 @@ export default function Home() {
                     className="w-full aspect-[16/10] object-cover rounded mb-8"
                 />
 
-                <div>
+                {/* ★修正: SP版のテキストボックスにも break-words を追加 */}
+                <div className="break-words">
                     <h2 className="font-inter text-[44px] leading-[1.05] font-bold mb-6">
                     {work.title}
                     </h2>
@@ -249,7 +241,7 @@ export default function Home() {
                     </div>
 
                     <p
-                    className="font-noto text-[12px] opacity-80 leading-[1.8] mb-8"
+                    className="font-noto text-[12px] opacity-80 leading-[1.8] mb-8 break-words"
                     dangerouslySetInnerHTML={{ __html: work.desc }}
                     />
 
