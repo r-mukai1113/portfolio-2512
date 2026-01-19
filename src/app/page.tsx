@@ -9,9 +9,35 @@ export default function Home() {
   const [isScrolling, setIsScrolling] = useState(false);
   const [bgColor, setBgColor] = useState(works[0].theme.bg);
   const [textColor, setTextColor] = useState(works[0].theme.text);
+  
+  // 画像の高さを取得するためのStateとRef
+  const [imgHeight, setImgHeight] = useState(0);
+  const imgRef = useRef<HTMLImageElement>(null);
+  
   const spContainerRef = useRef<HTMLDivElement>(null);
 
   const currentWork = works[currentIndex];
+  const CARD_GAP = 80; // PC版のカード間の余白
+
+  // PC: 画像の高さを測定してStateに保存（リサイズ対応）
+  useEffect(() => {
+    const updateHeight = () => {
+      if (imgRef.current) {
+        setImgHeight(imgRef.current.clientHeight);
+      }
+    };
+
+    // 初回実行
+    updateHeight();
+    // 画像読み込み完了時にも実行（念のため）
+    const img = imgRef.current;
+    if (img) {
+        img.onload = updateHeight;
+    }
+
+    window.addEventListener("resize", updateHeight);
+    return () => window.removeEventListener("resize", updateHeight);
+  }, []);
 
   // PC: ホイールスクロールハンドラー
   useEffect(() => {
@@ -22,18 +48,18 @@ export default function Home() {
       setIsScrolling(true);
 
       if (e.deltaY > 0) {
-        // 下スクロール: 次へ
+        // 下スクロール
         if (currentIndex < works.length - 1) {
           setCurrentIndex((prev) => prev + 1);
         } else {
-          setCurrentIndex(0);
+          setCurrentIndex(0); // ループ
         }
       } else {
-        // 上スクロール: 前へ
+        // 上スクロール
         if (currentIndex > 0) {
           setCurrentIndex((prev) => prev - 1);
         } else {
-          setCurrentIndex(works.length - 1);
+          setCurrentIndex(works.length - 1); // ループ
         }
       }
 
@@ -98,25 +124,21 @@ export default function Home() {
         {/* 左カラム: テキスト */}
         <div className="w-1/2 h-full flex items-center pl-20 pr-12">
           <div className="max-w-[520px] w-full">
-            {/* 1. タイトル */}
             <h1 className="font-inter text-[72px] leading-[1.1] tracking-[0.04em] font-bold mb-8">
               {currentWork.title}
             </h1>
 
-            {/* 2. サブ情報 */}
             <div className="font-inter text-[14px] leading-[1.0] tracking-[0.02em] opacity-60 mb-6">
               <span>{currentWork.category}</span>
               <span className="mx-2">|</span>
               <span className="mx-2">{currentWork.year}</span>
             </div>
 
-            {/* 3. 説明文 */}
             <p
               className="font-noto text-[14px] leading-[2.0] tracking-[0.04em] opacity-80 mb-10 font-normal"
               dangerouslySetInnerHTML={{ __html: currentWork.desc }}
             />
 
-            {/* 4. ボタン */}
             <a
               href={currentWork.url}
               target="_blank"
@@ -139,22 +161,27 @@ export default function Home() {
               className="absolute left-0 w-full transition-transform duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
               style={{
                 top: "50%",
-                transform: `translateY(calc(-50% - ${currentIndex * (100 + 80)}px))`, 
+                // ★修正ロジック:
+                // 現在のインデックスまでの高さ合計 (index * (画像高さ + gap))
+                // さらに、自分の画像の高さの半分 (imgHeight / 2) を引くことで、画像の中心を画面中心に合わせる
+                transform: `translateY(-${currentIndex * (imgHeight + CARD_GAP) + (imgHeight / 2)}px)`,
               }}
             >
               {works.map((work, index) => (
                 <div
                     key={work.id}
-                    className="w-full mb-[80px] last:mb-0"
+                    className="w-full"
+                    style={{ marginBottom: `${CARD_GAP}px` }} // 80px
                 >
                     <img
+                        // 1枚目にRefを設定して高さを計測させる
+                        ref={index === 0 ? imgRef : null}
                         src={work.thumbnail}
                         alt={work.title}
-                        // ★修正: shadowクラスを削除
                         className={`block w-full aspect-[16/10] object-cover rounded-sm transition-all duration-[800ms] ${
                         index === currentIndex
-                            ? "opacity-100 grayscale-0 scale-100" // shadow削除
-                            : "opacity-30 grayscale scale-95"    // shadow削除
+                            ? "opacity-100 grayscale-0 scale-100"
+                            : "opacity-30 grayscale scale-95"
                         }`}
                     />
                 </div>
@@ -182,11 +209,10 @@ export default function Home() {
       </main>
 
       {/* ==============================================
-          SP View
+          SP View (変更なし)
       ============================================== */}
       <main
         ref={spContainerRef}
-        // ★修正: mainの pt-[72px] を削除 (セクション側で余白を制御するため)
         className="md:hidden h-screen overflow-y-scroll snap-y snap-mandatory"
         style={{
           WebkitOverflowScrolling: "touch",
@@ -195,48 +221,36 @@ export default function Home() {
         {works.map((work) => (
           <div
             key={work.id}
-            // ★修正: pt-[80px] でヘッダー分の余白とカード上の余白を確保
             className="sp-card-section h-screen w-full snap-start flex flex-col pt-[80px] pb-5 px-5"
           >
-            {/* カード本体
-                - flex-1: 残りの高さを埋める
-                - justify-between を削除 (要素を上から順に配置し、隙間を固定するため)
-            */}
             <div
                 className={`w-full flex-1 rounded-xl flex flex-col transition-all duration-500 py-12 px-5 ${
                     work.theme.isLight
-                    ? "bg-white/50 border border-white/60" // shadow削除
-                    : "bg-white/[0.04] backdrop-blur-[20px] border border-white/10" // shadow削除
+                    ? "bg-white/50 border border-white/60"
+                    : "bg-white/[0.04] backdrop-blur-[20px] border border-white/10"
                 }`}
                 style={{ color: work.theme.isLight ? "#333" : "#FFF" }}
             >
                 <img
                     src={work.thumbnail}
                     alt={work.title}
-                    // ★修正: shadow削除
-                    // mb-8 (32px) でタイトルとの隙間を固定
                     className="w-full aspect-[16/10] object-cover rounded mb-8"
                 />
 
-                {/* mt-auto を削除 (上から詰める) */}
                 <div>
-                    {/* 1. タイトル */}
                     <h2 className="font-inter text-[44px] leading-[1.05] font-bold mb-6">
                     {work.title}
                     </h2>
 
-                    {/* 2. サブ情報 */}
                     <div className="font-inter text-[12px] opacity-60 mb-4 tracking-[0.02em]">
                     {work.category} | {work.year}
                     </div>
 
-                    {/* 3. 説明文 */}
                     <p
                     className="font-noto text-[12px] opacity-80 leading-[1.8] mb-8"
                     dangerouslySetInnerHTML={{ __html: work.desc }}
                     />
 
-                    {/* 4. ボタン */}
                     <a
                     href={work.url}
                     target="_blank"
