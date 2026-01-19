@@ -7,7 +7,8 @@ export const GlobalHeader = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 w-full h-[72px] px-5 md:px-20 flex justify-between items-center z-[100] mix-blend-exclusion">
+    // bg-transparent を追加しました
+    <header className="fixed top-0 left-0 w-full h-[72px] px-5 md:px-20 flex justify-between items-center z-[100] mix-blend-exclusion bg-transparent">
       <Link href="/" className="text-white font-semibold text-[16px] md:text-[18px] tracking-[0.04em] no-underline">
         R.MUKAI
       </Link>
