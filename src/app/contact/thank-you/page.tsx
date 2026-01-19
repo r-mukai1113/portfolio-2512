@@ -1,9 +1,15 @@
 import Link from "next/link";
+import { GlobalHeader } from "@/components/GlobalHeader";
 
 export default function ThankYou() {
   return (
-    <main className="relative min-h-screen bg-[#FCFCFC] text-slate-900">
-      <div className="flex flex-col items-center justify-center min-h-screen px-[20px]">
+    <>
+      <div className="fixed top-0 left-0 w-full h-full -z-10 bg-[#FCFCFC]" />
+
+      <GlobalHeader />
+
+      <main className="relative min-h-screen text-slate-900">
+        <div className="flex flex-col items-center justify-center min-h-screen px-[20px]">
         <div className="text-center max-w-[600px]">
           <h1 className="font-inter font-bold text-[64px] md:text-[96px] leading-none tracking-[-0.02em] mb-[10px]">
             Thank You
@@ -38,7 +44,8 @@ export default function ThankYou() {
             Back to Top
           </Link>
         </div>
-      </div>
-    </main>
+        </div>
+      </main>
+    </>
   );
 }

@@ -1,69 +1,222 @@
-import { EmojiSwitcher } from "@/components/EmojiSwitcher";
-import { BottomNav } from "@/components/BottomNav";
+"use client";
+
+import { GlobalHeader } from "@/components/GlobalHeader";
 import { works } from "@/data/works";
+import { useState, useEffect, useRef } from "react";
 
 export default function Home() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isScrolling, setIsScrolling] = useState(false);
+  const [bgColor, setBgColor] = useState(works[0].theme.bg);
+  const [textColor, setTextColor] = useState(works[0].theme.text);
+  const spContainerRef = useRef<HTMLDivElement>(null);
+
+  const currentWork = works[currentIndex];
+
+  // PC: ホイールスクロールハンドラー
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      if (window.innerWidth <= 768) return;
+      if (isScrolling) return;
+
+      setIsScrolling(true);
+
+      if (e.deltaY > 0) {
+        // 下スクロール: 次へ
+        setCurrentIndex((prev) => (prev + 1) % works.length);
+      } else {
+        // 上スクロール: 前へ
+        setCurrentIndex((prev) => (prev - 1 + works.length) % works.length);
+      }
+
+      setTimeout(() => setIsScrolling(false), 800);
+    };
+
+    window.addEventListener("wheel", handleWheel);
+    return () => window.removeEventListener("wheel", handleWheel);
+  }, [isScrolling]);
+
+  // PC: テーマカラー更新
+  useEffect(() => {
+    setBgColor(works[currentIndex].theme.bg);
+    setTextColor(works[currentIndex].theme.text);
+  }, [currentIndex]);
+
+  // SP: スクロール検知
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!spContainerRef.current) return;
+      const scrollCenter =
+        spContainerRef.current.scrollTop + window.innerHeight / 2;
+
+      const sections = spContainerRef.current.querySelectorAll(".sp-card-section");
+      sections.forEach((sec, i) => {
+        const element = sec as HTMLElement;
+        const top = element.offsetTop;
+        const bottom = top + element.offsetHeight;
+
+        if (scrollCenter >= top && scrollCenter < bottom) {
+          setBgColor(works[i].theme.bg);
+          setTextColor(works[i].theme.text);
+        }
+      });
+    };
+
+    const container = spContainerRef.current;
+    if (container) {
+      container.addEventListener("scroll", handleScroll);
+      return () => container.removeEventListener("scroll", handleScroll);
+    }
+  }, []);
+
   return (
-    <main className="relative min-h-screen bg-[#FCFCFC] text-slate-900">
-      {/* First View (Hero) */}
-      <section className="w-full max-w-[1600px] mx-auto px-[20px] md:px-[48px] lg:px-[80px] pt-[88px] md:pt-[120px]">
-        <div className="flex flex-col lg:flex-row lg:justify-between lg:items-end w-full">
-          {/* 名前 + 絵文字エリア */}
-          <div className="flex items-start md:items-center gap-[8px] md:gap-[12px]">
-            <h1 className="font-inter font-light text-[40px] md:text-[88px] tracking-[-0.01em] leading-tight text-slate-900">
-              Ryuta Mukai
-            </h1>
-            <div className="text-[40px] md:text-[96px] flex items-center mt-[4px] md:mt-0">
-              <EmojiSwitcher />
-            </div>
-          </div>
+    <>
+      {/* 背景色レイヤー */}
+      <div
+        className="fixed top-0 left-0 w-full h-full -z-10 transition-colors duration-[800ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
+        style={{ backgroundColor: bgColor }}
+      />
 
-          {/* 右側のテキスト */}
-          <p className="mt-4 lg:mt-0 text-sm md:text-base text-[#565656] font-medium font-noto flex items-start md:items-center gap-1">
-            <span className="text-[11px] md:text-[1em] inline-block mt-[2px] md:mt-0">🏡</span>
-            <span>Web Designer based in Yokohama</span>
-          </p>
-        </div>
-      </section>
+      <GlobalHeader />
 
-      {/* Works Section */}
-      <section
-        id="works"
-        className="w-full max-w-[1600px] mx-auto px-[20px] md:px-[48px] lg:px-[80px] mt-[40px] md:mt-[64px]"
+      {/* PC View */}
+      <main
+        className="hidden md:flex h-screen w-full"
+        style={{ color: textColor }}
       >
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-y-[40px] md:gap-y-[48px] md:gap-x-[48px]">
-          {works.map((work) => (
+        {/* 左カラム: テキスト */}
+        <div className="w-1/2 h-full flex items-center pl-20">
+          <div className="max-w-[520px] w-full">
+            <div className="opacity-60 text-[0.85rem] tracking-[0.1em] uppercase mb-6">
+              <span>{currentWork.category}</span>
+              <span className="mx-2">|</span>
+              <span>{currentWork.year}</span>
+            </div>
+
+            <h1 className="text-[5rem] leading-[1.05] font-bold tracking-[-0.03em] mb-6">
+              {currentWork.title}
+            </h1>
+
+            <p
+              className="font-noto text-base leading-[2.0] opacity-80 mb-10 font-light"
+              dangerouslySetInnerHTML={{ __html: currentWork.desc }}
+            />
+
+            <div className="w-full h-px bg-current opacity-20 mb-8" />
+
             <a
-              key={work.id}
-              href={work.url}
+              href={currentWork.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group cursor-pointer"
+              className="inline-flex items-center gap-4 text-[0.9rem] font-medium no-underline hover:opacity-70 transition-opacity"
+              style={{ color: textColor }}
             >
-              <div className="aspect-[16/9] bg-slate-200 rounded-lg mb-4 overflow-hidden relative">
-                <div className="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/5 transition-colors duration-300" />
-              </div>
-
-              <h3 className="font-noto font-normal text-[16px] tracking-[0.02em] group-hover:underline decoration-1 underline-offset-4">
-                {work.title}
-              </h3>
-
-              <p className="font-noto font-normal text-[10px] tracking-[0.02em] text-slate-500 mt-2">
-                {work.client}
-              </p>
+              View Project
+              <span className="flex items-center justify-center w-8 h-8 border border-current rounded-full text-sm">
+                →
+              </span>
             </a>
+          </div>
+        </div>
+
+        {/* 右カラム: 画像 */}
+        <div className="w-1/2 h-full overflow-hidden relative">
+          <div
+            className="absolute top-1/2 left-[10%] w-[80%] transition-transform duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
+            style={{
+              transform: `translateY(calc(-50% - ${currentIndex * (100 + 80)}px))`,
+              maskImage:
+                "linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)",
+              WebkitMaskImage:
+                "linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)",
+            }}
+          >
+            {works.map((work, index) => (
+              <img
+                key={work.id}
+                src={work.thumbnail}
+                alt={work.title}
+                className={`block w-full aspect-[16/10] object-cover mb-20 rounded-sm transition-all duration-[800ms] ${
+                  index === currentIndex
+                    ? "opacity-100 grayscale-0 scale-100 shadow-[0_20px_60px_rgba(0,0,0,0.3)]"
+                    : "opacity-30 grayscale scale-95 shadow-[0_10px_40px_rgba(0,0,0,0.2)]"
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* ドットナビゲーション */}
+        <div className="fixed right-8 top-1/2 -translate-y-1/2 flex flex-col gap-4 z-50">
+          {works.map((work, index) => (
+            <button
+              key={work.id}
+              onClick={() => setCurrentIndex(index)}
+              className={`w-1.5 h-1.5 rounded-full cursor-pointer transition-all border-0 ${
+                index === currentIndex
+                  ? "opacity-100 scale-150"
+                  : "opacity-30 hover:opacity-60 hover:scale-150"
+              }`}
+              style={{ backgroundColor: textColor }}
+              aria-label={`Go to ${work.title}`}
+            />
           ))}
         </div>
-      </section>
+      </main>
 
-      {/* Footer (Copyright) */}
-      <footer className="w-full max-w-[1600px] mx-auto px-[20px] md:px-[48px] lg:px-[80px] mt-[40px] md:mt-[100px] pb-[88px] md:pb-[120px]">
-        <p className="text-center text-xs text-slate-400 font-inter">
-          ©2025 Ryuta Mukai
-        </p>
-      </footer>
+      {/* SP View */}
+      <main
+        ref={spContainerRef}
+        className="md:hidden h-screen overflow-y-scroll snap-y snap-mandatory"
+        style={{
+          WebkitOverflowScrolling: "touch",
+        }}
+      >
+        {works.map((work) => (
+          <div
+            key={work.id}
+            className="sp-card-section h-screen w-full snap-start px-5 pt-20 flex items-start"
+          >
+            <div
+              className={`w-full h-[92%] rounded-xl p-6 flex flex-col justify-between transition-all duration-500 ${
+                work.theme.isLight
+                  ? "bg-white/50 border border-white/60 shadow-[0_10px_40px_rgba(0,0,0,0.05)]"
+                  : "bg-white/[0.04] backdrop-blur-[20px] border border-white/10 shadow-[0_4px_24px_rgba(0,0,0,0.05)]"
+              }`}
+              style={{ color: work.theme.isLight ? "#333" : "#FFF" }}
+            >
+              <img
+                src={work.thumbnail}
+                alt={work.title}
+                className="w-full aspect-[16/10] object-cover rounded mb-6 shadow-[0_4px_12px_rgba(0,0,0,0.1)]"
+              />
 
-      <BottomNav />
-    </main>
+              <div className="mt-auto">
+                <div className="text-xs opacity-60 mb-2 uppercase tracking-wider">
+                  {work.category} | {work.year}
+                </div>
+                <h2 className="text-[2.2rem] leading-[1.1] mb-4 font-bold">
+                  {work.title}
+                </h2>
+                <p
+                  className="font-noto text-[0.85rem] opacity-80 leading-[1.8] mb-6"
+                  dangerouslySetInnerHTML={{ __html: work.desc }}
+                />
+                <a
+                  href={work.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[0.9rem] flex items-center gap-2 font-medium no-underline hover:opacity-70 transition-opacity"
+                  style={{ color: work.theme.isLight ? "#333" : "#FFF" }}
+                >
+                  View Project
+                  <span className="inline-block transition-transform">→</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        ))}
+      </main>
+    </>
   );
 }

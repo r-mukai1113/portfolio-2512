@@ -1,6 +1,6 @@
 "use client";
 
-import { BottomNav } from "@/components/BottomNav";
+import { GlobalHeader } from "@/components/GlobalHeader";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -55,8 +55,13 @@ export default function Contact() {
   };
 
   return (
-    <main className="relative min-h-screen bg-[#FCFCFC] text-slate-900">
-      <div className="w-full max-w-[1600px] mx-auto px-[20px] md:px-[48px] lg:px-[80px] pt-[88px] md:pt-[120px] pb-[120px]">
+    <>
+      <div className="fixed top-0 left-0 w-full h-full -z-10 bg-[#FCFCFC]" />
+
+      <GlobalHeader />
+
+      <main className="relative min-h-screen text-slate-900 overflow-y-auto">
+        <div className="w-full max-w-[1600px] mx-auto px-[20px] md:px-[48px] lg:px-[80px] pt-[88px] md:pt-[120px] pb-[120px]">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-12 lg:gap-x-20">
           {/* 左カラム：タイトル & 説明文 */}
           <div className="lg:col-span-5">
@@ -217,16 +222,15 @@ export default function Contact() {
             </form>
           </div>
         </div>
-      </div>
+        </div>
 
-      {/* Footer (Copyright) */}
-      <footer className="w-full max-w-[1600px] mx-auto px-[20px] md:px-[48px] lg:px-[80px] pb-[88px] md:pb-[120px]">
-        <p className="text-center text-xs text-slate-400 font-inter">
-          ©2025 Ryuta Mukai
-        </p>
-      </footer>
-
-      <BottomNav />
-    </main>
+        {/* Footer (Copyright) */}
+        <footer className="w-full max-w-[1600px] mx-auto px-[20px] md:px-[48px] lg:px-[80px] pb-[88px] md:pb-[120px]">
+          <p className="text-center text-xs text-slate-400 font-inter">
+            ©2025 Ryuta Mukai
+          </p>
+        </footer>
+      </main>
+    </>
   );
 }
