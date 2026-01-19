@@ -3,6 +3,7 @@
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { works } from "@/data/works";
 import { useState, useEffect, useRef } from "react";
+import Link from "next/link";
 
 export default function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -162,19 +163,18 @@ export default function Home() {
 
             <p
               className="font-noto text-[14px] leading-[2.0] tracking-[0.04em] opacity-80 mb-10 font-normal break-words"
-              dangerouslySetInnerHTML={{ __html: currentWork.desc }}
-            />
+            >
+              {currentWork.desc.overview}
+            </p>
 
-            <a
-              href={currentWork.url}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href={`/works/${currentWork.slug}`}
               className="inline-flex items-center gap-2 text-[14px] font-medium no-underline hover:opacity-70 transition-opacity"
               style={{ color: textColor }}
             >
               View Project
               <span className="text-[16px] leading-none pb-[2px]">›</span>
-            </a>
+            </Link>
           </div>
         </div>
 
@@ -270,19 +270,18 @@ export default function Home() {
 
                     <p
                     className="font-noto text-[12px] opacity-80 leading-[1.8] mb-8 break-words"
-                    dangerouslySetInnerHTML={{ __html: work.desc }}
-                    />
+                    >
+                    {work.desc.overview}
+                    </p>
 
-                    <a
-                    href={work.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    <Link
+                    href={`/works/${work.slug}`}
                     className="text-[14px] flex items-center gap-2 font-medium no-underline hover:opacity-70 transition-opacity"
                     style={{ color: work.theme.isLight ? "#333" : "#FFF" }}
                     >
                     View Project
                     <span className="text-[16px] leading-none pb-[2px]">›</span>
-                    </a>
+                    </Link>
                 </div>
             </div>
           </div>

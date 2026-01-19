@@ -9,7 +9,7 @@ export interface Work {
   role: string; // 担当領域
   url: string;
   thumbnail: string;
-  
+
   // トップページ用テーマ
   theme: {
     bg: string;
@@ -46,13 +46,13 @@ export const works: Work[] = [
     role: "Design / Implementation",
     url: "https://ytag.jp/",
     thumbnail: "https://placehold.co/800x500/E6E6E6/333?text=Y-Tag",
-    
+
     theme: {
       bg: "#F0F2F5",
       text: "#333333",
       isLight: true,
     },
-    
+
     detailTheme: {
       bg: "#E5E7EB", // 少し濃いグレー
       text: "#333333",
@@ -81,7 +81,7 @@ export const works: Work[] = [
     role: "Branding / Design",
     url: "https://monolith-tokyo.jp/",
     thumbnail: "https://placehold.co/800x500/111/FFF?text=Monolith",
-    
+
     theme: {
       bg: "#111111",
       text: "#FFFFFF",
@@ -115,7 +115,7 @@ export const works: Work[] = [
     role: "Design",
     url: "https://lily-r-braids.studio.site/",
     thumbnail: "https://placehold.co/800x500/D8C3B5/FFF?text=Lily",
-    
+
     theme: {
       bg: "#E8DCCA",
       text: "#333333",
@@ -148,7 +148,7 @@ export const works: Work[] = [
     role: "Design / Coding",
     url: "https://www.yachicro.com/",
     thumbnail: "https://placehold.co/800x500/3E3A39/FFF?text=YACHIMATA",
-    
+
     theme: {
       bg: "#3E3A39",
       text: "#FFFFFF",
@@ -181,7 +181,7 @@ export const works: Work[] = [
     role: "Design / Dev",
     url: "https://minz.luluvision.jp/",
     thumbnail: "https://placehold.co/800x500/004D40/FFF?text=Min'z",
-    
+
     theme: {
       bg: "#004D40",
       text: "#FFFFFF",
@@ -214,7 +214,7 @@ export const works: Work[] = [
     role: "Design",
     url: "https://frameinterior.net/",
     thumbnail: "https://placehold.co/800x500/000/FFF?text=frame",
-    
+
     theme: {
       bg: "#000000",
       text: "#FFFFFF",
