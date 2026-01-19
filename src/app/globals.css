@@ -26,6 +26,7 @@ body {
   background: #FCFCFC;
   font-family: var(--font-ja);
   overflow: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* テキスト選択時の色（黒背景 + 白文字） */

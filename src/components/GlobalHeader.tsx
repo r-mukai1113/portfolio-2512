@@ -7,20 +7,20 @@ export const GlobalHeader = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 w-full px-8 py-6 flex justify-between items-center z-[100] mix-blend-exclusion">
-      <Link href="/" className="text-white font-semibold tracking-wider no-underline">
+    <header className="fixed top-0 left-0 w-full h-[72px] px-8 md:px-8 flex justify-between items-center z-[100] mix-blend-exclusion">
+      <Link href="/" className="text-white font-semibold text-[16px] md:text-[18px] tracking-[0.04em] no-underline">
         R.MUKAI
       </Link>
 
       {/* PC Navigation */}
       <nav className="hidden md:flex gap-8">
-        <Link href="/" className="text-white no-underline font-semibold text-sm tracking-wider hover:opacity-70 transition-opacity">
+        <Link href="/" className="text-white no-underline font-medium text-[14px] hover:opacity-70 transition-opacity">
           Works
         </Link>
-        <Link href="/about" className="text-white no-underline font-semibold text-sm tracking-wider hover:opacity-70 transition-opacity">
+        <Link href="/about" className="text-white no-underline font-medium text-[14px] hover:opacity-70 transition-opacity">
           Profile
         </Link>
-        <Link href="/contact" className="text-white no-underline font-semibold text-sm tracking-wider hover:opacity-70 transition-opacity">
+        <Link href="/contact" className="text-white no-underline font-medium text-[14px] hover:opacity-70 transition-opacity">
           Contact
         </Link>
       </nav>

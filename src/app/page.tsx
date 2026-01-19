@@ -81,38 +81,40 @@ export default function Home() {
 
       {/* PC View */}
       <main
-        className="hidden md:flex h-screen w-full"
+        className="hidden md:flex h-screen w-full pt-[72px]"
         style={{ color: textColor }}
       >
         {/* 左カラム: テキスト */}
         <div className="w-1/2 h-full flex items-center pl-20">
           <div className="max-w-[520px] w-full">
-            <div className="opacity-60 text-[0.85rem] tracking-[0.1em] uppercase mb-6">
+            {/* 1. タイトル */}
+            <h1 className="font-inter text-[72px] leading-[1.1] tracking-[0.04em] font-semibold mb-8">
+              {currentWork.title}
+            </h1>
+
+            {/* 2. サブ情報 */}
+            <div className="font-inter text-[14px] leading-[1.0] tracking-[0.02em] opacity-60 mb-6">
               <span>{currentWork.category}</span>
               <span className="mx-2">|</span>
               <span>{currentWork.year}</span>
             </div>
 
-            <h1 className="text-[5rem] leading-[1.05] font-bold tracking-[-0.03em] mb-6">
-              {currentWork.title}
-            </h1>
-
+            {/* 3. 説明文 */}
             <p
-              className="font-noto text-base leading-[2.0] opacity-80 mb-10 font-light"
+              className="font-noto text-[14px] leading-[2.0] tracking-[0.04em] opacity-80 mb-10 font-normal"
               dangerouslySetInnerHTML={{ __html: currentWork.desc }}
             />
 
-            <div className="w-full h-px bg-current opacity-20 mb-8" />
-
+            {/* 4. ボタン */}
             <a
               href={currentWork.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-4 text-[0.9rem] font-medium no-underline hover:opacity-70 transition-opacity"
+              className="inline-flex items-center gap-2 text-[14px] font-medium no-underline hover:opacity-70 transition-opacity"
               style={{ color: textColor }}
             >
               View Project
-              <span className="flex items-center justify-center w-8 h-8 border border-current rounded-full text-sm">
+              <span className="flex items-center justify-center w-6 h-6 border border-current rounded-full text-[10px]">
                 →
               </span>
             </a>
@@ -167,7 +169,7 @@ export default function Home() {
       {/* SP View */}
       <main
         ref={spContainerRef}
-        className="md:hidden h-screen overflow-y-scroll snap-y snap-mandatory"
+        className="md:hidden h-screen overflow-y-scroll snap-y snap-mandatory pt-[72px]"
         style={{
           WebkitOverflowScrolling: "touch",
         }}
@@ -175,10 +177,10 @@ export default function Home() {
         {works.map((work) => (
           <div
             key={work.id}
-            className="sp-card-section h-screen w-full snap-start px-5 pt-20 flex items-start"
+            className="sp-card-section h-screen w-full snap-start px-5 pt-4 flex items-start"
           >
             <div
-              className={`w-full h-[92%] rounded-xl p-6 flex flex-col justify-between transition-all duration-500 ${
+              className={`w-full h-[90%] rounded-xl p-6 flex flex-col justify-between transition-all duration-500 ${
                 work.theme.isLight
                   ? "bg-white/50 border border-white/60 shadow-[0_10px_40px_rgba(0,0,0,0.05)]"
                   : "bg-white/[0.04] backdrop-blur-[20px] border border-white/10 shadow-[0_4px_24px_rgba(0,0,0,0.05)]"
@@ -192,25 +194,34 @@ export default function Home() {
               />
 
               <div className="mt-auto">
-                <div className="text-xs opacity-60 mb-2 uppercase tracking-wider">
-                  {work.category} | {work.year}
-                </div>
-                <h2 className="text-[2.2rem] leading-[1.1] mb-4 font-bold">
+                {/* 1. タイトル */}
+                <h2 className="font-inter text-[44px] leading-[1.05] font-semibold mb-6">
                   {work.title}
                 </h2>
+
+                {/* 2. サブ情報 */}
+                <div className="font-inter text-[12px] opacity-60 mb-4 tracking-[0.02em]">
+                  {work.category} | {work.year}
+                </div>
+
+                {/* 3. 説明文 */}
                 <p
-                  className="font-noto text-[0.85rem] opacity-80 leading-[1.8] mb-6"
+                  className="font-noto text-[12px] opacity-80 leading-[1.8] mb-8"
                   dangerouslySetInnerHTML={{ __html: work.desc }}
                 />
+
+                {/* 4. ボタン */}
                 <a
                   href={work.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[0.9rem] flex items-center gap-2 font-medium no-underline hover:opacity-70 transition-opacity"
+                  className="text-[14px] flex items-center gap-2 font-medium no-underline hover:opacity-70 transition-opacity"
                   style={{ color: work.theme.isLight ? "#333" : "#FFF" }}
                 >
                   View Project
-                  <span className="inline-block transition-transform">→</span>
+                  <span className="flex items-center justify-center w-6 h-6 border border-current rounded-full text-[10px]">
+                    →
+                  </span>
                 </a>
               </div>
             </div>
