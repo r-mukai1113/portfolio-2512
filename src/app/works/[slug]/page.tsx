@@ -33,13 +33,14 @@ export default function WorkDetail() {
   // スタイル定義
   // =================================================================
 
-  // ガラスの質感 (トップページSPと同様のロジック)
+  // ガラスの質感
   const glassClass = currentWork.theme.isLight
     ? "bg-white/50 border border-white/60 backdrop-blur-md" // Light
     : "bg-white/[0.04] border border-white/10 backdrop-blur-[20px]"; // Dark
 
   // 共通カードクラス
-  const cardClass = `rounded-[32px] w-full transition-colors duration-500 ${glassClass}`;
+  // ① SPの角丸を12px, PCは32pxに変更 (rounded-[12px] md:rounded-[32px])
+  const cardClass = `rounded-[12px] md:rounded-[32px] w-full transition-colors duration-500 ${glassClass}`;
 
   // Gap設定 (Bento Grid ごとの余白: PC 12px / SP 8px)
   const gridGapClass = "mb-2 md:mb-3";
@@ -156,13 +157,17 @@ export default function WorkDetail() {
           {/* =================================================
               4. Navigation Footer
           ================================================= */}
-          <div className="flex flex-col md:flex-row gap-[8px] md:gap-[12px] mt-6 md:mt-10">
+          {/* ② Gapの調整: Bento UI同士(mb-2/3)よりも広く取るため mt-4 md:mt-8 に変更 */}
+          <div className="flex flex-col md:flex-row gap-[8px] md:gap-[12px] mt-4 md:mt-8">
+            
             {/* TOP Button */}
             <Link
               href="/"
-              className={`group md:w-1/3 w-full flex items-center justify-center py-[28px] px-[20px] md:py-[48px] md:px-[40px] transition-transform duration-300 hover:-translate-y-1 ${cardClass}`}
+              // ③ 左揃え: items-center を items-start に変更
+              // ⑤ PCテキスト: md:text-[20px] に変更
+              className={`group md:w-1/3 w-full flex flex-col items-start justify-center py-[28px] px-[20px] md:py-[48px] md:px-[40px] transition-transform duration-300 hover:-translate-y-1 ${cardClass}`}
             >
-              <span className="font-inter font-medium text-[14px] md:text-[28px] tracking-wider group-hover:opacity-60 transition-opacity">
+              <span className="font-inter font-medium text-[14px] md:text-[20px] tracking-wider group-hover:opacity-60 transition-opacity">
                 ‹ TOP
               </span>
             </Link>
@@ -170,13 +175,17 @@ export default function WorkDetail() {
             {/* Next Project Button */}
             <Link
               href={`/works/${nextWork.slug}`}
-              className={`group md:flex-1 w-full flex flex-col items-center justify-center py-[40px] px-[20px] md:py-[48px] md:px-[40px] transition-transform duration-300 hover:-translate-y-1 ${cardClass}`}
+              // ③ 左揃え: items-center を items-start に変更
+              className={`group md:flex-1 w-full flex flex-col items-start justify-center py-[40px] px-[20px] md:py-[48px] md:px-[40px] transition-transform duration-300 hover:-translate-y-1 ${cardClass}`}
             >
-              <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4">
-                 <span className="font-inter font-medium text-[14px] md:text-[28px] tracking-wider">
+              {/* ④ SPは1列: flex-col を明示。PCは横並び(md:flex-row)でも縦積みでもOKですが、左揃えなら縦積みが自然です */}
+              <div className="flex flex-col md:flex-row md:items-center gap-1 md:gap-4 w-full">
+                 {/* ⑤ PCテキスト: md:text-[20px] に変更 */}
+                 <span className="font-inter font-medium text-[14px] md:text-[20px] tracking-wider whitespace-nowrap">
                    Next Project <span className="ml-1">›</span>
                  </span>
-                 <span className="font-inter text-[12px] md:text-[20px] opacity-60">
+                 {/* プロジェクト名 */}
+                 <span className="font-inter text-[12px] md:text-[20px] opacity-60 break-all">
                    Project : {nextWork.title}
                  </span>
               </div>
