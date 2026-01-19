@@ -149,7 +149,7 @@ export default function Home() {
         </div>
 
         {/* ドットナビゲーション */}
-        <div className="fixed right-8 top-1/2 -translate-y-1/2 flex flex-col gap-4 z-50">
+        <div className="fixed right-20 top-1/2 -translate-y-1/2 flex flex-col gap-4 z-50">
           {works.map((work, index) => (
             <button
               key={work.id}
