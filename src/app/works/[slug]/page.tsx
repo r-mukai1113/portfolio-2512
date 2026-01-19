@@ -44,8 +44,8 @@ export default function WorkDetail() {
   // Gap設定 (Bento Grid ごとの余白: PC 12px / SP 8px)
   const gridGapClass = "mb-2 md:mb-3";
 
-  // Bento Grid 内の余白 (PC: 上下56px 左右40px / SP: 上下28px 左右20px)
-  const cardPaddingClass = "py-[28px] px-[20px] md:py-[56px] md:px-[40px]";
+  // Bento Grid 内の余白 (PC: 上下56px 左右40px / SP: 上下32px 左右20px)
+  const cardPaddingClass = "py-[32px] px-[20px] md:py-[56px] md:px-[40px]";
 
   // テキストカラー
   const textColor = { color: currentWork.detailTheme.text };
@@ -55,7 +55,7 @@ export default function WorkDetail() {
       <GlobalHeader />
 
       <main
-        className="w-full min-h-screen transition-colors duration-500 pt-[100px] pb-20"
+        className="w-full min-h-screen transition-colors duration-500 pt-[72px] pb-20"
         style={{ backgroundColor: currentWork.detailTheme.bg }}
       >
         {/* コンテナ: Max 880px / 余白 PC 80px, SP 20px */}

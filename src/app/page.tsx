@@ -133,7 +133,7 @@ export default function Home() {
   }, []);
 
   return (
-    <>
+    <div className="overflow-hidden">
       <div
         className="fixed top-0 left-0 w-full h-full -z-10 transition-colors duration-[800ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
         style={{ backgroundColor: bgColor }}
@@ -242,7 +242,7 @@ export default function Home() {
           <div
             key={work.id}
             // min-h-screen: 最低でも画面高さ（snapのため）。長い場合は伸びる。
-            className="sp-card-section min-h-screen w-full snap-start flex flex-col pt-[80px] pb-5 px-5"
+            className="sp-card-section min-h-screen w-full snap-start flex flex-col pt-[72px] pb-5 px-5"
           >
             <div
                 // ★修正: flex-1 を h-auto に変更（中身の量に合わせる）
@@ -287,6 +287,6 @@ export default function Home() {
           </div>
         ))}
       </main>
-    </>
+    </div>
   );
 }
