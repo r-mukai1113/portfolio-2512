@@ -39,11 +39,13 @@ export default function WorkDetail() {
     : "bg-white/[0.04] border border-white/10 backdrop-blur-[20px]"; // Dark
 
   // 共通カードクラス
-  // ① SPの角丸を12px, PCは32pxに変更 (rounded-[12px] md:rounded-[32px])
+  // SP: 12px, PC: 32px
   const cardClass = `rounded-[12px] md:rounded-[32px] w-full transition-colors duration-500 ${glassClass}`;
 
-  // Gap設定 (Bento Grid ごとの余白: PC 12px / SP 8px)
-  const gridGapClass = "mb-2 md:mb-3";
+  // Gap設定 (Bento Grid ごとの余白)
+  // PC: 12px (mb-[12px]), SP: 8px (mb-2)
+  // ★ここを mb-3 から mb-[12px] に明示的に変更しました
+  const gridGapClass = "mb-2 md:mb-[12px]";
 
   // Bento Grid 内の余白 (PC: 上下56px 左右40px / SP: 上下32px 左右20px)
   const cardPaddingClass = "py-[32px] px-[20px] md:py-[56px] md:px-[40px]";
@@ -67,7 +69,7 @@ export default function WorkDetail() {
           ================================================= */}
           <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass}`}>
             {/* タイトル */}
-            <h1 className="font-inter font-bold text-[44px] md:text-[72px] leading-[1.1] tracking-[0.04em] mb-6 md:mb-20 break-words">
+            <h1 className="font-inter font-bold text-[44px] md:text-[72px] leading-[1.1] tracking-[0.04em] mb-6 md:mb-[28px] break-words">
               {currentWork.title}
             </h1>
 
@@ -157,14 +159,12 @@ export default function WorkDetail() {
           {/* =================================================
               4. Navigation Footer
           ================================================= */}
-          {/* ② Gapの調整: Bento UI同士(mb-2/3)よりも広く取るため mt-4 md:mt-8 に変更 */}
-          <div className="flex flex-col md:flex-row gap-[8px] md:gap-[12px] mt-4 md:mt-8">
+          {/* Bento Grid間の余白と同じにするため mt-2 md:mt-[12px] に変更 */}
+          <div className="flex flex-col md:flex-row gap-[8px] md:gap-[12px] mt-2 md:mt-[12px]">
             
             {/* TOP Button */}
             <Link
               href="/"
-              // ③ 左揃え: items-center を items-start に変更
-              // ⑤ PCテキスト: md:text-[20px] に変更
               className={`group md:w-1/3 w-full flex flex-col items-start justify-center py-[28px] px-[20px] md:py-[48px] md:px-[40px] transition-transform duration-300 hover:-translate-y-1 ${cardClass}`}
             >
               <span className="font-inter font-medium text-[14px] md:text-[20px] tracking-wider group-hover:opacity-60 transition-opacity">
@@ -175,18 +175,14 @@ export default function WorkDetail() {
             {/* Next Project Button */}
             <Link
               href={`/works/${nextWork.slug}`}
-              // ③ 左揃え: items-center を items-start に変更
               className={`group md:flex-1 w-full flex flex-col items-start justify-center py-[40px] px-[20px] md:py-[48px] md:px-[40px] transition-transform duration-300 hover:-translate-y-1 ${cardClass}`}
             >
-              {/* ④ SPは1列: flex-col を明示。PCは横並び(md:flex-row)でも縦積みでもOKですが、左揃えなら縦積みが自然です */}
               <div className="flex flex-col md:flex-row md:items-center gap-1 md:gap-4 w-full">
-                 {/* ⑤ PCテキスト: md:text-[20px] に変更 */}
                  <span className="font-inter font-medium text-[14px] md:text-[20px] tracking-wider whitespace-nowrap">
                    Next Project <span className="ml-1">›</span>
                  </span>
-                 {/* プロジェクト名 */}
                  <span className="font-inter text-[12px] md:text-[20px] opacity-60 break-all">
-                   Project : {nextWork.title}
+                   {nextWork.title}
                  </span>
               </div>
             </Link>
