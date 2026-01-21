@@ -60,8 +60,7 @@ export default function WorkDetail() {
         className="w-full min-h-screen transition-colors duration-500 pt-[72px] pb-20"
         style={{ backgroundColor: currentWork.detailTheme.bg }}
       >
-        {/* コンテナ: Max 880pxに戻す (コンテンツ実質720px + padding 160px) */}
-        {/* ★修正: max-w-[1040px] -> max-w-[880px] */}
+        {/* コンテナ: Max 880px (コンテンツ実質720px + padding 160px) */}
         <div className="max-w-[880px] mx-auto px-5 md:px-20 w-full" style={textColor}>
 
           {/* =================================================
@@ -75,19 +74,20 @@ export default function WorkDetail() {
 
             <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8 md:gap-20 mb-6 md:mb-8">
               {/* Meta Info */}
-              <div className="flex flex-col md:flex-row gap-6 md:gap-20 w-full">
+              {/* ★変更箇所: PCのgapを gap-10 (40px) に変更 */}
+              <div className="flex flex-col md:flex-row gap-3 md:gap-10 w-full">
                 {/* Category */}
-                <div className="flex flex-col gap-1 md:gap-2">
+                <div className="flex flex-col gap-3 md:gap-2">
                   <span className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40">Category</span>
                   <span className="font-inter text-[12px] md:text-[14px] leading-none tracking-[0.02em]">{currentWork.category}</span>
                 </div>
                 {/* Role */}
-                <div className="flex flex-col gap-1 md:gap-2">
+                <div className="flex flex-col gap-3 md:gap-2">
                   <span className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40">Role</span>
                   <span className="font-inter text-[12px] md:text-[14px] leading-none tracking-[0.02em]">{currentWork.role}</span>
                 </div>
                 {/* Year */}
-                <div className="flex flex-col gap-1 md:gap-2">
+                <div className="flex flex-col gap-3 md:gap-2">
                   <span className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40">Date</span>
                   <span className="font-inter text-[12px] md:text-[14px] leading-none tracking-[0.02em]">{currentWork.year}</span>
                 </div>
@@ -126,17 +126,14 @@ export default function WorkDetail() {
           {currentWork.desc && (
             <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass} font-noto`}>
               
-              {/* テキスト読みやすさ調整用のラッパー: max-w-[720px] */}
-              {/* 親要素の実質幅も720pxなので、ここでは「最大幅制限」として機能し、レイアウト崩れを防ぎます */}
               <div className="max-w-[720px] mx-auto">
-                
                 {/* Overview */}
-                <div className="mb-10 md:mb-[40px]">
+                <div className="mb-6 md:mb-[40px]">
                    <h3 className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40 mb-[12px] md:mb-[16px]">Overview</h3>
                    <p className="text-[12px] md:text-[14px] leading-[1.8] tracking-[0.02em] opacity-75 whitespace-pre-wrap">{currentWork.desc.overview}</p>
                 </div>
                 {/* Insight */}
-                <div className="mb-10 md:mb-[40px]">
+                <div className="mb-6 md:mb-[40px]">
                    <h3 className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40 mb-[12px] md:mb-[16px]">Insight</h3>
                    <h4 className="text-[16px] md:text-[20px] leading-[1.3] tracking-[0.02em] font-medium mb-[12px] md:mb-[16px]">{currentWork.desc.insight}</h4>
                    <p className="text-[12px] md:text-[14px] leading-[1.8] tracking-[0.02em] opacity-75 whitespace-pre-wrap">{currentWork.desc.insightText}</p>
@@ -147,8 +144,8 @@ export default function WorkDetail() {
                    <h4 className="text-[16px] md:text-[20px] leading-[1.3] tracking-[0.02em] font-medium mb-[12px] md:mb-[16px]">{currentWork.desc.idea}</h4>
                    <p className="text-[12px] md:text-[14px] leading-[1.8] tracking-[0.02em] opacity-75 whitespace-pre-wrap">{currentWork.desc.ideaText}</p>
                 </div>
-
               </div>
+
             </section>
           )}
 
@@ -183,8 +180,8 @@ export default function WorkDetail() {
               href={`/works/${nextWork.slug}`}
               className={`group md:flex-1 w-full flex flex-col items-start justify-center py-[40px] px-[20px] md:py-[48px] md:px-[40px] transition-transform duration-300 hover:-translate-y-1 ${cardClass}`}
             >
-              <div className="flex flex-col md:flex-row md:items-center gap-1 md:gap-4 w-full">
-                 <span className="font-inter font-medium text-[14px] md:text-[20px] tracking-wider whitespace-nowrap">
+              <div className="flex flex-row items-center gap-2 md:gap-4 w-full">
+                 <span className="font-inter font-medium text-[14px] md:text-[20px] tracking-wider whitespace-nowrap shrink-0">
                    Next Project <span className="ml-1">›</span>
                  </span>
                  <span className="font-inter text-[12px] md:text-[20px] opacity-60 break-all">
