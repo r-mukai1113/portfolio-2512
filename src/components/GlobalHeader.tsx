@@ -77,7 +77,7 @@ export const GlobalHeader = () => {
       <div
         className={`md:hidden fixed inset-0 z-40 flex flex-col justify-center items-center transition-all duration-500 ${
           isOpen
-            ? "opacity-100 visible backdrop-blur-md bg-[#1A1A1A]/75" // 背景色を少し落とした黒に変更
+            ? "opacity-100 visible backdrop-blur-md bg-[#1A1A1A]/95" // 背景色を少し落とした黒
             : "opacity-0 invisible pointer-events-none"
         }`}
       >
@@ -85,7 +85,7 @@ export const GlobalHeader = () => {
         <div className="w-full px-5 flex flex-col items-center">
 
           {/* Main Navigation */}
-          {/* Gapを40pxに変更 */}
+          {/* Gapを40pxに設定 */}
           <nav className="flex flex-col items-center gap-[40px]">
             {navItems.map((item, index) => (
               <Link
@@ -103,20 +103,28 @@ export const GlobalHeader = () => {
             ))}
           </nav>
 
-          {/* SNS Link (Instagram) */}
-          {/* 矢印削除、opacity-60、メニューとの距離を確保 */}
+          {/* Sub Info (Instagram & Mail) */}
           <div
-            className={`mt-12 transition-all duration-700 delay-300 ${
+            className={`mt-12 flex flex-col items-center gap-4 transition-all duration-700 delay-300 ${
               isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             }`}
           >
+            {/* Instagram */}
             <a
               href="https://www.instagram.com/mutalog_muji/"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-inter text-[12px] tracking-wider text-white opacity-60 block py-2"
+              className="font-inter text-[12px] tracking-wider text-white opacity-60 hover:opacity-100 transition-opacity"
             >
               Instagram
+            </a>
+
+            {/* Mail */}
+            <a
+              href="mailto:r.mukai@mutalog.com"
+              className="font-inter text-[12px] tracking-wider text-white opacity-60 hover:opacity-100 transition-opacity"
+            >
+              Mail
             </a>
           </div>
 
