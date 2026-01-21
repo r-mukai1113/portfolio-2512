@@ -77,7 +77,7 @@ export const GlobalHeader = () => {
       <div
         className={`md:hidden fixed inset-0 z-40 flex flex-col justify-center items-center transition-all duration-500 ${
           isOpen
-            ? "opacity-100 visible backdrop-blur-md bg-[#1A1A1A]/95" // 背景色を少し落とした黒
+            ? "opacity-100 visible backdrop-blur-md bg-[#1A1A1A]/80" // 透明度を80%に変更し、ガラス感アップ
             : "opacity-0 invisible pointer-events-none"
         }`}
       >
@@ -85,7 +85,7 @@ export const GlobalHeader = () => {
         <div className="w-full px-5 flex flex-col items-center">
 
           {/* Main Navigation */}
-          {/* Gapを40pxに設定 */}
+          {/* Gapは 40px を維持 */}
           <nav className="flex flex-col items-center gap-[40px]">
             {navItems.map((item, index) => (
               <Link
@@ -104,8 +104,10 @@ export const GlobalHeader = () => {
           </nav>
 
           {/* Sub Info (Instagram & Mail) */}
+          {/* ① mt-16 -> mt-[56px] (指定値) */}
+          {/* ② gap-8 -> gap-6 (24px) */}
           <div
-            className={`mt-12 flex flex-col items-center gap-4 transition-all duration-700 delay-300 ${
+            className={`mt-[56px] flex flex-col items-center gap-6 transition-all duration-700 delay-300 ${
               isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             }`}
           >
@@ -131,7 +133,6 @@ export const GlobalHeader = () => {
         </div>
 
         {/* Copyright (Fixed Bottom) */}
-        {/* 画面下固定(bottom-8 = 32px), opacity-40 */}
         <div
           className={`absolute bottom-8 left-0 w-full text-center transition-opacity duration-700 delay-500 ${
             isOpen ? "opacity-40" : "opacity-0"
