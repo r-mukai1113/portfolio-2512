@@ -60,9 +60,9 @@ export default function WorkDetail() {
         className="w-full min-h-screen transition-colors duration-500 pt-[72px] pb-20"
         style={{ backgroundColor: currentWork.detailTheme.bg }}
       >
-        {/* コンテナ: Max 1040px (コンテンツ880px + padding 160px) */}
-        {/* ★修正: max-w-[880px] -> max-w-[1040px] */}
-        <div className="max-w-[1040px] mx-auto px-5 md:px-20 w-full" style={textColor}>
+        {/* コンテナ: Max 880pxに戻す (コンテンツ実質720px + padding 160px) */}
+        {/* ★修正: max-w-[1040px] -> max-w-[880px] */}
+        <div className="max-w-[880px] mx-auto px-5 md:px-20 w-full" style={textColor}>
 
           {/* =================================================
               1. Hero Card
@@ -125,24 +125,29 @@ export default function WorkDetail() {
           ================================================= */}
           {currentWork.desc && (
             <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass} font-noto`}>
-              {/* Overview */}
-              {/* ★修正: gapが大きいので md:mb-16 -> md:mb-[40px] に変更 */}
-              <div className="mb-10 md:mb-[40px]">
-                 <h3 className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40 mb-[12px] md:mb-[16px]">Overview</h3>
-                 <p className="text-[12px] md:text-[14px] leading-[1.8] tracking-[0.02em] opacity-75 whitespace-pre-wrap">{currentWork.desc.overview}</p>
-              </div>
-              {/* Insight */}
-              {/* ★修正: gapが大きいので md:mb-16 -> md:mb-[40px] に変更 */}
-              <div className="mb-10 md:mb-[40px]">
-                 <h3 className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40 mb-[12px] md:mb-[16px]">Insight</h3>
-                 <h4 className="text-[16px] md:text-[20px] leading-[1.3] tracking-[0.02em] font-medium mb-[12px] md:mb-[16px]">{currentWork.desc.insight}</h4>
-                 <p className="text-[12px] md:text-[14px] leading-[1.8] tracking-[0.02em] opacity-75 whitespace-pre-wrap">{currentWork.desc.insightText}</p>
-              </div>
-              {/* Idea */}
-              <div>
-                 <h3 className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40 mb-[12px] md:mb-[16px]">Idea</h3>
-                 <h4 className="text-[16px] md:text-[20px] leading-[1.3] tracking-[0.02em] font-medium mb-[12px] md:mb-[16px]">{currentWork.desc.idea}</h4>
-                 <p className="text-[12px] md:text-[14px] leading-[1.8] tracking-[0.02em] opacity-75 whitespace-pre-wrap">{currentWork.desc.ideaText}</p>
+              
+              {/* テキスト読みやすさ調整用のラッパー: max-w-[720px] */}
+              {/* 親要素の実質幅も720pxなので、ここでは「最大幅制限」として機能し、レイアウト崩れを防ぎます */}
+              <div className="max-w-[720px] mx-auto">
+                
+                {/* Overview */}
+                <div className="mb-10 md:mb-[40px]">
+                   <h3 className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40 mb-[12px] md:mb-[16px]">Overview</h3>
+                   <p className="text-[12px] md:text-[14px] leading-[1.8] tracking-[0.02em] opacity-75 whitespace-pre-wrap">{currentWork.desc.overview}</p>
+                </div>
+                {/* Insight */}
+                <div className="mb-10 md:mb-[40px]">
+                   <h3 className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40 mb-[12px] md:mb-[16px]">Insight</h3>
+                   <h4 className="text-[16px] md:text-[20px] leading-[1.3] tracking-[0.02em] font-medium mb-[12px] md:mb-[16px]">{currentWork.desc.insight}</h4>
+                   <p className="text-[12px] md:text-[14px] leading-[1.8] tracking-[0.02em] opacity-75 whitespace-pre-wrap">{currentWork.desc.insightText}</p>
+                </div>
+                {/* Idea */}
+                <div>
+                   <h3 className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40 mb-[12px] md:mb-[16px]">Idea</h3>
+                   <h4 className="text-[16px] md:text-[20px] leading-[1.3] tracking-[0.02em] font-medium mb-[12px] md:mb-[16px]">{currentWork.desc.idea}</h4>
+                   <p className="text-[12px] md:text-[14px] leading-[1.8] tracking-[0.02em] opacity-75 whitespace-pre-wrap">{currentWork.desc.ideaText}</p>
+                </div>
+
               </div>
             </section>
           )}
