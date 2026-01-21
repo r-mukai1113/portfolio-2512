@@ -39,8 +39,8 @@ export default function WorkDetail() {
     : "bg-white/[0.04] border border-white/10 backdrop-blur-[20px]"; // Dark
 
   // 共通カードクラス
-  // SP: 12px, PC: 32px
-  const cardClass = `rounded-[12px] md:rounded-[32px] w-full transition-colors duration-500 ${glassClass}`;
+  // SP: 12px, PC: 16px
+  const cardClass = `rounded-[12px] md:rounded-[16px] w-full transition-colors duration-500 ${glassClass}`;
 
   // Gap設定 (Bento Grid ごとの余白)
   // PC: 12px (mb-[12px]), SP: 8px (mb-2)
