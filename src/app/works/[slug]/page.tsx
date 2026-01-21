@@ -52,6 +52,9 @@ export default function WorkDetail() {
   // テキストカラー
   const textColor = { color: currentWork.detailTheme.text };
 
+  // ギャラリー画像があるかどうかの判定 (メイン以外の画像があるか)
+  const hasGalleryImages = currentWork.images && currentWork.images.length > 1;
+
   return (
     <>
       <GlobalHeader />
@@ -74,7 +77,6 @@ export default function WorkDetail() {
 
             <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8 md:gap-20 mb-6 md:mb-8">
               {/* Meta Info */}
-              {/* ★変更箇所: PCのgapを gap-10 (40px) に変更 */}
               <div className="flex flex-col md:flex-row gap-3 md:gap-10 w-full">
                 {/* Category */}
                 <div className="flex flex-col gap-3 md:gap-2">
@@ -94,18 +96,21 @@ export default function WorkDetail() {
               </div>
 
               {/* Visit Website Button */}
-              <div className="shrink-0 mt-2 md:mt-0">
-                <a
-                  href={currentWork.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-1 font-inter font-medium text-[14px] md:text-[16px] leading-none tracking-[0.02em] hover:opacity-60 transition-opacity group"
-                  style={{ color: currentWork.detailTheme.text }}
-                >
-                  Visit Website
-                  <span className="group-hover:translate-x-1 transition-transform">›</span>
-                </a>
-              </div>
+              {/* ★修正: URLがある場合のみ表示 */}
+              {currentWork.url && (
+                <div className="shrink-0 mt-2 md:mt-0">
+                  <a
+                    href={currentWork.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1 font-inter font-medium text-[14px] md:text-[16px] leading-none tracking-[0.02em] hover:opacity-60 transition-opacity group"
+                    style={{ color: currentWork.detailTheme.text }}
+                  >
+                    Visit Website
+                    <span className="group-hover:translate-x-1 transition-transform">›</span>
+                  </a>
+                </div>
+              )}
             </div>
 
             {/* Main Visual */}
@@ -152,13 +157,17 @@ export default function WorkDetail() {
           {/* =================================================
               3. Gallery Cards
           ================================================= */}
-          <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass}`}>
-             <div className="flex flex-col gap-[24px] md:gap-[40px]">
-               {currentWork.images && currentWork.images.slice(1).map((imgUrl, idx) => (
-                 <img key={idx} src={imgUrl} alt={`Gallery ${idx + 1}`} className="w-full h-auto rounded-sm" />
-               ))}
-             </div>
-          </section>
+          {/* ★修正: メイン以外の画像がある場合のみセクションを表示 */}
+          {hasGalleryImages && (
+            <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass}`}>
+               <div className="flex flex-col gap-[24px] md:gap-[40px]">
+                 {/* slice(1) で2枚目以降を表示 */}
+                 {currentWork.images.slice(1).map((imgUrl, idx) => (
+                   <img key={idx} src={imgUrl} alt={`Gallery ${idx + 1}`} className="w-full h-auto rounded-sm" />
+                 ))}
+               </div>
+            </section>
+          )}
 
           {/* =================================================
               4. Navigation Footer
