@@ -4,6 +4,8 @@ import { GlobalHeader } from "@/components/GlobalHeader";
 import { works } from "@/data/works";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+// ★追加: フックをインポート
+import { useThemeColor } from "@/hooks/useThemeColor";
 
 export default function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -18,6 +20,9 @@ export default function Home() {
 
   const currentWork = works[currentIndex];
   const CARD_GAP = 80;
+
+  // ★追加: 背景色が変わるたびにブラウザのテーマカラーも変更
+  useThemeColor(bgColor);
 
   // 画像高さ取得
   useEffect(() => {
@@ -246,7 +251,7 @@ export default function Home() {
           >
             <div
                 // ★修正: flex-1 を h-auto に変更（中身の量に合わせる）
-                className={`w-full h-auto rounded-xl flex flex-col transition-all duration-500 py-12 px-5 ${
+                className={`w-full h-auto rounded-[32px] flex flex-col transition-all duration-500 py-12 px-5 ${
                     work.theme.isLight
                     ? "bg-white/50 border border-white/60"
                     : "bg-white/[0.04] backdrop-blur-[20px] border border-white/10"
