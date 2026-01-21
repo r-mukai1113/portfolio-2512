@@ -52,7 +52,7 @@ export const GlobalHeader = () => {
           </Link>
         </nav>
 
-        {/* SP Hamburger Button (2本線 → ×) */}
+        {/* SP Hamburger Button */}
         <button
           onClick={toggleMenu}
           className="md:hidden relative w-8 h-8 flex flex-col justify-center items-center gap-[6px] z-50 group"
@@ -77,19 +77,21 @@ export const GlobalHeader = () => {
       <div
         className={`md:hidden fixed inset-0 z-40 flex flex-col justify-center items-center transition-all duration-500 ${
           isOpen
-            ? "opacity-100 visible backdrop-blur-xl bg-black/80"
+            ? "opacity-100 visible backdrop-blur-md bg-[#1A1A1A]/75" // 背景色を少し落とした黒に変更
             : "opacity-0 invisible pointer-events-none"
         }`}
       >
-        <div className="w-full max-w-[880px] px-5 flex flex-col items-center gap-12 text-white">
+        {/* Center Content (Menu & SNS) */}
+        <div className="w-full px-5 flex flex-col items-center">
 
           {/* Main Navigation */}
-          <nav className="flex flex-col items-center gap-6">
+          {/* Gapを40pxに変更 */}
+          <nav className="flex flex-col items-center gap-[40px]">
             {navItems.map((item, index) => (
               <Link
                 key={item.label}
                 href={item.href}
-                className={`font-inter font-medium text-[16px] tracking-[0.05em] transition-all duration-500 transform hover:opacity-60 ${
+                className={`font-inter font-medium text-[16px] tracking-[0.05em] text-white transition-all duration-500 transform hover:opacity-60 ${
                   isOpen
                     ? "translate-y-0 opacity-100"
                     : "translate-y-4 opacity-0"
@@ -101,30 +103,35 @@ export const GlobalHeader = () => {
             ))}
           </nav>
 
-          {/* Sub Info (SNS & Copyright) */}
+          {/* SNS Link (Instagram) */}
+          {/* 矢印削除、opacity-60、メニューとの距離を確保 */}
           <div
-            className={`flex flex-col items-center gap-4 transition-all duration-700 delay-300 ${
-              isOpen ? "opacity-60 translate-y-0" : "opacity-0 translate-y-4"
+            className={`mt-12 transition-all duration-700 delay-300 ${
+              isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             }`}
           >
-            {/* SNS Link (Instagram Only) */}
-            <div className="font-inter text-[12px] tracking-wider">
-              <a
-                href="https://www.instagram.com/mutalog_muji/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:opacity-60 transition-opacity flex items-center gap-2"
-              >
-                Instagram ↗
-              </a>
-            </div>
-
-            {/* Copyright */}
-            <p className="font-inter text-[10px] tracking-widest mt-4">
-              © 2026 R.MUKAI
-            </p>
+            <a
+              href="https://www.instagram.com/mutalog_muji/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-inter text-[12px] tracking-wider text-white opacity-60 block py-2"
+            >
+              Instagram
+            </a>
           </div>
 
+        </div>
+
+        {/* Copyright (Fixed Bottom) */}
+        {/* 画面下固定(bottom-8 = 32px), opacity-40 */}
+        <div
+          className={`absolute bottom-8 left-0 w-full text-center transition-opacity duration-700 delay-500 ${
+            isOpen ? "opacity-40" : "opacity-0"
+          }`}
+        >
+          <p className="font-inter text-[10px] tracking-widest text-white">
+            © 2026 R.MUKAI
+          </p>
         </div>
       </div>
     </>
