@@ -43,8 +43,7 @@ export default function WorkDetail() {
   const cardClass = `rounded-[12px] md:rounded-[16px] w-full transition-colors duration-500 ${glassClass}`;
 
   // Gap設定 (Bento Grid ごとの余白)
-  // PC: 12px (mb-[12px]), SP: 8px (mb-2)
-  // ★ここを mb-3 から mb-[12px] に明示的に変更しました
+  // PC: 12px, SP: 8px
   const gridGapClass = "mb-2 md:mb-[12px]";
 
   // Bento Grid 内の余白 (PC: 上下56px 左右40px / SP: 上下32px 左右20px)
@@ -61,8 +60,9 @@ export default function WorkDetail() {
         className="w-full min-h-screen transition-colors duration-500 pt-[72px] pb-20"
         style={{ backgroundColor: currentWork.detailTheme.bg }}
       >
-        {/* コンテナ: Max 880px / 余白 PC 80px, SP 20px */}
-        <div className="max-w-[880px] mx-auto px-5 md:px-20 w-full" style={textColor}>
+        {/* コンテナ: Max 1040px (コンテンツ880px + padding 160px) */}
+        {/* ★修正: max-w-[880px] -> max-w-[1040px] */}
+        <div className="max-w-[1040px] mx-auto px-5 md:px-20 w-full" style={textColor}>
 
           {/* =================================================
               1. Hero Card
@@ -126,12 +126,14 @@ export default function WorkDetail() {
           {currentWork.desc && (
             <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass} font-noto`}>
               {/* Overview */}
-              <div className="mb-10 md:mb-16">
+              {/* ★修正: gapが大きいので md:mb-16 -> md:mb-[40px] に変更 */}
+              <div className="mb-10 md:mb-[40px]">
                  <h3 className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40 mb-[12px] md:mb-[16px]">Overview</h3>
                  <p className="text-[12px] md:text-[14px] leading-[1.8] tracking-[0.02em] opacity-75 whitespace-pre-wrap">{currentWork.desc.overview}</p>
               </div>
               {/* Insight */}
-              <div className="mb-10 md:mb-16">
+              {/* ★修正: gapが大きいので md:mb-16 -> md:mb-[40px] に変更 */}
+              <div className="mb-10 md:mb-[40px]">
                  <h3 className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40 mb-[12px] md:mb-[16px]">Insight</h3>
                  <h4 className="text-[16px] md:text-[20px] leading-[1.3] tracking-[0.02em] font-medium mb-[12px] md:mb-[16px]">{currentWork.desc.insight}</h4>
                  <p className="text-[12px] md:text-[14px] leading-[1.8] tracking-[0.02em] opacity-75 whitespace-pre-wrap">{currentWork.desc.insightText}</p>
@@ -159,7 +161,6 @@ export default function WorkDetail() {
           {/* =================================================
               4. Navigation Footer
           ================================================= */}
-          {/* Bento Grid間の余白と同じにするため mt-2 md:mt-[12px] に変更 */}
           <div className="flex flex-col md:flex-row gap-[8px] md:gap-[12px] mt-2 md:mt-[12px]">
             
             {/* TOP Button */}
