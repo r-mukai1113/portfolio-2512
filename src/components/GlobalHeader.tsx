@@ -124,7 +124,7 @@ export const GlobalHeader = () => {
               href="mailto:r.mukai@mutalog.com"
               className="font-inter text-[12px] tracking-wider text-white opacity-60 hover:opacity-100 transition-opacity"
             >
-              Mail
+              r.mukai@mutalog.com
             </a>
           </div>
 
