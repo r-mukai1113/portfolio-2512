@@ -2,206 +2,296 @@
 
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { works } from "@/data/works";
-import { notFound, useParams } from "next/navigation";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+// ★追加: フックをインポート
+import { useThemeColor } from "@/hooks/useThemeColor";
 
-export default function WorkDetail() {
-  const params = useParams();
-  const slug = params.slug as string;
+export default function Home() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isScrolling, setIsScrolling] = useState(false);
+  const [bgColor, setBgColor] = useState(works[0].theme.bg);
+  const [textColor, setTextColor] = useState(works[0].theme.text);
+  
+  const [imgHeight, setImgHeight] = useState(0);
+  const imgRef = useRef<HTMLImageElement>(null);
+  
+  const spContainerRef = useRef<HTMLDivElement>(null);
 
-  // データ取得
-  const currentIndex = works.findIndex((work) => work.slug === slug);
   const currentWork = works[currentIndex];
-  const nextIndex = (currentIndex + 1) % works.length;
-  const nextWork = works[nextIndex];
+  const CARD_GAP = 80;
 
-  // クライアントサイドでのレンダリング待機
-  const [mounted, setMounted] = useState(false);
+  // ★追加: 背景色が変わるたびにブラウザのテーマカラーも変更
+  useThemeColor(bgColor);
+
+  // 画像高さ取得
   useEffect(() => {
-    setMounted(true);
+    const updateHeight = () => {
+      if (imgRef.current) {
+        setImgHeight(imgRef.current.clientHeight);
+      }
+    };
+
+    updateHeight();
+    const img = imgRef.current;
+    if (img) {
+        img.onload = updateHeight;
+    }
+
+    window.addEventListener("resize", updateHeight);
+    return () => window.removeEventListener("resize", updateHeight);
   }, []);
 
-  if (!currentWork) {
-    notFound();
-    return null;
-  }
+  // マウスホイール操作
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      if (window.innerWidth <= 768) return;
+      if (isScrolling) return;
 
-  if (!mounted) return null;
+      setIsScrolling(true);
 
-  // =================================================================
-  // スタイル定義
-  // =================================================================
+      if (e.deltaY > 0) {
+        if (currentIndex < works.length - 1) {
+          setCurrentIndex((prev) => prev + 1);
+        } else {
+          setCurrentIndex(0);
+        }
+      } else {
+        if (currentIndex > 0) {
+          setCurrentIndex((prev) => prev - 1);
+        } else {
+          setCurrentIndex(works.length - 1);
+        }
+      }
 
-  // ガラスの質感
-  const glassClass = currentWork.theme.isLight
-    ? "bg-white/50 border border-white/60 backdrop-blur-md" // Light
-    : "bg-white/[0.04] border border-white/10 backdrop-blur-[20px]"; // Dark
+      setTimeout(() => setIsScrolling(false), 800);
+    };
 
-  // 共通カードクラス
-  // SP: 12px, PC: 16px
-  const cardClass = `rounded-[12px] md:rounded-[16px] w-full transition-colors duration-500 ${glassClass}`;
+    window.addEventListener("wheel", handleWheel);
+    return () => window.removeEventListener("wheel", handleWheel);
+  }, [isScrolling, currentIndex]);
 
-  // Gap設定 (Bento Grid ごとの余白)
-  // PC: 12px, SP: 8px
-  const gridGapClass = "mb-2 md:mb-[12px]";
+  // キーボード操作
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (window.innerWidth <= 768) return;
+      if (isScrolling) return;
 
-  // Bento Grid 内の余白 (PC: 上下56px 左右40px / SP: 上下32px 左右20px)
-  const cardPaddingClass = "py-[32px] px-[20px] md:py-[56px] md:px-[40px]";
+      if (e.key === "ArrowDown" || e.key === "ArrowRight") {
+        e.preventDefault();
+        setIsScrolling(true);
+        if (currentIndex < works.length - 1) {
+          setCurrentIndex((prev) => prev + 1);
+        } else {
+          setCurrentIndex(0);
+        }
+        setTimeout(() => setIsScrolling(false), 800);
+      } 
+      else if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
+        e.preventDefault();
+        setIsScrolling(true);
+        if (currentIndex > 0) {
+          setCurrentIndex((prev) => prev - 1);
+        } else {
+          setCurrentIndex(works.length - 1);
+        }
+        setTimeout(() => setIsScrolling(false), 800);
+      }
+    };
 
-  // テキストカラー
-  const textColor = { color: currentWork.detailTheme.text };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isScrolling, currentIndex]);
 
-  // ギャラリー画像があるかどうかの判定 (メイン以外の画像があるか)
-  const hasGalleryImages = currentWork.images && currentWork.images.length > 1;
+  // テーマカラー更新
+  useEffect(() => {
+    setBgColor(works[currentIndex].theme.bg);
+    setTextColor(works[currentIndex].theme.text);
+  }, [currentIndex]);
+
+  // SP: スクロール検知
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!spContainerRef.current) return;
+      const scrollCenter =
+        spContainerRef.current.scrollTop + window.innerHeight / 2;
+
+      const sections =
+        spContainerRef.current.querySelectorAll(".sp-card-section");
+      sections.forEach((sec, i) => {
+        const element = sec as HTMLElement;
+        const top = element.offsetTop;
+        const bottom = top + element.offsetHeight;
+
+        if (scrollCenter >= top && scrollCenter < bottom) {
+          setBgColor(works[i].theme.bg);
+          setTextColor(works[i].theme.text);
+        }
+      });
+    };
+
+    const container = spContainerRef.current;
+    if (container) {
+      container.addEventListener("scroll", handleScroll);
+      return () => container.removeEventListener("scroll", handleScroll);
+    }
+  }, []);
 
   return (
-    <>
+    <div className="overflow-hidden">
+      <div
+        className="fixed top-0 left-0 w-full h-full -z-10 transition-colors duration-[800ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
+        style={{ backgroundColor: bgColor }}
+      />
+
       <GlobalHeader />
 
+      {/* ==============================================
+          PC View
+      ============================================== */}
       <main
-        className="w-full min-h-screen transition-colors duration-500 pt-[72px] pb-20"
-        style={{ backgroundColor: currentWork.detailTheme.bg }}
+        className="hidden md:flex h-screen w-full pt-[72px]"
+        style={{ color: textColor }}
       >
-        {/* コンテナ: Max 880px (コンテンツ実質720px + padding 160px) */}
-        <div className="max-w-[880px] mx-auto px-5 md:px-20 w-full" style={textColor}>
-
-          {/* =================================================
-              1. Hero Card
-          ================================================= */}
-          <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass}`}>
-            {/* タイトル */}
-            <h1 className="font-inter font-bold text-[44px] md:text-[72px] leading-[1.1] tracking-[0.04em] mb-6 md:mb-[28px] break-words">
+        {/* 左カラム: 幅を600pxに修正 */}
+        <div className="w-[600px] shrink-0 h-full flex items-center pl-20 pr-12 relative z-10">
+          <div className="w-full break-words">
+            <h1 className="font-inter text-[72px] leading-[1.1] tracking-[0.04em] font-bold mb-8 break-words">
               {currentWork.title}
             </h1>
 
-            <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8 md:gap-20 mb-6 md:mb-8">
-              {/* Meta Info */}
-              <div className="flex flex-col md:flex-row gap-3 md:gap-10 w-full">
-                {/* Category */}
-                <div className="flex flex-col gap-3 md:gap-2">
-                  <span className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40">Category</span>
-                  <span className="font-inter text-[12px] md:text-[14px] leading-none tracking-[0.02em]">{currentWork.category}</span>
-                </div>
-                {/* Role */}
-                <div className="flex flex-col gap-3 md:gap-2">
-                  <span className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40">Role</span>
-                  <span className="font-inter text-[12px] md:text-[14px] leading-none tracking-[0.02em]">{currentWork.role}</span>
-                </div>
-                {/* Year */}
-                <div className="flex flex-col gap-3 md:gap-2">
-                  <span className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40">Date</span>
-                  <span className="font-inter text-[12px] md:text-[14px] leading-none tracking-[0.02em]">{currentWork.year}</span>
-                </div>
-              </div>
-
-              {/* Visit Website Button */}
-              {/* ★修正: URLがある場合のみ表示 */}
-              {currentWork.url && (
-                <div className="shrink-0 mt-2 md:mt-0">
-                  <a
-                    href={currentWork.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-1 font-inter font-medium text-[14px] md:text-[16px] leading-none tracking-[0.02em] hover:opacity-60 transition-opacity group"
-                    style={{ color: currentWork.detailTheme.text }}
-                  >
-                    Visit Website
-                    <span className="group-hover:translate-x-1 transition-transform">›</span>
-                  </a>
-                </div>
-              )}
+            <div className="font-inter text-[14px] leading-[1.0] tracking-[0.02em] opacity-60 mb-6">
+              <span>{currentWork.category}</span>
+              <span className="mx-2">|</span>
+              <span className="mx-2">{currentWork.year}</span>
             </div>
 
-            {/* Main Visual */}
-            <div className="mt-[24px] md:mt-[32px] w-full">
-               {currentWork.images && currentWork.images[0] && (
-                  <img
-                    src={currentWork.images[0]}
-                    alt="Main Visual"
-                    className="block w-full aspect-[16/10] object-cover rounded-sm"
-                  />
-               )}
-            </div>
-          </section>
-
-          {/* =================================================
-              2. Context Card (Overview, Insight, Idea)
-          ================================================= */}
-          {currentWork.desc && (
-            <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass} font-noto`}>
-
-              <div className="max-w-[720px] mx-auto">
-                {/* Overview */}
-                <div className="mb-6 md:mb-[40px]">
-                   <h3 className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40 mb-[12px] md:mb-[16px]">Overview</h3>
-                   <p className="text-[12px] md:text-[14px] leading-[1.8] tracking-[0.02em] opacity-75 whitespace-pre-wrap">{currentWork.desc.overview}</p>
-                </div>
-                {/* Insight */}
-                <div className="mb-6 md:mb-[40px]">
-                   <h3 className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40 mb-[12px] md:mb-[16px]">Insight</h3>
-                   <h4 className="text-[16px] md:text-[20px] leading-[1.3] tracking-[0.02em] font-medium mb-[12px] md:mb-[16px]">{currentWork.desc.insight}</h4>
-                   <p className="text-[12px] md:text-[14px] leading-[1.8] tracking-[0.02em] opacity-75 whitespace-pre-wrap">{currentWork.desc.insightText}</p>
-                </div>
-                {/* Idea */}
-                <div>
-                   <h3 className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40 mb-[12px] md:mb-[16px]">Idea</h3>
-                   <h4 className="text-[16px] md:text-[20px] leading-[1.3] tracking-[0.02em] font-medium mb-[12px] md:mb-[16px]">{currentWork.desc.idea}</h4>
-                   <p className="text-[12px] md:text-[14px] leading-[1.8] tracking-[0.02em] opacity-75 whitespace-pre-wrap">{currentWork.desc.ideaText}</p>
-                </div>
-              </div>
-
-            </section>
-          )}
-
-          {/* =================================================
-              3. Gallery Cards
-          ================================================= */}
-          {/* ★修正: メイン以外の画像がある場合のみセクションを表示 */}
-          {hasGalleryImages && (
-            <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass}`}>
-               <div className="flex flex-col gap-[24px] md:gap-[40px]">
-                 {/* slice(1) で2枚目以降を表示 */}
-                 {currentWork.images.slice(1).map((imgUrl, idx) => (
-                   <img key={idx} src={imgUrl} alt={`Gallery ${idx + 1}`} className="w-full h-auto rounded-sm" />
-                 ))}
-               </div>
-            </section>
-          )}
-
-          {/* =================================================
-              4. Navigation Footer
-          ================================================= */}
-          <div className="flex flex-col md:flex-row gap-[8px] md:gap-[12px] mt-2 md:mt-[12px]">
-
-            {/* TOP Button */}
-            <Link
-              href="/"
-              className={`group md:w-1/3 w-full flex flex-col items-start justify-center py-[28px] px-[20px] md:py-[48px] md:px-[40px] transition-transform duration-300 hover:-translate-y-1 ${cardClass}`}
+            <p
+              className="font-noto text-[14px] leading-[2.0] tracking-[0.04em] opacity-80 mb-10 font-normal break-words"
             >
-              <span className="font-inter font-medium text-[14px] md:text-[20px] tracking-wider group-hover:opacity-60 transition-opacity">
-                ‹ TOP
-              </span>
-            </Link>
+              {currentWork.desc.overview}
+            </p>
 
-            {/* Next Project Button */}
             <Link
-              href={`/works/${nextWork.slug}`}
-              className={`group md:flex-1 w-full flex flex-col items-start justify-center py-[40px] px-[20px] md:py-[48px] md:px-[40px] transition-transform duration-300 hover:-translate-y-1 ${cardClass}`}
+              href={`/works/${currentWork.slug}`}
+              className="inline-flex items-center gap-2 text-[14px] font-medium no-underline hover:opacity-70 transition-opacity"
+              style={{ color: textColor }}
             >
-              <div className="flex flex-row items-center gap-2 md:gap-4 w-full">
-                 <span className="font-inter font-medium text-[14px] md:text-[20px] tracking-wider whitespace-nowrap shrink-0">
-                   Next Project <span className="ml-1">›</span>
-                 </span>
-                 <span className="font-inter text-[12px] md:text-[20px] opacity-60 break-all">
-                   {nextWork.title}
-                 </span>
-              </div>
+              View Project
+              <span className="text-[16px] leading-none pb-[2px]">›</span>
             </Link>
           </div>
+        </div>
 
+        {/* 右カラム */}
+        <div className="flex-1 h-full flex pr-20 relative min-w-0">
+          
+          <div className="flex-1 h-full relative overflow-hidden">
+            <div
+              className="absolute left-0 w-full transition-transform duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
+              style={{
+                top: "50%",
+                transform: `translateY(-${currentIndex * (imgHeight + CARD_GAP) + (imgHeight / 2)}px)`,
+              }}
+            >
+              {works.map((work, index) => (
+                <div
+                    key={work.id}
+                    className="w-full"
+                    style={{ marginBottom: `${CARD_GAP}px` }}
+                >
+                    <img
+                        ref={index === 0 ? imgRef : null}
+                        src={work.thumbnail}
+                        alt={work.title}
+                        className={`block w-full aspect-[16/10] object-cover rounded-sm transition-all duration-[800ms] ${
+                        index === currentIndex
+                            ? "opacity-100 grayscale-0 scale-100"
+                            : "opacity-30 grayscale scale-95"
+                        }`}
+                    />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="ml-8 h-full flex flex-col justify-center items-center gap-4 z-10 w-2 shrink-0">
+            {works.map((work, index) => (
+              <button
+                key={work.id}
+                onClick={() => setCurrentIndex(index)}
+                className={`w-2 h-4 rounded-full cursor-pointer transition-all border-0 ${
+                  index === currentIndex
+                    ? "opacity-100 bg-current"
+                    : "opacity-30 bg-current hover:opacity-60"
+                }`}
+                style={{ backgroundColor: textColor }}
+                aria-label={`Go to ${work.title}`}
+              />
+            ))}
+          </div>
         </div>
       </main>
-    </>
+
+      {/* ==============================================
+          SP View
+      ============================================== */}
+      <main
+        ref={spContainerRef}
+        className="md:hidden h-screen overflow-y-scroll snap-y snap-mandatory"
+        style={{
+          WebkitOverflowScrolling: "touch",
+        }}
+      >
+        {works.map((work) => (
+          <div
+            key={work.id}
+            // min-h-screen: 最低でも画面高さ（snapのため）。長い場合は伸びる。
+            className="sp-card-section min-h-screen w-full snap-start flex flex-col pt-[72px] pb-5 px-5"
+          >
+            <div
+                // ★修正: flex-1 を h-auto に変更（中身の量に合わせる）
+                className={`w-full h-auto rounded-[32px] flex flex-col transition-all duration-500 py-12 px-5 ${
+                    work.theme.isLight
+                    ? "bg-white/50 border border-white/60"
+                    : "bg-white/[0.04] backdrop-blur-[20px] border border-white/10"
+                }`}
+                style={{ color: work.theme.isLight ? "#333" : "#FFF" }}
+            >
+                <img
+                    src={work.thumbnail}
+                    alt={work.title}
+                    className="w-full aspect-[16/10] object-cover rounded mb-8"
+                />
+
+                <div className="break-words">
+                    <h2 className="font-inter text-[44px] leading-[1.05] font-bold mb-6">
+                    {work.title}
+                    </h2>
+
+                    <div className="font-inter text-[12px] opacity-60 mb-4 tracking-[0.02em]">
+                    {work.category} | {work.year}
+                    </div>
+
+                    <p
+                    className="font-noto text-[12px] opacity-80 leading-[1.8] mb-8 break-words"
+                    >
+                    {work.desc.overview}
+                    </p>
+
+                    <Link
+                    href={`/works/${work.slug}`}
+                    className="text-[14px] flex items-center gap-2 font-medium no-underline hover:opacity-70 transition-opacity"
+                    style={{ color: work.theme.isLight ? "#333" : "#FFF" }}
+                    >
+                    View Project
+                    <span className="text-[16px] leading-none pb-[2px]">›</span>
+                    </Link>
+                </div>
+            </div>
+          </div>
+        ))}
+      </main>
+    </div>
   );
 }
