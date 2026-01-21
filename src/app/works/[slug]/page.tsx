@@ -130,7 +130,7 @@ export default function WorkDetail() {
           ================================================= */}
           {currentWork.desc && (
             <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass} font-noto`}>
-              
+
               <div className="max-w-[720px] mx-auto">
                 {/* Overview */}
                 <div className="mb-6 md:mb-[40px]">
@@ -173,7 +173,7 @@ export default function WorkDetail() {
               4. Navigation Footer
           ================================================= */}
           <div className="flex flex-col md:flex-row gap-[8px] md:gap-[12px] mt-2 md:mt-[12px]">
-            
+
             {/* TOP Button */}
             <Link
               href="/"
