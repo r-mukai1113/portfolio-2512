@@ -5,8 +5,17 @@ import { works } from "@/data/works";
 import { notFound, useParams } from "next/navigation";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-// ★追加: フックをインポート
 import { useThemeColor } from "@/hooks/useThemeColor";
+
+// ★重要: 前回の修正で追加した generateStaticParams がもし消えていたら、
+// 下記のコメントアウトを外して復活させてください（今回は提示コード通りに記述します）
+/*
+export function generateStaticParams() {
+  return works.map((work) => ({
+    slug: work.slug,
+  }));
+}
+*/
 
 export default function WorkDetail() {
   const params = useParams();
@@ -18,8 +27,7 @@ export default function WorkDetail() {
   const nextIndex = (currentIndex + 1) % works.length;
   const nextWork = works[nextIndex];
 
-  // ★追加: テーマカラーを適用 (currentWorkがある場合のみ)
-  // これにより、上下のオーバースクロール部分の色も背景色と一致します
+  // テーマカラーを適用
   useThemeColor(currentWork?.detailTheme?.bg || "");
 
   // クライアントサイドでのレンダリング待機
@@ -45,20 +53,18 @@ export default function WorkDetail() {
     : "bg-white/[0.04] border border-white/10 backdrop-blur-[20px]"; // Dark
 
   // 共通カードクラス
-  // SP: 12px, PC: 16px
   const cardClass = `rounded-[12px] md:rounded-[16px] w-full transition-colors duration-500 ${glassClass}`;
 
-  // Gap設定 (Bento Grid ごとの余白)
-  // PC: 12px, SP: 8px
+  // Gap設定
   const gridGapClass = "mb-2 md:mb-[12px]";
 
-  // Bento Grid 内の余白 (PC: 上下56px 左右40px / SP: 上下32px 左右20px)
+  // Bento Grid 内の余白
   const cardPaddingClass = "py-[32px] px-[20px] md:py-[56px] md:px-[40px]";
 
   // テキストカラー
   const textColor = { color: currentWork.detailTheme.text };
 
-  // ギャラリー画像があるかどうかの判定 (メイン以外の画像があるか)
+  // ギャラリー画像があるかどうかの判定
   const hasGalleryImages = currentWork.images && currentWork.images.length > 1;
 
   return (
@@ -69,7 +75,7 @@ export default function WorkDetail() {
         className="w-full min-h-screen transition-colors duration-500 pt-[72px] pb-20"
         style={{ backgroundColor: currentWork.detailTheme.bg }}
       >
-        {/* コンテナ: Max 880px (コンテンツ実質720px + padding 160px) */}
+        {/* コンテナ */}
         <div className="max-w-[880px] mx-auto px-5 md:px-20 w-full" style={textColor}>
 
           {/* =================================================
@@ -77,7 +83,8 @@ export default function WorkDetail() {
           ================================================= */}
           <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass}`}>
             {/* タイトル */}
-            <h1 className="font-inter font-bold text-[44px] md:text-[72px] leading-[1.1] tracking-[0.04em] mb-6 md:mb-[28px] break-words">
+            {/* ★修正: SPサイズを 44px -> 32px に変更 */}
+            <h1 className="font-inter font-bold text-[32px] md:text-[72px] leading-[1.1] tracking-[0.04em] mb-6 md:mb-[28px] break-words">
               {currentWork.title}
             </h1>
 
@@ -103,7 +110,8 @@ export default function WorkDetail() {
 
               {/* Visit Website Button */}
               {currentWork.url && (
-                <div className="shrink-0 mt-2 md:mt-0">
+                // ★修正: mt-2 を削除 (mt-0に) して8px詰める
+                <div className="shrink-0 mt-0 md:mt-0">
                   <a
                     href={currentWork.url}
                     target="_blank"
