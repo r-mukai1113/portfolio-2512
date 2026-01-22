@@ -54,8 +54,11 @@ export default function WorkDetail() {
   const textColor = { color: currentWork.detailTheme.text };
   const hasGalleryImages = currentWork.images && currentWork.images.length > 1;
 
-  // ラベルと値の間の余白設定 (SP:12px / PC:12px)
   const metaItemGap = "flex flex-col gap-3 md:gap-[12px]";
+
+  // ★追加: Aboutページと共通のボタン用スタイル (高さ固定・パディング統一)
+  const navButtonPadding = "px-[20px] md:px-[40px]";
+  const baseNavButtonClass = `group flex flex-col items-start justify-center ${cardClass} ${navButtonPadding} h-[72px] md:h-[120px] hover:-translate-y-1`;
 
   return (
     <>
@@ -71,8 +74,6 @@ export default function WorkDetail() {
               1. Hero Card
           ================================================= */}
           <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass}`}>
-            
-            {/* ★修正: PCサイズを 72px -> 64px に変更 */}
             <h1 className="font-inter font-bold text-[32px] md:text-[64px] leading-[1.1] tracking-[0.04em] mb-6 md:mb-[28px] break-words">
               {currentWork.title}
             </h1>
@@ -81,19 +82,16 @@ export default function WorkDetail() {
               
               {/* Meta Info */}
               <div className="flex flex-col md:flex-row gap-6 md:gap-10 w-full">
-                
                 {/* Category */}
                 <div className={metaItemGap}>
                   <span className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40">Category</span>
                   <span className="font-inter text-[12px] md:text-[14px] leading-none tracking-[0.02em]">{currentWork.category}</span>
                 </div>
-                
                 {/* Role */}
                 <div className={metaItemGap}>
                   <span className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40">Role</span>
                   <span className="font-inter text-[12px] md:text-[14px] leading-none tracking-[0.02em]">{currentWork.role}</span>
                 </div>
-                
                 {/* Year */}
                 <div className={metaItemGap}>
                   <span className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40">Year</span>
@@ -131,7 +129,7 @@ export default function WorkDetail() {
           </section>
 
           {/* =================================================
-              2. Context Card (Overview, Insight, Idea)
+              2. Context Card
           ================================================= */}
           {currentWork.desc && (
             <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass} font-noto`}>
@@ -168,30 +166,31 @@ export default function WorkDetail() {
           )}
 
           {/* =================================================
-              4. Navigation Footer
+              4. Navigation Footer (Updated to match About page style)
           ================================================= */}
-          <div className="flex flex-col md:flex-row gap-[8px] md:gap-[12px] mt-2 md:mt-[12px]">
+          <div className="flex flex-row gap-[8px] md:gap-[12px] mt-2 md:mt-[12px]">
 
-            {/* TOP Button */}
+            {/* TOP Button (flex-1) */}
             <Link
               href="/"
-              className={`group md:w-1/3 w-full flex flex-col items-start justify-center py-[28px] px-[20px] md:py-[48px] md:px-[40px] transition-transform duration-300 hover:-translate-y-1 ${cardClass}`}
+              className={`flex-1 ${baseNavButtonClass}`}
             >
-              <span className="font-inter font-medium text-[14px] md:text-[20px] tracking-wider group-hover:opacity-60 transition-opacity">
+              <span className="font-inter font-bold text-[14px] md:text-[20px] tracking-wider group-hover:opacity-60 transition-opacity">
                 ‹ TOP
               </span>
             </Link>
 
-            {/* Next Project Button */}
+            {/* Next Project Button (flex-2) */}
             <Link
               href={`/works/${nextWork.slug}`}
-              className={`group md:flex-1 w-full flex flex-col items-start justify-center py-[40px] px-[20px] md:py-[48px] md:px-[40px] transition-transform duration-300 hover:-translate-y-1 ${cardClass}`}
+              className={`flex-[2] ${baseNavButtonClass}`}
             >
-              <div className="flex flex-row items-center gap-2 md:gap-4 w-full">
-                  <span className="font-inter font-medium text-[14px] md:text-[20px] tracking-wider whitespace-nowrap shrink-0">
+              <div className="flex flex-row items-center gap-2 md:gap-4 w-full overflow-hidden">
+                  <span className="font-inter font-bold text-[14px] md:text-[20px] tracking-wider whitespace-nowrap shrink-0 group-hover:opacity-60 transition-opacity">
                     Next Project <span className="ml-1">›</span>
                   </span>
-                  <span className="font-inter text-[12px] md:text-[20px] opacity-60 break-all">
+                  {/* タイトルが長い場合に備えて truncate を適用 */}
+                  <span className="font-inter text-[12px] md:text-[20px] opacity-60 truncate group-hover:opacity-40 transition-opacity">
                     {nextWork.title}
                   </span>
               </div>
