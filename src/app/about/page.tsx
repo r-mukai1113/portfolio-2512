@@ -31,17 +31,14 @@ const likesData: LikeItem[] = [
 ];
 
 export default function ProfilePage() {
-  // 背景色
   useThemeColor("#F0F2F5");
 
   const [selectedLike, setSelectedLike] = useState<LikeItem | null>(null);
 
-  // 現在のインデックスを取得
   const currentIndex = selectedLike
     ? likesData.findIndex((item) => item.id === selectedLike.id)
     : -1;
 
-  // モーダル操作: 次へ (ループなし)
   const handleNext = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (currentIndex !== -1 && currentIndex < likesData.length - 1) {
@@ -49,7 +46,6 @@ export default function ProfilePage() {
     }
   };
 
-  // モーダル操作: 前へ (ループなし)
   const handlePrev = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (currentIndex > 0) {
@@ -57,12 +53,10 @@ export default function ProfilePage() {
     }
   };
 
-  // モーダルを閉じる
   const handleClose = (e?: React.MouseEvent) => {
     e?.stopPropagation();
     setSelectedLike(null);
   }
-
 
   // =================================================================
   // デザインシステム
@@ -78,49 +72,33 @@ export default function ProfilePage() {
   const cardClass = `rounded-[12px] md:rounded-[16px] w-full transition-colors duration-500 ${glassClass}`;
   const gridGapClass = "mb-2 md:mb-[12px]";
   const cardPaddingClass = "py-[32px] px-[20px] md:py-[56px] md:px-[40px]";
-
   const navButtonClass = `group flex-1 flex flex-col items-start justify-center ${cardClass} ${cardPaddingClass} hover:-translate-y-1`;
 
-  // モーダル用スタイル
+  // モーダル用クラス定義
   const modalTitleClass = "font-noto font-bold text-[16px] md:text-[20px] text-[#333] mb-4 text-center leading-[1.3] tracking-[0.02em]";
   const modalBodyClass = "font-noto text-sm text-[#666] leading-relaxed opacity-75 text-center";
-  const modalNavButtonClass = "font-inter text-sm font-bold text-gray-400 hover:text-gray-600 transition-colors flex items-center gap-1";
-
+  
+  // PREV/NEXTボタン: SP:10px / PC:12px
+  const modalNavButtonClass = "font-inter text-[10px] md:text-[12px] font-bold text-gray-400 hover:text-gray-600 transition-colors flex items-center gap-1 p-2";
 
   return (
     <>
       <GlobalHeader />
 
       <main className="w-full min-h-screen bg-[#F0F2F5] pt-[72px] pb-20 transition-colors duration-500">
-        
         <div className="max-w-[880px] mx-auto w-full px-5 md:px-20 text-[#333]">
 
-          {/* =================================================
-              1. Main Identity (Photo & Bio)
-          ================================================= */}
+          {/* 1. Main Identity */}
           <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass}`}>
-            
             <div className="w-full aspect-[16/9] rounded-[4px] overflow-hidden mb-[40px]">
-              <img 
-                src="/images/2026portfolio_profile_2_1.png" 
-                alt="RYUTA MUKAI Profile"
-                className="w-full h-full object-cover"
-              />
+              <img src="/images/2026portfolio_profile_2_1.png" alt="RYUTA MUKAI Profile" className="w-full h-full object-cover"/>
             </div>
-
             <div className="mb-[16px]">
-              <span className="block font-inter font-bold text-[16px] tracking-[0.02em] opacity-80 mb-[16px]">
-                Web Designer
-              </span>
-              <h1 className="font-inter font-bold text-[32px] md:text-[48px] leading-none">
-                RYUTA MUKAI
-              </h1>
+              <span className="block font-inter font-bold text-[16px] tracking-[0.02em] opacity-80 mb-[16px]">Web Designer</span>
+              <h1 className="font-inter font-bold text-[32px] md:text-[48px] leading-none">RYUTA MUKAI</h1>
             </div>
-
             <div className="mt-8">
-              <span className={TEXT_STYLES.LABEL}>
-                Profile
-              </span>
+              <span className={TEXT_STYLES.LABEL}>Profile</span>
               <div className={TEXT_STYLES.BODY}>
                 <p className="mb-6">
                   2000年生まれ、千葉県出身。Webデザイナー。<br />
@@ -134,20 +112,12 @@ export default function ProfilePage() {
             </div>
           </section>
 
-          {/* =================================================
-              2. mutalog (Personal Media)
-          ================================================= */}
+          {/* 2. mutalog */}
           <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass}`}>
             <div className="flex flex-col h-full justify-between">
               <div>
-                <span className={TEXT_STYLES.LABEL}>
-                  Personal Media
-                </span>
-                
-                <h2 className={`${TEXT_STYLES.CARD_TITLE} mb-6 whitespace-nowrap`}>
-                  暮らしの記録、ムタログ。
-                </h2>
-                
+                <span className={TEXT_STYLES.LABEL}>Personal Media</span>
+                <h2 className={`${TEXT_STYLES.CARD_TITLE} mb-6 whitespace-nowrap`}>暮らしの記録、ムタログ。</h2>
                 <div className={`${TEXT_STYLES.BODY} mb-8`}>
                   <p className="mb-6">
                     生活のノイズを減らし、心に余白を作るためのライフログです。<br className="hidden md:block"/>
@@ -159,33 +129,18 @@ export default function ProfilePage() {
                   </p>
                 </div>
               </div>
-              
-              <a 
-                href="https://www.instagram.com/mutalog_muji/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 font-inter font-bold text-[12px] md:text-[14px] opacity-60 hover:opacity-100 transition-opacity"
-              >
-                View Instagram 
-                <span className="text-[14px] md:text-[16px] mb-[2px]">›</span>
+              <a href="https://www.instagram.com/mutalog_muji/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 font-inter font-bold text-[12px] md:text-[14px] opacity-60 hover:opacity-100 transition-opacity">
+                View Instagram <span className="text-[14px] md:text-[16px] mb-[2px]">›</span>
               </a>
             </div>
           </section>
 
-          {/* =================================================
-              3. Likes (Interactive Pills)
-          ================================================= */}
+          {/* 3. Likes */}
           <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass}`}>
             <div className="mb-6">
-              <span className={TEXT_STYLES.LABEL}>
-                Likes
-              </span>
-              <p className={TEXT_STYLES.BODY}>
-                好奇心が旺盛で、食わず嫌いをしないのが自慢です。
-              </p>
+              <span className={TEXT_STYLES.LABEL}>Likes</span>
+              <p className={TEXT_STYLES.BODY}>好奇心が旺盛で、食わず嫌いをしないのが自慢です。</p>
             </div>
-
-            {/* Tag List */}
             <div className="flex flex-wrap gap-3">
               {likesData.map((item) => (
                 <button
@@ -195,29 +150,20 @@ export default function ProfilePage() {
                 >
                   <span className="text-[12px] md:text-[14px]">{item.emoji}</span>
                   <span className="font-bold font-noto text-[10px] md:text-[12px]">{item.text}</span>
-                  <span className="opacity-40 text-[10px] md:text-[12px] group-hover:scale-110 transition-transform">
-                    +
-                  </span>
+                  <span className="opacity-40 text-[10px] md:text-[12px] group-hover:scale-110 transition-transform">+</span>
                 </button>
               ))}
             </div>
           </section>
 
-          {/* =================================================
-              4. Navigation Footer
-          ================================================= */}
+          {/* 4. Footer Nav */}
           <div className="flex flex-row gap-[8px] md:gap-[12px] mt-2 md:mt-[12px]">
             <Link href="/" className={navButtonClass}>
-              <span className="font-inter font-bold text-[14px] md:text-[20px] tracking-wider group-hover:opacity-60 transition-opacity">
-                ‹ Works
-              </span>
+              <span className="font-inter font-bold text-[14px] md:text-[20px] tracking-wider group-hover:opacity-60 transition-opacity">‹ Works</span>
             </Link>
-
             <Link href="/contact" className={navButtonClass}>
               <div className="flex items-center gap-2 w-full">
-                <span className="font-inter font-bold text-[14px] md:text-[20px] tracking-wider">
-                  Contact
-                </span>
+                <span className="font-inter font-bold text-[14px] md:text-[20px] tracking-wider">Contact</span>
                 <span className="font-inter text-[14px] md:text-[20px] mb-[2px]">›</span>
               </div>
             </Link>
@@ -227,71 +173,69 @@ export default function ProfilePage() {
       </main>
 
       {/* =================================================
-          Likes Modal (Overlay) - 新UI
+          Likes Modal (Overlay)
       ================================================= */}
       {selectedLike && (
         <div 
           className="fixed inset-0 z-[200] flex items-center justify-center px-5"
           onClick={handleClose}
         >
-          {/* 背景オーバーレイ */}
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" />
 
-          {/* モーダル本体 */}
+          {/* モーダル本体: 角丸修正 SP:8px PC:12px, 余白調整 */}
           <div 
-            className="relative w-full max-w-[500px] bg-white rounded-[24px] p-6 md:p-8 shadow-2xl transform transition-all animate-in fade-in zoom-in-95 duration-200"
+            className="relative w-full max-w-[500px] bg-white rounded-[8px] md:rounded-[12px] px-6 py-8 md:px-8 md:py-10 shadow-2xl transform transition-all animate-in fade-in zoom-in-95 duration-200"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* ヘッダー: ラベルと閉じるボタン */}
+            {/* ヘッダー */}
             <div className="flex justify-between items-center mb-6 md:mb-8">
               <span className="font-inter text-sm opacity-40 tracking-wider">Likes</span>
+              
+              {/* 閉じるボタン: 背景なし、中央揃え調整 */}
               <button
                 onClick={handleClose}
-                className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-full text-black transition-colors"
+                className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full text-black/40 hover:text-black transition-colors"
               >
-                ✕
+                {/* leading-none で上下位置を中央に安定させる */}
+                <span className="text-xl leading-none font-light">✕</span>
               </button>
             </div>
 
-            {/* メインコンテンツ: 画像、タイトル、本文 */}
+            {/* メインコンテンツ */}
             <div className="flex flex-col items-center mb-8">
-              {/* 画像コンテナ (正方形) */}
-              <div className="w-full max-w-[320px] aspect-square rounded-xl overflow-hidden mb-6 shadow-sm bg-gray-50">
+              {/* 画像: 角丸4px, SP最大280px */}
+              <div className="w-full max-w-[280px] md:max-w-[320px] aspect-square rounded-[4px] overflow-hidden mb-6 bg-gray-50">
                 <img 
                   src={selectedLike.image} 
                   alt={selectedLike.text}
                   className="w-full h-full object-cover"
                 />
               </div>
-              {/* タイトル */}
               <h3 className={modalTitleClass}>
                 <span className="mr-2">{selectedLike.emoji}</span>
                 {selectedLike.text}
               </h3>
-              {/* 本文 */}
               <p className={modalBodyClass}>
                 {selectedLike.comment}
               </p>
             </div>
 
-            {/* フッター: ナビゲーション (PREV / NEXT) */}
-            <div className="flex justify-between items-center w-full">
-              {/* PREV ボタン (先頭以外で表示) */}
+            {/* フッター: PREV / NEXT */}
+            <div className="flex justify-between items-center w-full min-h-[32px]">
               {currentIndex > 0 ? (
                 <button onClick={handlePrev} className={modalNavButtonClass}>
-                  <span>←</span> PREV
+                  <span>&lt;</span> PREV
                 </button>
               ) : (
-                <div /> /* レイアウト維持用のダミー */
+                <div />
               )}
 
-              {/* NEXT ボタン (末尾以外で表示) */}
               {currentIndex < likesData.length - 1 ? (
                 <button onClick={handleNext} className={modalNavButtonClass}>
-                  NEXT <span>→</span>
+                  NEXT <span>&gt;</span>
                 </button>
               ) : (
-                <div /> /* レイアウト維持用のダミー */
+                <div />
               )}
             </div>
 
