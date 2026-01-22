@@ -26,7 +26,7 @@ export interface Work {
   // 詳細テキスト (Bento Grid用)
   desc: {
     overview: string;
-    insight: string;     // 課題の見出し
+    insight: string;      // 課題の見出し
     insightText: string; // 課題の本文
     idea: string;        // 解決策の見出し
     ideaText: string;    // 解決策の本文
@@ -34,6 +34,9 @@ export interface Work {
 
   // 詳細ページ用画像ギャラリー
   images: string[];
+
+  // ★追加: 使用ツール・技術スタック (ここを追加しないとエラーになります)
+  tools?: string[];
 }
 
 export const works: Work[] = [
@@ -46,6 +49,9 @@ export const works: Work[] = [
     role: "Design / Implementation",
     url: "https://ytag.jp/",
     thumbnail: "https://placehold.co/800x500/E6E6E6/333?text=Y-Tag",
+    
+    // ★追加: サンプルとして入れています。必要に応じて書き換えてください。
+    tools: ["Figma", "Next.js", "Tailwind CSS"],
 
     theme: {
       bg: "#F0F2F5",
@@ -81,6 +87,9 @@ export const works: Work[] = [
     role: "Branding / Design",
     url: "https://monolith-tokyo.jp/",
     thumbnail: "https://placehold.co/800x500/111/FFF?text=Monolith",
+    
+    // ★追加
+    tools: ["Figma", "React", "GSAP"],
 
     theme: {
       bg: "#111111",
@@ -116,6 +125,9 @@ export const works: Work[] = [
     url: "https://lily-r-braids.studio.site/",
     thumbnail: "https://placehold.co/800x500/D8C3B5/FFF?text=Lily",
 
+    // ★追加
+    tools: ["Figma", "Studio"],
+
     theme: {
       bg: "#E8DCCA",
       text: "#333333",
@@ -148,6 +160,9 @@ export const works: Work[] = [
     role: "Design / Coding",
     url: "https://www.yachicro.com/",
     thumbnail: "https://placehold.co/800x500/3E3A39/FFF?text=YACHIMATA",
+
+    // ★追加
+    tools: ["Figma", "VS Code", "WordPress"],
 
     theme: {
       bg: "#3E3A39",
@@ -182,6 +197,9 @@ export const works: Work[] = [
     url: "https://minz.luluvision.jp/",
     thumbnail: "https://placehold.co/800x500/004D40/FFF?text=Min'z",
 
+    // ★追加
+    tools: ["Figma", "Shopify"],
+
     theme: {
       bg: "#004D40",
       text: "#FFFFFF",
@@ -214,6 +232,9 @@ export const works: Work[] = [
     role: "Design",
     url: "https://frameinterior.net/",
     thumbnail: "https://placehold.co/800x500/000/FFF?text=frame",
+
+    // ★追加
+    tools: ["Figma"],
 
     theme: {
       bg: "#000000",
