@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { useThemeColor } from "@/hooks/useThemeColor";
 
 export default function Contact() {
-  // 1. 背景色の引き継ぎ対策 (Aboutなどと同様に固定色を指定)
   useThemeColor("#F0F2F5");
   
   const router = useRouter();
@@ -60,7 +59,6 @@ export default function Contact() {
   // デザインシステム
   // =================================================================
 
-  // アクセントカラー (オレンジ)
   const ACCENT_COLOR = "#F37022"; 
 
   const glassClass = "bg-white/50 border border-white/60 backdrop-blur-md";
@@ -68,21 +66,18 @@ export default function Contact() {
   const gridGapClass = "mb-2 md:mb-[12px]";
   const cardPaddingClass = "py-[32px] px-[20px] md:py-[56px] md:px-[40px]";
 
-  // フォーム入力欄: SP文字サイズ 12px / PC 16px
   const inputClass = "w-full bg-white/60 border border-gray-200 rounded-[8px] px-4 py-3 text-[12px] md:text-base text-[#333] placeholder-gray-400 outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-all font-noto";
-  
-  // ラベル: SP文字サイズ 14px / PC 16px
   const labelClass = "block text-[14px] md:text-base font-bold font-noto text-[#333] mb-2";
 
-  // 必須マーク: オレンジに変更
-  const requiredMark = <span style={{ color: ACCENT_COLOR }} className="opacity-80 text-[11px] align-top ml-1">※</span>;
+  // 修正: ※マークのサイズを少し大きく (text-[11px] -> text-[12px])
+  const requiredMark = <span style={{ color: ACCENT_COLOR }} className="opacity-80 text-[12px] align-top ml-1">※</span>;
 
   return (
     <>
       <GlobalHeader />
 
-      {/* Main: 最下部の余白(pb)を32pxに設定 */}
-      <main className="w-full min-h-screen bg-[#F0F2F5] pt-[72px] pb-[32px] transition-colors duration-500">
+      {/* 修正: コピーライト下の余白(pb)を24pxに設定 */}
+      <main className="w-full min-h-screen bg-[#F0F2F5] pt-[72px] pb-6 transition-colors duration-500">
         <div className="max-w-[880px] mx-auto w-full px-5 md:px-20 text-[#333]">
 
           {/* =================================================
@@ -208,12 +203,13 @@ export default function Contact() {
               </div>
 
               {/* 送信ボタン */}
-              <div className="pt-4">
+              {/* 修正: 上部の余白を pt-2 (8px) に設定。影(shadow)を削除 */}
+              <div className="pt-2">
                 <button
                   type="submit"
                   disabled={isSubmitting}
                   style={{ backgroundColor: ACCENT_COLOR }}
-                  className="w-full text-white font-bold font-noto py-4 rounded-[8px] hover:brightness-90 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-0.5 shadow-sm"
+                  className="w-full text-white font-bold font-noto py-4 rounded-[8px] hover:brightness-90 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-0.5"
                 >
                   {isSubmitting ? "送信中..." : "送信する"}
                 </button>
@@ -223,7 +219,8 @@ export default function Contact() {
           </section>
 
           {/* Footer (Copyright) */}
-          <footer className="mt-12 text-center">
+          {/* 修正: 上部の余白を mt-6 (24px) に設定 */}
+          <footer className="mt-6 text-center">
              <p className="font-inter text-[10px] md:text-[12px] opacity-40">
                ©2025 Ryuta Mukai
              </p>
