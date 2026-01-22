@@ -232,7 +232,8 @@ export default function WorkDetail() {
               href="/"
               className={`flex-1 ${baseNavButtonClass}`}
             >
-              <span className="font-inter font-bold text-[14px] md:text-[20px] tracking-wider group-hover:opacity-60 transition-opacity">
+              {/* 修正: text-[14px] -> text-[12px] に変更 */}
+              <span className="font-inter font-bold text-[12px] md:text-[20px] tracking-wider group-hover:opacity-60 transition-opacity">
                 ‹ Works
               </span>
             </Link>
@@ -242,10 +243,12 @@ export default function WorkDetail() {
               className={`flex-[2] ${baseNavButtonClass}`}
             >
               <div className="flex flex-row items-center gap-2 md:gap-4 w-full overflow-hidden">
-                  <span className="font-inter font-bold text-[14px] md:text-[20px] tracking-wider whitespace-nowrap shrink-0 group-hover:opacity-60 transition-opacity">
+                  {/* 修正: text-[14px] -> text-[12px] に変更 */}
+                  <span className="font-inter font-bold text-[12px] md:text-[20px] tracking-wider whitespace-nowrap shrink-0 group-hover:opacity-60 transition-opacity">
                     Next Project <span className="ml-1">›</span>
                   </span>
-                  <span className="font-inter text-[12px] md:text-[20px] opacity-60 truncate group-hover:opacity-40 transition-opacity">
+                  {/* 修正: text-[12px] -> text-[10px] に変更してメリハリをつける */}
+                  <span className="font-inter text-[10px] md:text-[20px] opacity-60 truncate group-hover:opacity-40 transition-opacity">
                     {nextWork.title}
                   </span>
               </div>
