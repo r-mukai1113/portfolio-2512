@@ -55,6 +55,10 @@ export default function ProfilePage() {
   const navButtonPadding = "px-[20px] md:px-[40px]";
   const baseNavButtonClass = `group flex flex-col items-start justify-center ${cardClass} ${navButtonPadding} h-[72px] md:h-[120px] hover:-translate-y-1`;
 
+  // ★Contactボタン専用のクラス（オレンジ背景バージョン）
+  // ガラス感を消して、ソリッドなオレンジ背景にします
+  const contactButtonClass = `group flex flex-col items-start justify-center rounded-[12px] md:rounded-[16px] w-full transition-all duration-300 ${navButtonPadding} h-[72px] md:h-[120px] hover:-translate-y-1 shadow-sm hover:shadow-md`;
+
   const modalTitleClass = "font-noto font-bold text-[16px] md:text-[20px] text-[#333] mb-4 text-center leading-[1.3] tracking-[0.02em]";
   const modalBodyClass = "font-noto text-[12px] md:text-[14px] text-[#666] leading-relaxed opacity-75 text-center";
   const modalNavButtonClass = "font-inter text-[10px] md:text-[12px] font-bold text-gray-400 hover:text-gray-600 transition-colors flex items-center gap-1 p-2";
@@ -92,7 +96,6 @@ export default function ProfilePage() {
             </div>
 
             <div className="mb-[16px]">
-              {/* アクセントカラー適用箇所①: Web Designer */}
               <span 
                 className="block font-inter font-bold text-[12px] md:text-[16px] tracking-[0.02em] opacity-80 mb-[12px] md:mb-[16px]"
                 style={{ color: ACCENT_COLOR }}
@@ -152,31 +155,22 @@ export default function ProfilePage() {
           {/* 3. Identity */}
           <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass}`}>
             <div className="mb-6">
-              {/* 修正: 色を元のグレーに戻す */}
               <span className={TEXT_STYLES.LABEL}>
                 Identity
               </span>
               <p className={TEXT_STYLES.BODY}>好奇心が旺盛で、食わず嫌いをしないのが自慢です。</p>
             </div>
             
-            {/* 修正: SP gap-2 (8px) / PC gap-[10px] */}
             <div className="flex flex-wrap gap-2 md:gap-[10px]">
               {likesData.map((item) => (
                 <button
                   key={item.id}
                   onClick={() => setSelectedLike(item)}
-                  // 修正: 
-                  // SP: px-[13px] py-[8px]
-                  // PC: px-[21px] py-[8px]
                   className="group px-[13px] py-[8px] md:px-[21px] md:py-[8px] bg-[#EEF0F2] hover:bg-[#E4E4E7] rounded-full text-[#333] flex items-center gap-[4px] md:gap-[8px] transition-colors duration-200"
                 >
                   <span className="text-[12px] md:text-[14px]">{item.emoji}</span>
                   <span className="font-bold font-noto text-[10px] md:text-[12px] tracking-wide">{item.text}</span>
-                  {/* 修正: +記号にアクセントカラーを適用 */}
-                  <span 
-                    className="text-[10px] md:text-[12px] group-hover:scale-110 transition-transform"
-                    style={{ color: ACCENT_COLOR }}
-                  >
+                  <span className="opacity-40 text-[10px] md:text-[12px] group-hover:scale-110 transition-transform">
                     +
                   </span>
                 </button>
@@ -186,14 +180,21 @@ export default function ProfilePage() {
 
           {/* 4. Footer Nav (1:2 Ratio) */}
           <div className="flex flex-row gap-[8px] md:gap-[12px] mt-2 md:mt-[12px]">
+            {/* Works: 既存の白ガラススタイル */}
             <Link href="/" className={`flex-1 ${baseNavButtonClass}`}>
               <span className="font-inter font-bold text-[14px] md:text-[20px] tracking-wider group-hover:opacity-60 transition-opacity">‹ Works</span>
             </Link>
 
-            <Link href="/contact" className={`flex-[2] ${baseNavButtonClass}`}>
+            {/* Contact: オレンジ背景スタイル */}
+            <Link 
+              href="/contact" 
+              className={`flex-[2] ${contactButtonClass}`}
+              style={{ backgroundColor: ACCENT_COLOR }}
+            >
               <div className="flex items-center justify-between w-full">
-                <span className="font-inter font-bold text-[14px] md:text-[20px] tracking-wider">Contact</span>
-                <span className="font-inter text-[14px] md:text-[20px] mb-[2px]">›</span>
+                {/* 文字色は白にして視認性を確保 */}
+                <span className="font-inter font-bold text-[14px] md:text-[20px] tracking-wider text-white">Contact</span>
+                <span className="font-inter text-[14px] md:text-[20px] mb-[2px] text-white">›</span>
               </div>
             </Link>
           </div>
