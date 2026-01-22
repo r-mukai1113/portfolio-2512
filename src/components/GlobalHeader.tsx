@@ -7,6 +7,9 @@ import { usePathname } from "next/navigation";
 export const GlobalHeader = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  
+  // アクセントカラー定義
+  const ACCENT_COLOR = "#F37022";
 
   // メニュー開閉時のスクロールロック
   useEffect(() => {
@@ -77,7 +80,7 @@ export const GlobalHeader = () => {
       <div
         className={`md:hidden fixed inset-0 z-40 flex flex-col justify-center items-center transition-all duration-500 ${
           isOpen
-            ? "opacity-100 visible backdrop-blur-md bg-[#1A1A1A]/80" // 透明度を80%に変更し、ガラス感アップ
+            ? "opacity-100 visible backdrop-blur-md bg-[#1A1A1A]/75" // ★変更: 80 -> 75 に透明度を変更
             : "opacity-0 invisible pointer-events-none"
         }`}
       >
@@ -85,27 +88,38 @@ export const GlobalHeader = () => {
         <div className="w-full px-5 flex flex-col items-center">
 
           {/* Main Navigation */}
-          {/* Gapは 40px を維持 */}
           <nav className="flex flex-col items-center gap-[40px]">
-            {navItems.map((item, index) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                className={`font-inter font-medium text-[16px] tracking-[0.05em] text-white transition-all duration-500 transform hover:opacity-60 ${
-                  isOpen
-                    ? "translate-y-0 opacity-100"
-                    : "translate-y-4 opacity-0"
-                }`}
-                style={{ transitionDelay: `${index * 100}ms` }}
-              >
-                {item.label}
-              </Link>
-            ))}
+            {navItems.map((item, index) => {
+              // 現在地かどうかを判定
+              const isActive = pathname === item.href;
+
+              return (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  // ★変更: flex items-center gap-1 を追加して横並びに
+                  className={`flex items-center gap-1 font-inter font-medium text-[16px] tracking-[0.05em] text-white transition-all duration-500 transform hover:opacity-60 ${
+                    isOpen
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-4 opacity-0"
+                  }`}
+                  style={{ transitionDelay: `${index * 100}ms` }}
+                >
+                  {item.label}
+                  
+                  {/* ★追加: Active State (8pxのオレンジ丸) */}
+                  {isActive && (
+                    <span 
+                      className="w-2 h-2 rounded-full" 
+                      style={{ backgroundColor: ACCENT_COLOR }}
+                    />
+                  )}
+                </Link>
+              );
+            })}
           </nav>
 
           {/* Sub Info (Instagram & Mail) */}
-          {/* ① mt-16 -> mt-[56px] (指定値) */}
-          {/* ② gap-8 -> gap-6 (24px) */}
           <div
             className={`mt-[56px] flex flex-col items-center gap-6 transition-all duration-700 delay-300 ${
               isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
