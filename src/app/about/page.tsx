@@ -45,7 +45,8 @@ export default function ProfilePage() {
   const gridGapClass = "mb-2 md:mb-[12px]";
   const cardPaddingClass = "py-[32px] px-[20px] md:py-[56px] md:px-[40px]";
 
-  // ナビゲーションボタン用クラス (flex-1を追加して均等幅にする)
+  // ナビゲーションボタン用クラス
+  // justify-center + items-start で左揃えにしつつ、中身の配置を制御
   const navButtonClass = `group flex-1 flex flex-col items-start justify-center ${cardClass} ${cardPaddingClass} hover:-translate-y-1`;
 
   return (
@@ -54,7 +55,7 @@ export default function ProfilePage() {
 
       <main className="w-full min-h-screen bg-[#F0F2F5] pt-[72px] pb-20 px-5 md:px-20 transition-colors duration-500">
         
-        {/* コンテナ */}
+        {/* コンテナ: Max 880px (詳細ページと統一) */}
         <div className="max-w-[880px] mx-auto w-full text-[#333]">
 
           {/* =================================================
@@ -76,7 +77,7 @@ export default function ProfilePage() {
               <span className="block font-inter font-bold text-[16px] tracking-[0.02em] opacity-80 mb-[16px]">
                 Web Designer
               </span>
-              {/* 修正: SP:32px / PC:48px */}
+              {/* SP:32px / PC:48px */}
               <h1 className="font-inter font-bold text-[32px] md:text-[48px] leading-none">
                 RYUTA MUKAI
               </h1>
@@ -109,10 +110,12 @@ export default function ProfilePage() {
                 <span className="block font-inter text-xs opacity-40 mb-4 tracking-wider">
                   Personal Media
                 </span>
-                {/* 修正: テキスト変更 & サイズ調整 (SP:16px / PC:20px) */}
-                <h2 className="font-noto font-bold text-[16px] md:text-[20px] mb-6 leading-tight">
-                  暮らしの記録、<br className="md:hidden" />ムタログ。
+                
+                {/* 修正: whitespace-nowrapで改行禁止、SPでも1行表示 */}
+                <h2 className="font-noto font-bold text-[16px] md:text-[20px] mb-6 leading-tight whitespace-nowrap">
+                  暮らしの記録、ムタログ。
                 </h2>
+                
                 {/* 本文 */}
                 <div className="font-noto text-sm leading-[2.0] opacity-80 mb-8">
                   <p className="mb-6">
@@ -130,10 +133,11 @@ export default function ProfilePage() {
                 href="https://www.instagram.com/mutalog_muji/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 font-inter font-bold text-[14px] hover:opacity-60 transition-opacity"
+                // 修正: text-[12px], opacity-60 を適用
+                className="inline-flex items-center gap-2 font-inter font-bold text-[12px] md:text-[14px] opacity-60 hover:opacity-100 transition-opacity"
               >
                 View Instagram 
-                <span className="text-[16px] mb-[2px]">›</span>
+                <span className="text-[14px] md:text-[16px] mb-[2px]">›</span>
               </a>
             </div>
           </section>
@@ -172,22 +176,23 @@ export default function ProfilePage() {
           {/* =================================================
               4. Navigation Footer
           ================================================= */}
-          {/* 修正: flex-1 を navButtonClass に適用済みのため、ここではそのまま配置 */}
-          <div className="flex flex-col md:flex-row gap-[8px] md:gap-[12px] mt-2 md:mt-[12px]">
+          {/* 修正: flex-col を flex-row に変更してSPでも横並びにする */}
+          <div className="flex flex-row gap-[8px] md:gap-[12px] mt-2 md:mt-[12px]">
             {/* Left: < Works */}
             <Link href="/" className={navButtonClass}>
-              <span className="font-inter font-bold text-[20px] tracking-wider group-hover:opacity-60 transition-opacity">
+              <span className="font-inter font-bold text-[14px] md:text-[20px] tracking-wider group-hover:opacity-60 transition-opacity">
                 ‹ Works
               </span>
             </Link>
 
             {/* Right: Contact > */}
             <Link href="/contact" className={navButtonClass}>
-              <div className="flex items-center justify-between w-full">
-                <span className="font-inter font-bold text-[20px] tracking-wider">
+              {/* 修正: justify-between を削除し、左揃え（デフォルト）にする */}
+              <div className="flex items-center gap-2 w-full">
+                <span className="font-inter font-bold text-[14px] md:text-[20px] tracking-wider">
                   Contact
                 </span>
-                <span className="font-inter text-[20px] mb-[2px]">›</span>
+                <span className="font-inter text-[14px] md:text-[20px] mb-[2px]">›</span>
               </div>
             </Link>
           </div>
@@ -203,15 +208,12 @@ export default function ProfilePage() {
           className="fixed inset-0 z-[200] flex items-center justify-center px-5"
           onClick={() => setSelectedLike(null)}
         >
-          {/* 背景 */}
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" />
 
-          {/* モーダル本体 */}
           <div 
             className="relative w-full max-w-[400px] bg-white rounded-[24px] overflow-hidden shadow-2xl transform transition-all animate-in fade-in zoom-in-95 duration-200"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Image Area */}
             <div className="w-full aspect-[4/3] bg-gray-100">
                <img 
                  src={selectedLike.image} 
@@ -219,8 +221,6 @@ export default function ProfilePage() {
                  className="w-full h-full object-cover"
                />
             </div>
-
-            {/* Text Area */}
             <div className="p-8">
               <div className="flex items-center gap-3 mb-4">
                 <span className="text-2xl">{selectedLike.emoji}</span>
@@ -230,8 +230,6 @@ export default function ProfilePage() {
                 {selectedLike.comment}
               </p>
             </div>
-
-            {/* Close Button */}
             <button
               onClick={() => setSelectedLike(null)}
               className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center bg-black/20 hover:bg-black/40 rounded-full text-white backdrop-blur-md transition-colors"
