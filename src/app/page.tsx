@@ -317,7 +317,6 @@ export default function Home() {
 
             {/* ★追加: 最後の要素の時だけ共通Copyrightコンポーネントを表示 */}
             {index === works.length - 1 && (
-              // 背景色に応じて文字が見えるように mix-blend-difference を適用
               <Copyright className="mt-8 mb-4 text-white mix-blend-difference" />
             )}
           </div>
