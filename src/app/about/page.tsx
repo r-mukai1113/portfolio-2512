@@ -10,6 +10,9 @@ export default function ProfilePage() {
   useThemeColor("#F0F2F5");
 
   const [selectedLike, setSelectedLike] = useState<LikeItem | null>(null);
+  
+  // アクセントカラー定義
+  const ACCENT_COLOR = "#F37022";
 
   const currentIndex = selectedLike
     ? likesData.findIndex((item) => item.id === selectedLike.id)
@@ -60,7 +63,6 @@ export default function ProfilePage() {
     <>
       <GlobalHeader />
 
-      {/* モーダルアニメーション用のスタイル (これだけは残しておきます) */}
       <style jsx global>{`
         @keyframes modalFadeIn {
           from { opacity: 0; }
@@ -78,8 +80,8 @@ export default function ProfilePage() {
         }
       `}</style>
 
-      {/* メインコンテンツ: 背景はシンプルな単色 */}
-      <main className="w-full min-h-screen bg-[#F0F2F5] pt-[72px] pb-20 transition-colors duration-500">
+      {/* 修正: Contactページに合わせて下部余白を pb-8 md:pb-10 に設定 */}
+      <main className="w-full min-h-screen bg-[#F0F2F5] pt-[72px] pb-8 md:pb-10 transition-colors duration-500">
         
         <div className="max-w-[880px] mx-auto w-full px-5 md:px-20 text-[#333]">
 
@@ -91,7 +93,11 @@ export default function ProfilePage() {
             </div>
 
             <div className="mb-[16px]">
-              <span className="block font-inter font-bold text-[12px] md:text-[16px] tracking-[0.02em] opacity-80 mb-[12px] md:mb-[16px]">
+              {/* アクセントカラー適用箇所①: Web Designer */}
+              <span 
+                className="block font-inter font-bold text-[12px] md:text-[16px] tracking-[0.02em] opacity-80 mb-[12px] md:mb-[16px]"
+                style={{ color: ACCENT_COLOR }}
+              >
                 Web Designer
               </span>
               <h1 className="font-inter font-bold text-[32px] md:text-[48px] leading-none">
@@ -132,7 +138,15 @@ export default function ProfilePage() {
                   </p>
                 </div>
               </div>
-              <a href="https://www.instagram.com/mutalog_muji/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 font-inter font-bold text-[12px] md:text-[14px] opacity-60 hover:opacity-100 transition-opacity">
+              
+              {/* アクセントカラー適用箇所②: Instagramリンク */}
+              <a 
+                href="https://www.instagram.com/mutalog_muji/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="inline-flex items-center gap-2 font-inter font-bold text-[12px] md:text-[14px] hover:opacity-80 transition-opacity"
+                style={{ color: ACCENT_COLOR }}
+              >
                 View Instagram <span className="text-[14px] md:text-[16px] mb-[2px]">›</span>
               </a>
             </div>
@@ -173,6 +187,13 @@ export default function ProfilePage() {
               </div>
             </Link>
           </div>
+
+          {/* 5. Copyright (New) */}
+          <footer className="mt-10 md:mt-12 text-center">
+             <p className="font-inter text-[10px] md:text-[12px] opacity-40">
+               ©2025 Ryuta Mukai
+             </p>
+          </footer>
 
         </div>
       </main>
