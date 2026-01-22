@@ -4,7 +4,6 @@ import { GlobalHeader } from "@/components/GlobalHeader";
 import { works } from "@/data/works";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-// ★追加: フックをインポート
 import { useThemeColor } from "@/hooks/useThemeColor";
 
 export default function Home() {
@@ -21,7 +20,6 @@ export default function Home() {
   const currentWork = works[currentIndex];
   const CARD_GAP = 80;
 
-  // ★追加: 背景色が変わるたびにブラウザのテーマカラーも変更
   useThemeColor(bgColor);
 
   // 画像高さ取得
@@ -139,6 +137,23 @@ export default function Home() {
 
   return (
     <div className="overflow-hidden">
+      {/* CSS Animation for Text */}
+      <style jsx>{`
+        @keyframes slideUpFade {
+          from {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-slide-up-fade {
+          animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+      `}</style>
+
       <div
         className="fixed top-0 left-0 w-full h-full -z-10 transition-colors duration-[800ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
         style={{ backgroundColor: bgColor }}
@@ -153,9 +168,11 @@ export default function Home() {
         className="hidden md:flex h-screen w-full pt-[72px]"
         style={{ color: textColor }}
       >
-        {/* 左カラム: 幅を600pxに修正 */}
+        {/* 左カラム: テキスト情報 */}
         <div className="w-[600px] shrink-0 h-full flex items-center pl-20 pr-12 relative z-10">
-          <div className="w-full break-words">
+          
+          {/* Keyを設定することで、currentIndexが変わるたびに再レンダリングされアニメーションが発火する */}
+          <div key={currentWork.id} className="w-full break-words animate-slide-up-fade">
             <h1 className="font-inter text-[72px] leading-[1.1] tracking-[0.04em] font-bold mb-8 break-words">
               {currentWork.title}
             </h1>
@@ -183,7 +200,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* 右カラム */}
+        {/* 右カラム: 画像スライダー */}
         <div className="flex-1 h-full flex pr-20 relative min-w-0">
           
           <div className="flex-1 h-full relative overflow-hidden">
@@ -200,16 +217,19 @@ export default function Home() {
                     className="w-full"
                     style={{ marginBottom: `${CARD_GAP}px` }}
                 >
-                    <img
-                        ref={index === 0 ? imgRef : null}
-                        src={work.thumbnail}
-                        alt={work.title}
-                        className={`block w-full aspect-[16/10] object-cover rounded-sm transition-all duration-[800ms] ${
-                        index === currentIndex
-                            ? "opacity-100 grayscale-0 scale-100"
-                            : "opacity-30 grayscale scale-95"
-                        }`}
-                    />
+                    {/* ★修正: サムネイルをLinkで囲んでクリック可能に */}
+                    <Link href={`/works/${work.slug}`} className="block w-full">
+                      <img
+                          ref={index === 0 ? imgRef : null}
+                          src={work.thumbnail}
+                          alt={work.title}
+                          className={`block w-full aspect-[16/10] object-cover rounded-sm transition-all duration-[800ms] ${
+                          index === currentIndex
+                              ? "opacity-100 grayscale-0 scale-100"
+                              : "opacity-30 grayscale scale-95"
+                          }`}
+                      />
+                    </Link>
                 </div>
               ))}
             </div>
@@ -243,29 +263,32 @@ export default function Home() {
           WebkitOverflowScrolling: "touch",
         }}
       >
-        {works.map((work) => (
+        {works.map((work, index) => (
           <div
             key={work.id}
-            // min-h-screen: 最低でも画面高さ（snapのため）。長い場合は伸びる。
             className="sp-card-section min-h-screen w-full snap-start flex flex-col pt-[72px] pb-5 px-5"
           >
             <div
-                // ★修正: flex-1 を h-auto に変更（中身の量に合わせる）
-                className={`w-full h-auto rounded-[32px] flex flex-col transition-all duration-500 py-12 px-5 ${
+                // ★修正: rounded-[12px] に変更
+                className={`w-full h-auto rounded-[12px] flex flex-col transition-all duration-500 py-12 px-5 mb-auto ${
                     work.theme.isLight
                     ? "bg-white/50 border border-white/60"
                     : "bg-white/[0.04] backdrop-blur-[20px] border border-white/10"
                 }`}
                 style={{ color: work.theme.isLight ? "#333" : "#FFF" }}
             >
-                <img
+                {/* ★修正: サムネイルをLinkで囲んでクリック可能に */}
+                <Link href={`/works/${work.slug}`} className="block mb-8">
+                  <img
                     src={work.thumbnail}
                     alt={work.title}
-                    className="w-full aspect-[16/10] object-cover rounded mb-8"
-                />
+                    className="w-full aspect-[16/10] object-cover rounded"
+                  />
+                </Link>
 
                 <div className="break-words">
-                    <h2 className="font-inter text-[44px] leading-[1.05] font-bold mb-6">
+                    {/* ★修正: 見出しサイズを text-[32px] に統一 */}
+                    <h2 className="font-inter text-[32px] leading-[1.05] font-bold mb-6">
                     {work.title}
                     </h2>
 
@@ -289,6 +312,15 @@ export default function Home() {
                     </Link>
                 </div>
             </div>
+
+            {/* ★追加: 最後の要素の時だけコピーライトを表示 */}
+            {index === works.length - 1 && (
+              <footer className="mt-8 mb-4 text-center">
+                 <p className="font-inter text-[10px] opacity-40 mix-blend-difference text-white">
+                   ©2025 Ryuta Mukai
+                 </p>
+              </footer>
+            )}
           </div>
         ))}
       </main>
