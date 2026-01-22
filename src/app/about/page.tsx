@@ -164,12 +164,13 @@ export default function ProfilePage() {
                 <button
                   key={item.id}
                   onClick={() => setSelectedLike(item)}
+                  // ★修正: groupを追加 (元々ありましたが念のため確認)
                   className="group px-[13px] py-[8px] md:px-[21px] md:py-[8px] bg-[#EEF0F2] hover:bg-[#E4E4E7] rounded-full text-[#333] flex items-center gap-[4px] md:gap-[8px] transition-colors duration-200"
                 >
                   <span className="text-[12px] md:text-[14px]">{item.emoji}</span>
                   <span className="font-bold font-noto text-[10px] md:text-[12px] tracking-wide">{item.text}</span>
-                  {/* 修正: アクセントカラーを削除 */}
-                  <span className="opacity-40 text-[10px] md:text-[12px] group-hover:scale-110 transition-transform">
+                  {/* ★修正: group-hover:scale-110 を削除し、group-hover:rotate-90 duration-300 を追加 */}
+                  <span className="opacity-40 text-[10px] md:text-[12px] transition-transform duration-300 group-hover:rotate-90">
                     +
                   </span>
                 </button>
@@ -180,7 +181,8 @@ export default function ProfilePage() {
           {/* 4. Footer Nav (1:2 Ratio) */}
           <div className="flex flex-row gap-[8px] md:gap-[12px] mt-2 md:mt-[12px]">
             <Link href="/" className={`flex-1 ${baseNavButtonClass}`}>
-              <span className="font-inter font-bold text-[14px] md:text-[20px] tracking-wider group-hover:opacity-60 transition-opacity">‹ Works</span>
+              {/* ★修正: text-[14px] -> text-[12px] に変更 */}
+              <span className="font-inter font-bold text-[12px] md:text-[20px] tracking-wider group-hover:opacity-60 transition-opacity">‹ Works</span>
             </Link>
 
             <Link 
@@ -188,8 +190,9 @@ export default function ProfilePage() {
               className={`flex-[2] ${baseNavButtonClass}`}
             >
               <div className="flex items-center gap-1 group-hover:opacity-60 transition-opacity">
-                <span className="font-inter font-bold text-[14px] md:text-[20px] tracking-wider">Contact</span>
-                <span className="font-inter text-[14px] md:text-[20px] mb-[2px]">›</span>
+                {/* ★修正: text-[14px] -> text-[12px] に変更 */}
+                <span className="font-inter font-bold text-[12px] md:text-[20px] tracking-wider">Contact</span>
+                <span className="font-inter text-[12px] md:text-[20px] mb-[2px]">›</span>
               </div>
             </Link>
           </div>
