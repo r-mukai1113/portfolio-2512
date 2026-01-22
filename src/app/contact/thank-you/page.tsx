@@ -56,6 +56,9 @@ export default function ThankYou() {
               <span className="pb-[1px]">Back to Top</span>
             </Link>
 
+          {/* 必要であればここに追加 */}
+            <Copyright className="mt-20" />
+
           </div>
         </div>
       </main>
