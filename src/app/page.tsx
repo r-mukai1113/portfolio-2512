@@ -5,6 +5,8 @@ import { works } from "@/data/works";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useThemeColor } from "@/hooks/useThemeColor";
+// ★追加: 共通化したコピーライトコンポーネント
+import { Copyright } from "@/components/Copyright";
 
 export default function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -137,7 +139,7 @@ export default function Home() {
 
   return (
     <div className="overflow-hidden">
-      {/* CSS Animation for Text */}
+      {/* ★追加: テキストアニメーション用のスタイル定義 */}
       <style jsx>{`
         @keyframes slideUpFade {
           from {
@@ -171,7 +173,7 @@ export default function Home() {
         {/* 左カラム: テキスト情報 */}
         <div className="w-[600px] shrink-0 h-full flex items-center pl-20 pr-12 relative z-10">
           
-          {/* Keyを設定することで、currentIndexが変わるたびに再レンダリングされアニメーションが発火する */}
+          {/* ★追加: Keyを設定してアニメーションを発火させる */}
           <div key={currentWork.id} className="w-full break-words animate-slide-up-fade">
             <h1 className="font-inter text-[72px] leading-[1.1] tracking-[0.04em] font-bold mb-8 break-words">
               {currentWork.title}
@@ -217,7 +219,7 @@ export default function Home() {
                     className="w-full"
                     style={{ marginBottom: `${CARD_GAP}px` }}
                 >
-                    {/* ★修正: サムネイルをLinkで囲んでクリック可能に */}
+                    {/* ★追加: サムネイルをLinkで囲んでクリック可能に */}
                     <Link href={`/works/${work.slug}`} className="block w-full">
                       <img
                           ref={index === 0 ? imgRef : null}
@@ -269,7 +271,7 @@ export default function Home() {
             className="sp-card-section min-h-screen w-full snap-start flex flex-col pt-[72px] pb-5 px-5"
           >
             <div
-                // ★修正: rounded-[12px] に変更
+                // ★修正: rounded-[32px] -> rounded-[12px] に変更
                 className={`w-full h-auto rounded-[12px] flex flex-col transition-all duration-500 py-12 px-5 mb-auto ${
                     work.theme.isLight
                     ? "bg-white/50 border border-white/60"
@@ -277,7 +279,7 @@ export default function Home() {
                 }`}
                 style={{ color: work.theme.isLight ? "#333" : "#FFF" }}
             >
-                {/* ★修正: サムネイルをLinkで囲んでクリック可能に */}
+                {/* ★追加: サムネイルをLinkで囲んでクリック可能に */}
                 <Link href={`/works/${work.slug}`} className="block mb-8">
                   <img
                     src={work.thumbnail}
@@ -287,7 +289,7 @@ export default function Home() {
                 </Link>
 
                 <div className="break-words">
-                    {/* ★修正: 見出しサイズを text-[32px] に統一 */}
+                    {/* ★修正: text-[44px] -> text-[32px] に統一 */}
                     <h2 className="font-inter text-[32px] leading-[1.05] font-bold mb-6">
                     {work.title}
                     </h2>
@@ -313,13 +315,10 @@ export default function Home() {
                 </div>
             </div>
 
-            {/* ★追加: 最後の要素の時だけコピーライトを表示 */}
+            {/* ★追加: 最後の要素の時だけ共通Copyrightコンポーネントを表示 */}
             {index === works.length - 1 && (
-              <footer className="mt-8 mb-4 text-center">
-                 <p className="font-inter text-[10px] opacity-40 mix-blend-difference text-white">
-                   ©2025 Ryuta Mukai
-                 </p>
-              </footer>
+              // 背景色に応じて文字が見えるように mix-blend-difference を適用
+              <Copyright className="mt-8 mb-4 text-white mix-blend-difference" />
             )}
           </div>
         ))}
