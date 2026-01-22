@@ -74,10 +74,8 @@ export default function ProfilePage() {
   const cardPaddingClass = "py-[32px] px-[20px] md:py-[56px] md:px-[40px]";
 
   const navButtonPadding = "px-[20px] md:px-[40px]";
-  // 修正: flex-1 を削除（個別に指定するため）
   const baseNavButtonClass = `group flex flex-col items-start justify-center ${cardClass} ${navButtonPadding} h-[72px] md:h-[120px] hover:-translate-y-1`;
 
-  // モーダル用クラス定義
   const modalTitleClass = "font-noto font-bold text-[16px] md:text-[20px] text-[#333] mb-4 text-center leading-[1.3] tracking-[0.02em]";
   const modalBodyClass = "font-noto text-sm text-[#666] leading-relaxed opacity-75 text-center";
   const modalNavButtonClass = "font-inter text-[10px] md:text-[12px] font-bold text-gray-400 hover:text-gray-600 transition-colors flex items-center gap-1 p-2";
@@ -127,7 +125,6 @@ export default function ProfilePage() {
                 <span className={TEXT_STYLES.LABEL}>Personal Media</span>
                 <h2 className={`${TEXT_STYLES.CARD_TITLE} mb-6 whitespace-nowrap`}>暮らしの記録、ムタログ。</h2>
                 
-                {/* 修正: mb-8 -> mb-6 に変更し、ボタンとの距離を8px縮小 */}
                 <div className={`${TEXT_STYLES.BODY} mb-6`}>
                   <p className="mb-6">
                     生活のノイズを減らし、心に余白を作るためのライフログです。<br className="hidden md:block"/>
@@ -151,12 +148,16 @@ export default function ProfilePage() {
               <span className={TEXT_STYLES.LABEL}>Likes</span>
               <p className={TEXT_STYLES.BODY}>好奇心が旺盛で、食わず嫌いをしないのが自慢です。</p>
             </div>
-            <div className="flex flex-wrap gap-3">
+            
+            {/* 修正: 項目間のgapを縮小 (SP:gap-1.5=6px / PC:gap-3=12px) */}
+            <div className="flex flex-wrap gap-1.5 md:gap-3">
               {likesData.map((item) => (
                 <button
                   key={item.id}
                   onClick={() => setSelectedLike(item)}
-                  className="group px-3 py-2 bg-[#F5F5F7] hover:bg-[#E5E5E7] rounded-full text-[#333] flex items-center gap-2 transition-colors duration-200"
+                  // 修正: 内部padding縮小 (SP:px-2=8px / PC:px-4=16px)
+                  // 修正: 内部gap縮小 (SP:gap-1=4px / PC:gap-2=8px)
+                  className="group px-2 py-2 md:px-4 md:py-2 bg-[#F5F5F7] hover:bg-[#E5E5E7] rounded-full text-[#333] flex items-center gap-1 md:gap-2 transition-colors duration-200"
                 >
                   <span className="text-[12px] md:text-[14px]">{item.emoji}</span>
                   <span className="font-bold font-noto text-[10px] md:text-[12px]">{item.text}</span>
@@ -166,15 +167,12 @@ export default function ProfilePage() {
             </div>
           </section>
 
-          {/* 4. Footer Nav (1:2 Ratio) */}
+          {/* 4. Footer Nav */}
           <div className="flex flex-row gap-[8px] md:gap-[12px] mt-2 md:mt-[12px]">
-            
-            {/* Works Button: flex-1 (1/3) */}
             <Link href="/" className={`flex-1 ${baseNavButtonClass}`}>
               <span className="font-inter font-bold text-[14px] md:text-[20px] tracking-wider group-hover:opacity-60 transition-opacity">‹ Works</span>
             </Link>
 
-            {/* Contact Button: flex-[2] (2/3) */}
             <Link href="/contact" className={`flex-[2] ${baseNavButtonClass}`}>
               <div className="flex items-center justify-between w-full">
                 <span className="font-inter font-bold text-[14px] md:text-[20px] tracking-wider">Contact</span>
