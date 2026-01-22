@@ -4,7 +4,6 @@ import { GlobalHeader } from "@/components/GlobalHeader";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useThemeColor } from "@/hooks/useThemeColor";
-// ★ここ！この1行が足りていませんでした
 import { Copyright } from "@/components/Copyright";
 
 export default function Contact() {
