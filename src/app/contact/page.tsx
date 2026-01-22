@@ -67,16 +67,16 @@ export default function Contact() {
   const cardPaddingClass = "py-[32px] px-[20px] md:py-[56px] md:px-[40px]";
 
   const inputClass = "w-full bg-white/60 border border-gray-200 rounded-[8px] px-4 py-3 text-[12px] md:text-base text-[#333] placeholder-gray-400 outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-all font-noto";
-  const labelClass = "block text-[14px] md:text-base font-bold font-noto text-[#333] mb-2";
+  
+  // 修正: 見出しサイズ SP:12px / PC:14px
+  const labelClass = "block text-[12px] md:text-[14px] font-bold font-noto text-[#333] mb-2";
 
-  // 修正: ※マークのサイズを少し大きく (text-[11px] -> text-[12px])
   const requiredMark = <span style={{ color: ACCENT_COLOR }} className="opacity-80 text-[12px] align-top ml-1">※</span>;
 
   return (
     <>
       <GlobalHeader />
 
-      {/* 修正: コピーライト下の余白(pb)を24pxに設定 */}
       <main className="w-full min-h-screen bg-[#F0F2F5] pt-[72px] pb-6 transition-colors duration-500">
         <div className="max-w-[880px] mx-auto w-full px-5 md:px-20 text-[#333]">
 
@@ -104,7 +104,8 @@ export default function Contact() {
               2. Form Card
           ================================================= */}
           <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass}`}>
-            <form onSubmit={handleSubmit} className="space-y-8">
+            {/* 修正: 項目間の余白 SP:space-y-6 (24px) / PC:space-y-8 (32px) */}
+            <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8">
               
               {/* お名前 */}
               <div>
@@ -203,7 +204,6 @@ export default function Contact() {
               </div>
 
               {/* 送信ボタン */}
-              {/* 修正: 上部の余白を pt-2 (8px) に設定。影(shadow)を削除 */}
               <div className="pt-2">
                 <button
                   type="submit"
@@ -219,8 +219,8 @@ export default function Contact() {
           </section>
 
           {/* Footer (Copyright) */}
-          {/* 修正: 上部の余白を mt-6 (24px) に設定 */}
-          <footer className="mt-6 text-center">
+          {/* 修正: コピーライト上の余白 SP:mt-10 (40px) / PC:mt-12 (48px) */}
+          <footer className="mt-10 md:mt-12 text-center">
              <p className="font-inter text-[10px] md:text-[12px] opacity-40">
                ©2025 Ryuta Mukai
              </p>
