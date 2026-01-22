@@ -66,7 +66,7 @@ export default function Contact() {
   const gridGapClass = "mb-2 md:mb-[12px]";
   const cardPaddingClass = "py-[32px] px-[20px] md:py-[56px] md:px-[40px]";
 
-  // 修正: フォントサイズを見出しと統一 (SP:12px / PC:14px)
+  // フォントサイズ (SP:12px / PC:14px)
   const inputClass = "w-full bg-white/60 border border-gray-200 rounded-[8px] px-4 py-3 text-[12px] md:text-[14px] text-[#333] placeholder-gray-400 outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-all font-noto";
   
   // 見出し (SP:12px / PC:14px)
@@ -78,7 +78,6 @@ export default function Contact() {
     <>
       <GlobalHeader />
 
-      {/* 修正: コピーライト下の余白 SP:32px(pb-8) / PC:40px(pb-10) */}
       <main className="w-full min-h-screen bg-[#F0F2F5] pt-[72px] pb-8 md:pb-10 transition-colors duration-500">
         <div className="max-w-[880px] mx-auto w-full px-5 md:px-20 text-[#333]">
 
@@ -210,7 +209,8 @@ export default function Contact() {
                   type="submit"
                   disabled={isSubmitting}
                   style={{ backgroundColor: ACCENT_COLOR }}
-                  className="w-full text-white font-bold font-noto py-4 rounded-[8px] hover:brightness-90 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-0.5"
+                  // 修正: text-[14px] md:text-[16px] を追加
+                  className="w-full text-white font-bold font-noto text-[14px] md:text-[16px] py-4 rounded-[8px] hover:brightness-90 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-0.5"
                 >
                   {isSubmitting ? "送信中..." : "送信する"}
                 </button>
