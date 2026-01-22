@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { useThemeColor } from "@/hooks/useThemeColor";
 
 export default function Contact() {
-  // 背景色設定
   useThemeColor("#F0F2F5");
   
   const router = useRouter();
@@ -57,7 +56,7 @@ export default function Contact() {
   };
 
   // =================================================================
-  // デザインシステム (Profile/Works詳細ページと統一)
+  // デザインシステム
   // =================================================================
 
   const glassClass = "bg-white/50 border border-white/60 backdrop-blur-md";
@@ -66,8 +65,16 @@ export default function Contact() {
   const cardPaddingClass = "py-[32px] px-[20px] md:py-[56px] md:px-[40px]";
 
   // フォーム入力欄のスタイル
-  const inputClass = "w-full bg-white/60 border border-gray-200 rounded-[8px] px-4 py-3 text-sm md:text-base text-slate-800 placeholder-slate-400 outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400 transition-all font-noto";
-  const labelClass = "block text-sm font-bold font-noto text-slate-700 mb-2";
+  // 修正: SP文字サイズを 12px に変更 (text-[12px])
+  const inputClass = "w-full bg-white/60 border border-gray-200 rounded-[8px] px-4 py-3 text-[12px] md:text-base text-[#333] placeholder-gray-400 outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-all font-noto";
+  
+  // ラベルのスタイル
+  // 修正: 文字色を #333 に統一、SPサイズを 14px (text-sm) に設定
+  const labelClass = "block text-sm md:text-base font-bold font-noto text-[#333] mb-2";
+
+  // 必須マークのスタイル
+  // 修正: 黒の米印、小さく表示
+  const requiredMark = <span className="text-[#333] opacity-60 text-[10px] align-top ml-1">※</span>;
 
   return (
     <>
@@ -81,19 +88,18 @@ export default function Contact() {
           ================================================= */}
           <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass}`}>
             <div className="mb-[16px]">
-               <span className="block font-inter font-bold text-[12px] md:text-[16px] tracking-[0.02em] opacity-80 mb-[16px]">
-                Form
-              </span>
+              {/* 修正: "Form" の文字を削除 */}
               <h1 className="font-inter font-bold text-[32px] md:text-[48px] leading-none mb-6">
                 Contact
               </h1>
             </div>
 
             <div className="font-noto text-[12px] md:text-[14px] leading-[2.0] opacity-80">
-              <p className="mb-4">
+              <p className="mb-4 text-[#333]">
                 お仕事のご依頼やご相談は以下のフォームよりお気軽にお問い合わせください。
               </p>
-              <p className="text-slate-500 text-[11px] md:text-[13px]">
+              {/* 修正: 補足テキストを黒(opacity-60)に変更 */}
+              <p className="text-[#333] opacity-60 text-[11px] md:text-[13px]">
                 1〜3日以内にお返事いたします。もし返信がない場合、何らかの理由でメールが受信されていない可能性がありますので、お手数ですがSNSのDMにてその旨をご連絡いただけますと幸いです。
               </p>
             </div>
@@ -108,7 +114,7 @@ export default function Contact() {
               {/* お名前 */}
               <div>
                 <label htmlFor="name" className={labelClass}>
-                  お名前 <span className="text-red-400 ml-1 text-xs">●</span>
+                  お名前 {requiredMark}
                 </label>
                 <input
                   type="text"
@@ -141,7 +147,7 @@ export default function Contact() {
               {/* メールアドレス */}
               <div>
                 <label htmlFor="email" className={labelClass}>
-                  メールアドレス <span className="text-red-400 ml-1 text-xs">●</span>
+                  メールアドレス {requiredMark}
                 </label>
                 <input
                   type="email"
@@ -158,7 +164,7 @@ export default function Contact() {
               {/* お問い合わせ種別 */}
               <div>
                 <label htmlFor="type" className={labelClass}>
-                  お問い合わせ種別 <span className="text-red-400 ml-1 text-xs">●</span>
+                  お問い合わせ種別 {requiredMark}
                 </label>
                 <div className="relative">
                   <select
@@ -169,14 +175,14 @@ export default function Contact() {
                     className={`${inputClass} appearance-none cursor-pointer`}
                     required
                   >
-                    <option value="" disabled className="text-slate-300">
+                    <option value="" disabled className="text-gray-400">
                       選択してください
                     </option>
                     <option value="production">Web制作のご依頼</option>
                     <option value="consulting">ご相談・お見積り</option>
                     <option value="other">その他</option>
                   </select>
-                  <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+                  <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
                     <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M0.5 0.5L5 5L9.5 0.5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
@@ -187,7 +193,7 @@ export default function Contact() {
               {/* 相談したい内容 */}
               <div>
                 <label htmlFor="message" className={labelClass}>
-                  相談したい内容 <span className="text-red-400 ml-1 text-xs">●</span>
+                  相談したい内容 {requiredMark}
                 </label>
                 <textarea
                   id="message"
