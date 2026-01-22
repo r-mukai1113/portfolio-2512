@@ -80,7 +80,7 @@ export const GlobalHeader = () => {
       <div
         className={`md:hidden fixed inset-0 z-40 flex flex-col justify-center items-center transition-all duration-500 ${
           isOpen
-            ? "opacity-100 visible backdrop-blur-md bg-[#333333]/85"
+            ? "opacity-100 visible backdrop-blur-md bg-[#1A1A1A]/80"
             : "opacity-0 invisible pointer-events-none"
         }`}
       >
