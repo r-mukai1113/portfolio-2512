@@ -52,13 +52,19 @@ export default function WorkDetail() {
   const gridGapClass = "mb-2 md:mb-[12px]";
   const cardPaddingClass = "py-[32px] px-[20px] md:py-[56px] md:px-[40px]";
   const textColor = { color: currentWork.detailTheme.text };
+  
   const hasGalleryImages = currentWork.images && currentWork.images.length > 1;
 
   const metaItemGap = "flex flex-col gap-3 md:gap-[12px]";
-
-  // Aboutページと共通のボタン用スタイル
   const navButtonPadding = "px-[20px] md:px-[40px]";
   const baseNavButtonClass = `group flex flex-col items-start justify-center ${cardClass} ${navButtonPadding} h-[72px] md:h-[120px] hover:-translate-y-1`;
+
+  // 表示ロジック
+  const showInsight = currentWork.desc?.insight || currentWork.desc?.insightText;
+  const showIdea = currentWork.desc?.idea || currentWork.desc?.ideaText;
+  
+  // Tools がある場合のみ、下部のカードを表示する
+  const showToolsCard = currentWork.tools && currentWork.tools.length > 0;
 
   return (
     <>
@@ -80,7 +86,6 @@ export default function WorkDetail() {
 
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 md:gap-20 mb-6 md:mb-8">
               
-              {/* Meta Info */}
               <div className="flex flex-col md:flex-row gap-6 md:gap-10 w-full">
                 {/* Category */}
                 <div className={metaItemGap}>
@@ -99,7 +104,7 @@ export default function WorkDetail() {
                 </div>
               </div>
 
-              {/* Visit Website Button */}
+              {/* Visit Website Button (Hero Card: 復活) */}
               {currentWork.url && (
                 <div className="shrink-0 -mt-2 md:mt-0">
                   <a
@@ -138,16 +143,30 @@ export default function WorkDetail() {
                    <h3 className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40 mb-[12px] md:mb-[16px]">Overview</h3>
                    <p className="text-[12px] md:text-[14px] leading-[1.8] tracking-[0.02em] opacity-75 whitespace-pre-wrap">{currentWork.desc.overview}</p>
                 </div>
-                <div className="mb-6 md:mb-[40px]">
-                   <h3 className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40 mb-[12px] md:mb-[16px]">Insight</h3>
-                   <h4 className="text-[16px] md:text-[20px] leading-[1.3] tracking-[0.02em] font-medium mb-[12px] md:mb-[16px]">{currentWork.desc.insight}</h4>
-                   <p className="text-[12px] md:text-[14px] leading-[1.8] tracking-[0.02em] opacity-75 whitespace-pre-wrap">{currentWork.desc.insightText}</p>
-                </div>
-                <div>
-                   <h3 className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40 mb-[12px] md:mb-[16px]">Idea</h3>
-                   <h4 className="text-[16px] md:text-[20px] leading-[1.3] tracking-[0.02em] font-medium mb-[12px] md:mb-[16px]">{currentWork.desc.idea}</h4>
-                   <p className="text-[12px] md:text-[14px] leading-[1.8] tracking-[0.02em] opacity-75 whitespace-pre-wrap">{currentWork.desc.ideaText}</p>
-                </div>
+
+                {showInsight && (
+                  <div className="mb-6 md:mb-[40px]">
+                    <h3 className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40 mb-[12px] md:mb-[16px]">Insight</h3>
+                    {currentWork.desc.insight && (
+                      <h4 className="text-[16px] md:text-[20px] leading-[1.3] tracking-[0.02em] font-medium mb-[12px] md:mb-[16px]">{currentWork.desc.insight}</h4>
+                    )}
+                    {currentWork.desc.insightText && (
+                      <p className="text-[12px] md:text-[14px] leading-[1.8] tracking-[0.02em] opacity-75 whitespace-pre-wrap">{currentWork.desc.insightText}</p>
+                    )}
+                  </div>
+                )}
+
+                {showIdea && (
+                  <div>
+                    <h3 className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40 mb-[12px] md:mb-[16px]">Idea</h3>
+                    {currentWork.desc.idea && (
+                      <h4 className="text-[16px] md:text-[20px] leading-[1.3] tracking-[0.02em] font-medium mb-[12px] md:mb-[16px]">{currentWork.desc.idea}</h4>
+                    )}
+                    {currentWork.desc.ideaText && (
+                      <p className="text-[12px] md:text-[14px] leading-[1.8] tracking-[0.02em] opacity-75 whitespace-pre-wrap">{currentWork.desc.ideaText}</p>
+                    )}
+                  </div>
+                )}
               </div>
             </section>
           )}
@@ -158,7 +177,7 @@ export default function WorkDetail() {
           {hasGalleryImages && (
             <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass}`}>
                <div className="flex flex-col gap-[24px] md:gap-[40px]">
-                 {currentWork.images.slice(1).map((imgUrl, idx) => (
+                 {currentWork.images.slice(1, 6).map((imgUrl, idx) => (
                    <img key={idx} src={imgUrl} alt={`Gallery ${idx + 1}`} className="w-full h-auto rounded-sm" />
                  ))}
                </div>
@@ -166,22 +185,58 @@ export default function WorkDetail() {
           )}
 
           {/* =================================================
+              ★新規: Tools Card (Toolsがある場合のみ表示)
+          ================================================= */}
+          {showToolsCard && (
+            <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass}`}>
+              <div className="flex flex-col gap-6 md:gap-8">
+                
+                {/* Tools Section */}
+                {/* showToolsCardの条件でToolsがあることは確定しているが、念のためチェック */}
+                {currentWork.tools && currentWork.tools.length > 0 && (
+                  <div className="flex flex-col gap-3 md:gap-4">
+                     <h3 className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40">
+                       Tools
+                     </h3>
+                     <p className="font-inter text-[14px] md:text-[16px] leading-relaxed tracking-[0.02em]">
+                        {currentWork.tools.join(", ")}
+                     </p>
+                  </div>
+                )}
+
+                {/* Website Link Section (Bottom) */}
+                {/* Toolsがあることが前提なので、上部にボーダーを入れて区切る */}
+                {currentWork.url && (
+                  <div className="border-t border-current/10 pt-6 md:pt-8">
+                     <a
+                        href={currentWork.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1 font-inter font-normal text-[14px] md:text-[16px] leading-none tracking-[0.02em] hover:opacity-60 transition-opacity group"
+                        style={{ color: currentWork.detailTheme.text }}
+                      >
+                        Visit Website
+                        <span className="group-hover:translate-x-1 transition-transform">›</span>
+                      </a>
+                  </div>
+                )}
+              </div>
+            </section>
+          )}
+
+          {/* =================================================
               4. Navigation Footer
           ================================================= */}
           <div className="flex flex-row gap-[8px] md:gap-[12px] mt-2 md:mt-[12px]">
-
-            {/* Works Button (flex-1) */}
             <Link
               href="/"
               className={`flex-1 ${baseNavButtonClass}`}
             >
-              {/* テキストを TOP -> Works に変更 */}
               <span className="font-inter font-bold text-[14px] md:text-[20px] tracking-wider group-hover:opacity-60 transition-opacity">
                 ‹ Works
               </span>
             </Link>
 
-            {/* Next Project Button (flex-2) */}
             <Link
               href={`/works/${nextWork.slug}`}
               className={`flex-[2] ${baseNavButtonClass}`}
