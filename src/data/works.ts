@@ -197,9 +197,6 @@ export const works: Work[] = [
     url: "https://minz.luluvision.jp/",
     thumbnail: "https://placehold.co/800x500/004D40/FFF?text=Min'z",
 
-    // ★追加
-    tools: ["Figma", "Shopify"],
-
     theme: {
       bg: "#004D40",
       text: "#FFFFFF",
@@ -232,9 +229,6 @@ export const works: Work[] = [
     role: "Design",
     url: "https://frameinterior.net/",
     thumbnail: "https://placehold.co/800x500/000/FFF?text=frame",
-
-    // ★追加
-    tools: ["Figma"],
 
     theme: {
       bg: "#000000",
