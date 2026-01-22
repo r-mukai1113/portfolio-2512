@@ -3,10 +3,11 @@
 import { useState } from "react";
 import Link from "next/link";
 import { GlobalHeader } from "@/components/GlobalHeader";
-import { useThemeColor } from "@/hooks/useThemeColor";
+import { useThemeColor } from "@/hooks/useThemeColor"; // ★背景色固定フック
 import { likesData, LikeItem } from "@/data/likes";
 
 export default function ProfilePage() {
+  // 1. 背景色の引き継ぎ対策 (Aboutページも固定色を指定)
   useThemeColor("#F0F2F5");
 
   const [selectedLike, setSelectedLike] = useState<LikeItem | null>(null);
@@ -55,10 +56,6 @@ export default function ProfilePage() {
   const navButtonPadding = "px-[20px] md:px-[40px]";
   const baseNavButtonClass = `group flex flex-col items-start justify-center ${cardClass} ${navButtonPadding} h-[72px] md:h-[120px] hover:-translate-y-1`;
 
-  // ★Contactボタン専用のクラス（オレンジ背景バージョン）
-  // ガラス感を消して、ソリッドなオレンジ背景にします
-  const contactButtonClass = `group flex flex-col items-start justify-center rounded-[12px] md:rounded-[16px] w-full transition-all duration-300 ${navButtonPadding} h-[72px] md:h-[120px] hover:-translate-y-1 shadow-sm hover:shadow-md`;
-
   const modalTitleClass = "font-noto font-bold text-[16px] md:text-[20px] text-[#333] mb-4 text-center leading-[1.3] tracking-[0.02em]";
   const modalBodyClass = "font-noto text-[12px] md:text-[14px] text-[#666] leading-relaxed opacity-75 text-center";
   const modalNavButtonClass = "font-inter text-[10px] md:text-[12px] font-bold text-gray-400 hover:text-gray-600 transition-colors flex items-center gap-1 p-2";
@@ -96,6 +93,7 @@ export default function ProfilePage() {
             </div>
 
             <div className="mb-[16px]">
+              {/* アクセントカラー適用箇所: Web Designer */}
               <span 
                 className="block font-inter font-bold text-[12px] md:text-[16px] tracking-[0.02em] opacity-80 mb-[12px] md:mb-[16px]"
                 style={{ color: ACCENT_COLOR }}
@@ -170,7 +168,10 @@ export default function ProfilePage() {
                 >
                   <span className="text-[12px] md:text-[14px]">{item.emoji}</span>
                   <span className="font-bold font-noto text-[10px] md:text-[12px] tracking-wide">{item.text}</span>
-                  <span className="opacity-40 text-[10px] md:text-[12px] group-hover:scale-110 transition-transform">
+                  <span 
+                    className="text-[10px] md:text-[12px] group-hover:scale-110 transition-transform"
+                    style={{ color: ACCENT_COLOR }} // +だけオレンジ
+                  >
                     +
                   </span>
                 </button>
@@ -180,21 +181,18 @@ export default function ProfilePage() {
 
           {/* 4. Footer Nav (1:2 Ratio) */}
           <div className="flex flex-row gap-[8px] md:gap-[12px] mt-2 md:mt-[12px]">
-            {/* Works: 既存の白ガラススタイル */}
             <Link href="/" className={`flex-1 ${baseNavButtonClass}`}>
               <span className="font-inter font-bold text-[14px] md:text-[20px] tracking-wider group-hover:opacity-60 transition-opacity">‹ Works</span>
             </Link>
 
-            {/* Contact: オレンジ背景スタイル */}
+            {/* Contact: ボタン内の文字だけオレンジ */}
             <Link 
               href="/contact" 
-              className={`flex-[2] ${contactButtonClass}`}
-              style={{ backgroundColor: ACCENT_COLOR }}
+              className={`flex-[2] ${baseNavButtonClass}`}
             >
-              <div className="flex items-center justify-between w-full">
-                {/* 文字色は白にして視認性を確保 */}
-                <span className="font-inter font-bold text-[14px] md:text-[20px] tracking-wider text-white">Contact</span>
-                <span className="font-inter text-[14px] md:text-[20px] mb-[2px] text-white">›</span>
+              <div className="flex items-center gap-1" style={{ color: ACCENT_COLOR }}>
+                <span className="font-inter font-bold text-[14px] md:text-[20px] tracking-wider">Contact</span>
+                <span className="font-inter text-[14px] md:text-[20px] mb-[2px]">›</span>
               </div>
             </Link>
           </div>
