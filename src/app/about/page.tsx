@@ -5,6 +5,8 @@ import Link from "next/link";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { likesData, LikeItem } from "@/data/likes";
+// ★追加: 共通Copyrightコンポーネント
+import { Copyright } from "@/components/Copyright";
 
 export default function ProfilePage() {
   useThemeColor("#F0F2F5");
@@ -92,6 +94,7 @@ export default function ProfilePage() {
             </div>
 
             <div className="mb-[16px]">
+              {/* アクセントカラー適用箇所: Web Designer */}
               <span 
                 className="block font-inter font-bold text-[12px] md:text-[16px] tracking-[0.02em] opacity-80 mb-[12px] md:mb-[16px]"
                 style={{ color: ACCENT_COLOR }}
@@ -137,7 +140,6 @@ export default function ProfilePage() {
                 </div>
               </div>
               
-              {/* 修正: font-bold を削除し、font-medium (標準的な太さ) に変更 */}
               <a 
                 href="https://www.instagram.com/mutalog_muji/" 
                 target="_blank" 
@@ -167,6 +169,7 @@ export default function ProfilePage() {
                 >
                   <span className="text-[12px] md:text-[14px]">{item.emoji}</span>
                   <span className="font-bold font-noto text-[10px] md:text-[12px] tracking-wide">{item.text}</span>
+                  {/* 修正: アクセントカラーを削除 */}
                   <span className="opacity-40 text-[10px] md:text-[12px] group-hover:scale-110 transition-transform">
                     +
                   </span>
@@ -185,6 +188,7 @@ export default function ProfilePage() {
               href="/contact" 
               className={`flex-[2] ${baseNavButtonClass}`}
             >
+              {/* 修正: アクセントカラーを削除 */}
               <div className="flex items-center gap-1 group-hover:opacity-60 transition-opacity">
                 <span className="font-inter font-bold text-[14px] md:text-[20px] tracking-wider">Contact</span>
                 <span className="font-inter text-[14px] md:text-[20px] mb-[2px]">›</span>
@@ -193,11 +197,8 @@ export default function ProfilePage() {
           </div>
 
           {/* 5. Copyright */}
-          <footer className="mt-10 md:mt-12 text-center">
-             <p className="font-inter text-[10px] md:text-[12px] opacity-40">
-               ©2025 Ryuta Mukai
-             </p>
-          </footer>
+          {/* 修正: 共通コンポーネントを使用 */}
+          <Copyright className="mt-10 md:mt-12" />
 
         </div>
       </main>
