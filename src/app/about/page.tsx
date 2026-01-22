@@ -92,7 +92,6 @@ export default function ProfilePage() {
             </div>
 
             <div className="mb-[16px]">
-              {/* アクセントカラー適用箇所①: Web Designer */}
               <span 
                 className="block font-inter font-bold text-[12px] md:text-[16px] tracking-[0.02em] opacity-80 mb-[12px] md:mb-[16px]"
                 style={{ color: ACCENT_COLOR }}
@@ -138,7 +137,6 @@ export default function ProfilePage() {
                 </div>
               </div>
               
-              {/* 修正: Instagramリンクはアクセントカラーを削除し、元のグレーに戻す */}
               <a 
                 href="https://www.instagram.com/mutalog_muji/" 
                 target="_blank" 
@@ -150,10 +148,9 @@ export default function ProfilePage() {
             </div>
           </section>
 
-          {/* 3. Identity (旧 Likes) */}
+          {/* 3. Identity */}
           <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass}`}>
             <div className="mb-6">
-              {/* アクセントカラー適用箇所②: Identityラベル */}
               <span 
                 className={TEXT_STYLES.LABEL}
                 style={{ color: ACCENT_COLOR, opacity: 0.8 }}
@@ -163,15 +160,19 @@ export default function ProfilePage() {
               <p className={TEXT_STYLES.BODY}>好奇心が旺盛で、食わず嫌いをしないのが自慢です。</p>
             </div>
             
-            <div className="flex flex-wrap gap-1.5 md:gap-3">
+            {/* 修正: チップ同士の間隔を調整 SP:gap-[6px] / PC:gap-[10px] */}
+            <div className="flex flex-wrap gap-[6px] md:gap-[10px]">
               {likesData.map((item) => (
                 <button
                   key={item.id}
                   onClick={() => setSelectedLike(item)}
-                  className="group px-[10px] py-[8px] md:px-[20px] md:py-[8px] bg-[#EEF0F2] hover:bg-[#E4E4E7] rounded-full text-[#333] flex items-center gap-[3px] md:gap-[7px] transition-colors duration-200"
+                  // 修正: パディングと内部Gapを拡大、字間(tracking-wide)を追加
+                  // SP: px-12px, py-8px, gap-4px
+                  // PC: px-20px, py-10px, gap-8px
+                  className="group px-[12px] py-[8px] md:px-[20px] md:py-[10px] bg-[#EEF0F2] hover:bg-[#E4E4E7] rounded-full text-[#333] flex items-center gap-[4px] md:gap-[8px] transition-colors duration-200"
                 >
                   <span className="text-[12px] md:text-[14px]">{item.emoji}</span>
-                  <span className="font-bold font-noto text-[10px] md:text-[12px]">{item.text}</span>
+                  <span className="font-bold font-noto text-[10px] md:text-[12px] tracking-wide">{item.text}</span>
                   <span className="opacity-40 text-[10px] md:text-[12px] group-hover:scale-110 transition-transform">+</span>
                 </button>
               ))}
