@@ -3,11 +3,10 @@
 import { useState } from "react";
 import Link from "next/link";
 import { GlobalHeader } from "@/components/GlobalHeader";
-import { useThemeColor } from "@/hooks/useThemeColor"; // ★背景色固定フック
+import { useThemeColor } from "@/hooks/useThemeColor";
 import { likesData, LikeItem } from "@/data/likes";
 
 export default function ProfilePage() {
-  // 1. 背景色の引き継ぎ対策 (Aboutページも固定色を指定)
   useThemeColor("#F0F2F5");
 
   const [selectedLike, setSelectedLike] = useState<LikeItem | null>(null);
@@ -93,7 +92,7 @@ export default function ProfilePage() {
             </div>
 
             <div className="mb-[16px]">
-              {/* アクセントカラー適用箇所: Web Designer */}
+              {/* アクセントカラー適用箇所: Web Designer (ここだけ残す) */}
               <span 
                 className="block font-inter font-bold text-[12px] md:text-[16px] tracking-[0.02em] opacity-80 mb-[12px] md:mb-[16px]"
                 style={{ color: ACCENT_COLOR }}
@@ -168,10 +167,8 @@ export default function ProfilePage() {
                 >
                   <span className="text-[12px] md:text-[14px]">{item.emoji}</span>
                   <span className="font-bold font-noto text-[10px] md:text-[12px] tracking-wide">{item.text}</span>
-                  <span 
-                    className="text-[10px] md:text-[12px] group-hover:scale-110 transition-transform"
-                    style={{ color: ACCENT_COLOR }} // +だけオレンジ
-                  >
+                  {/* 修正: アクセントカラーを削除 (元のグレーに戻す) */}
+                  <span className="opacity-40 text-[10px] md:text-[12px] group-hover:scale-110 transition-transform">
                     +
                   </span>
                 </button>
@@ -185,12 +182,12 @@ export default function ProfilePage() {
               <span className="font-inter font-bold text-[14px] md:text-[20px] tracking-wider group-hover:opacity-60 transition-opacity">‹ Works</span>
             </Link>
 
-            {/* Contact: ボタン内の文字だけオレンジ */}
+            {/* Contact: アクセントカラーを削除 (元の黒/グレーに戻す) */}
             <Link 
               href="/contact" 
               className={`flex-[2] ${baseNavButtonClass}`}
             >
-              <div className="flex items-center gap-1" style={{ color: ACCENT_COLOR }}>
+              <div className="flex items-center gap-1 group-hover:opacity-60 transition-opacity">
                 <span className="font-inter font-bold text-[14px] md:text-[20px] tracking-wider">Contact</span>
                 <span className="font-inter text-[14px] md:text-[20px] mb-[2px]">›</span>
               </div>
