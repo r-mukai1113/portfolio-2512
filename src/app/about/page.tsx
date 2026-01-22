@@ -36,50 +36,56 @@ export default function ProfilePage() {
 
   const [selectedLike, setSelectedLike] = useState<LikeItem | null>(null);
 
+  // モーダル操作: 次へ
+  const handleNext = (e: React.MouseEvent) => {
+    e.stopPropagation(); // モーダルが閉じるのを防ぐ
+    if (!selectedLike) return;
+    const currentIndex = likesData.findIndex((item) => item.id === selectedLike.id);
+    const nextIndex = (currentIndex + 1) % likesData.length; // ループ
+    setSelectedLike(likesData[nextIndex]);
+  };
+
+  // モーダル操作: 前へ
+  const handlePrev = (e: React.MouseEvent) => {
+    e.stopPropagation(); // モーダルが閉じるのを防ぐ
+    if (!selectedLike) return;
+    const currentIndex = likesData.findIndex((item) => item.id === selectedLike.id);
+    const prevIndex = (currentIndex - 1 + likesData.length) % likesData.length; // ループ
+    setSelectedLike(likesData[prevIndex]);
+  };
+
   // =================================================================
-  // デザインシステム (詳細ページと完全統一)
+  // デザインシステム
   // =================================================================
 
-  // 1. テキストスタイル定義
   const TEXT_STYLES = {
-    // セクションラベル (例: Profile, Personal Media)
-    // 詳細ページの "Overview", "Category" ラベルと統一
     LABEL: "font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40 mb-4 block",
-
-    // カードタイトル (例: ムタログのタイトル)
-    // 詳細ページの "Insight", "Idea" の見出し(H4)と統一
     CARD_TITLE: "font-noto font-bold text-[16px] md:text-[20px] leading-[1.3] tracking-[0.02em]",
-
-    // 本文 (例: 自己紹介文)
-    // 詳細ページの本文と統一 (SP:12px / PC:14px がポイント！)
     BODY: "font-noto text-[12px] md:text-[14px] leading-[1.8] tracking-[0.02em] opacity-80",
   };
 
-  // 2. レイアウトスタイル定義
   const glassClass = "bg-white/50 border border-white/60 backdrop-blur-md";
   const cardClass = `rounded-[12px] md:rounded-[16px] w-full transition-colors duration-500 ${glassClass}`;
   const gridGapClass = "mb-2 md:mb-[12px]";
   const cardPaddingClass = "py-[32px] px-[20px] md:py-[56px] md:px-[40px]";
 
-  // 3. ナビゲーションボタンスタイル
   const navButtonClass = `group flex-1 flex flex-col items-start justify-center ${cardClass} ${cardPaddingClass} hover:-translate-y-1`;
-
 
   return (
     <>
       <GlobalHeader />
 
-      <main className="w-full min-h-screen bg-[#F0F2F5] pt-[72px] pb-20 px-5 md:px-20 transition-colors duration-500">
+      {/* 修正: mainのpxを削除 */}
+      <main className="w-full min-h-screen bg-[#F0F2F5] pt-[72px] pb-20 transition-colors duration-500">
         
-        {/* コンテナ: Max 880px (詳細ページと統一) */}
-        <div className="max-w-[880px] mx-auto w-full text-[#333]">
+        {/* 修正: ここに px-5 md:px-20 を移動 (これで詳細ページと完全に一致) */}
+        <div className="max-w-[880px] mx-auto w-full px-5 md:px-20 text-[#333]">
 
           {/* =================================================
               1. Main Identity (Photo & Bio)
           ================================================= */}
           <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass}`}>
             
-            {/* Main Image */}
             <div className="w-full aspect-[16/9] rounded-[4px] overflow-hidden mb-[40px]">
               <img 
                 src="/images/2026portfolio_profile_2_1.png" 
@@ -88,25 +94,19 @@ export default function ProfilePage() {
               />
             </div>
 
-            {/* Role & Name */}
             <div className="mb-[16px]">
               <span className="block font-inter font-bold text-[16px] tracking-[0.02em] opacity-80 mb-[16px]">
                 Web Designer
               </span>
-              {/* H1: SP 32px / PC 48px */}
               <h1 className="font-inter font-bold text-[32px] md:text-[48px] leading-none">
                 RYUTA MUKAI
               </h1>
             </div>
 
-            {/* Profile Body */}
             <div className="mt-8">
-              {/* スタイル適用: LABEL */}
               <span className={TEXT_STYLES.LABEL}>
                 Profile
               </span>
-              
-              {/* スタイル適用: BODY */}
               <div className={TEXT_STYLES.BODY}>
                 <p className="mb-6">
                   2000年生まれ、千葉県出身。Webデザイナー。<br />
@@ -126,17 +126,14 @@ export default function ProfilePage() {
           <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass}`}>
             <div className="flex flex-col h-full justify-between">
               <div>
-                {/* スタイル適用: LABEL */}
                 <span className={TEXT_STYLES.LABEL}>
                   Personal Media
                 </span>
                 
-                {/* スタイル適用: CARD_TITLE (whitespace-nowrapで改行禁止) */}
                 <h2 className={`${TEXT_STYLES.CARD_TITLE} mb-6 whitespace-nowrap`}>
                   暮らしの記録、ムタログ。
                 </h2>
                 
-                {/* スタイル適用: BODY */}
                 <div className={`${TEXT_STYLES.BODY} mb-8`}>
                   <p className="mb-6">
                     生活のノイズを減らし、心に余白を作るためのライフログです。<br className="hidden md:block"/>
@@ -153,7 +150,6 @@ export default function ProfilePage() {
                 href="https://www.instagram.com/mutalog_muji/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                // ボタン: text-[12px], opacity-60
                 className="inline-flex items-center gap-2 font-inter font-bold text-[12px] md:text-[14px] opacity-60 hover:opacity-100 transition-opacity"
               >
                 View Instagram 
@@ -167,12 +163,9 @@ export default function ProfilePage() {
           ================================================= */}
           <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass}`}>
             <div className="mb-6">
-              {/* スタイル適用: LABEL */}
               <span className={TEXT_STYLES.LABEL}>
                 Likes
               </span>
-              
-              {/* スタイル適用: BODY (leading-relaxed等少し調整あってもOKだが基本統一) */}
               <p className={TEXT_STYLES.BODY}>
                 好奇心が旺盛で、食わず嫌いをしないのが自慢です。
               </p>
@@ -184,11 +177,12 @@ export default function ProfilePage() {
                 <button
                   key={item.id}
                   onClick={() => setSelectedLike(item)}
-                  className="group px-4 py-2 bg-[#F5F5F7] hover:bg-[#E5E5E7] rounded-full text-[13px] text-[#333] flex items-center gap-2 transition-colors duration-200"
+                  className="group px-4 py-2 bg-[#F5F5F7] hover:bg-[#E5E5E7] rounded-full text-[#333] flex items-center gap-2 transition-colors duration-200"
                 >
-                  <span className="text-[14px]">{item.emoji}</span>
-                  <span className="font-bold font-noto text-[12px] md:text-[13px]">{item.text}</span>
-                  <span className="opacity-40 text-[14px] group-hover:scale-110 transition-transform">
+                  {/* フォントサイズ修正: SP:10px / PC:12px (絵文字は少し大きめに補正) */}
+                  <span className="text-[12px] md:text-[14px]">{item.emoji}</span>
+                  <span className="font-bold font-noto text-[10px] md:text-[12px]">{item.text}</span>
+                  <span className="opacity-40 text-[10px] md:text-[12px] group-hover:scale-110 transition-transform">
                     +
                   </span>
                 </button>
@@ -200,16 +194,13 @@ export default function ProfilePage() {
               4. Navigation Footer
           ================================================= */}
           <div className="flex flex-row gap-[8px] md:gap-[12px] mt-2 md:mt-[12px]">
-            {/* Left: < Works */}
             <Link href="/" className={navButtonClass}>
               <span className="font-inter font-bold text-[14px] md:text-[20px] tracking-wider group-hover:opacity-60 transition-opacity">
                 ‹ Works
               </span>
             </Link>
 
-            {/* Right: Contact > */}
             <Link href="/contact" className={navButtonClass}>
-              {/* 左揃え */}
               <div className="flex items-center gap-2 w-full">
                 <span className="font-inter font-bold text-[14px] md:text-[20px] tracking-wider">
                   Contact
@@ -236,26 +227,45 @@ export default function ProfilePage() {
             className="relative w-full max-w-[400px] bg-white rounded-[24px] overflow-hidden shadow-2xl transform transition-all animate-in fade-in zoom-in-95 duration-200"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="w-full aspect-[4/3] bg-gray-100">
+            {/* Image Area */}
+            <div className="relative w-full aspect-[4/3] bg-gray-100">
                <img 
                  src={selectedLike.image} 
                  alt={selectedLike.text}
                  className="w-full h-full object-cover"
                />
+
+               {/* ★追加: ナビゲーションボタン (前へ) */}
+               <button
+                  onClick={handlePrev}
+                  className="absolute top-1/2 left-4 -translate-y-1/2 w-8 h-8 md:w-10 md:h-10 flex items-center justify-center bg-black/20 hover:bg-black/40 backdrop-blur-sm rounded-full text-white transition-colors z-10"
+               >
+                 ‹
+               </button>
+
+               {/* ★追加: ナビゲーションボタン (次へ) */}
+               <button
+                  onClick={handleNext}
+                  className="absolute top-1/2 right-4 -translate-y-1/2 w-8 h-8 md:w-10 md:h-10 flex items-center justify-center bg-black/20 hover:bg-black/40 backdrop-blur-sm rounded-full text-white transition-colors z-10"
+               >
+                 ›
+               </button>
             </div>
+
             <div className="p-8">
               <div className="flex items-center gap-3 mb-4">
                 <span className="text-2xl">{selectedLike.emoji}</span>
                 <h3 className="font-bold text-xl text-[#333] font-noto">{selectedLike.text}</h3>
               </div>
-              {/* Modal Bodyも統一感を出すならTEXT_STYLES.BODYに近いものを使用 */}
               <p className="font-noto text-[13px] md:text-[14px] leading-[1.8] text-[#666]">
                 {selectedLike.comment}
               </p>
             </div>
+
+            {/* Close Button */}
             <button
               onClick={() => setSelectedLike(null)}
-              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center bg-black/20 hover:bg-black/40 rounded-full text-white backdrop-blur-md transition-colors"
+              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center bg-black/20 hover:bg-black/40 rounded-full text-white backdrop-blur-md transition-colors z-20"
             >
               ✕
             </button>
