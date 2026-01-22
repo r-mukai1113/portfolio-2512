@@ -3,8 +3,12 @@
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useThemeColor } from "@/hooks/useThemeColor";
 
 export default function Contact() {
+  // 背景色設定
+  useThemeColor("#F0F2F5");
+  
   const router = useRouter();
   const [formData, setFormData] = useState({
     name: "",
@@ -40,10 +44,8 @@ export default function Contact() {
       });
 
       if (response.ok) {
-        // サンクスページに遷移
         router.push("/contact/thank-you");
       } else {
-        // エラー処理
         alert("送信に失敗しました。もう一度お試しください。");
         setIsSubmitting(false);
       }
@@ -54,49 +56,59 @@ export default function Contact() {
     }
   };
 
+  // =================================================================
+  // デザインシステム (Profile/Works詳細ページと統一)
+  // =================================================================
+
+  const glassClass = "bg-white/50 border border-white/60 backdrop-blur-md";
+  const cardClass = `rounded-[12px] md:rounded-[16px] w-full transition-colors duration-500 ${glassClass}`;
+  const gridGapClass = "mb-2 md:mb-[12px]";
+  const cardPaddingClass = "py-[32px] px-[20px] md:py-[56px] md:px-[40px]";
+
+  // フォーム入力欄のスタイル
+  const inputClass = "w-full bg-white/60 border border-gray-200 rounded-[8px] px-4 py-3 text-sm md:text-base text-slate-800 placeholder-slate-400 outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400 transition-all font-noto";
+  const labelClass = "block text-sm font-bold font-noto text-slate-700 mb-2";
+
   return (
     <>
-      <div className="fixed top-0 left-0 w-full h-full -z-10 bg-[#FCFCFC]" />
-
       <GlobalHeader />
 
-      <main className="relative min-h-screen text-slate-900 overflow-y-auto">
-        <div className="w-full max-w-[1600px] mx-auto px-[20px] md:px-[48px] lg:px-[80px] pt-[88px] md:pt-[120px] pb-[120px]">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-12 lg:gap-x-20">
-          {/* 左カラム：タイトル & 説明文 */}
-          <div className="lg:col-span-5">
-            <div className="lg:sticky lg:top-[120px]">
-              <div className="flex items-center gap-[12px] md:gap-[16px] mb-8 md:mb-12">
-                <h1 className="font-inter font-normal text-[40px] md:text-[88px] tracking-tight leading-none">
-                  Contact
-                </h1>
-                <div className="text-[28px] md:text-[56px] flex items-center mb-[3px] md:mb-0">
-                  🖐️
-                </div>
-              </div>
+      <main className="w-full min-h-screen bg-[#F0F2F5] pt-[72px] pb-20 transition-colors duration-500">
+        <div className="max-w-[880px] mx-auto w-full px-5 md:px-20 text-[#333]">
 
-              <div className="font-noto text-sm md:text-base leading-relaxed text-slate-700 space-y-6">
-                <p>
-                  お仕事のご依頼やご相談は以下のフォームよりお気軽にお問い合わせください。
-                </p>
-                <p className="text-xs md:text-sm text-slate-500">
-                  1〜3日以内にお返事いたします。
-                  もし返信がない場合、何らかの理由でメールが受信されていない可能性がありますので、お手数ですがSNSのDMにてその旨をご連絡いただけますと幸いです。
-                </p>
-              </div>
+          {/* =================================================
+              1. Header Card (Title & Description)
+          ================================================= */}
+          <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass}`}>
+            <div className="mb-[16px]">
+               <span className="block font-inter font-bold text-[12px] md:text-[16px] tracking-[0.02em] opacity-80 mb-[16px]">
+                Form
+              </span>
+              <h1 className="font-inter font-bold text-[32px] md:text-[48px] leading-none mb-6">
+                Contact
+              </h1>
             </div>
-          </div>
 
-          {/* 右カラム：フォーム */}
-          <div className="lg:col-span-7 w-full max-w-[640px] lg:ml-auto">
-            <form onSubmit={handleSubmit} className="space-y-8 md:space-y-10">
+            <div className="font-noto text-[12px] md:text-[14px] leading-[2.0] opacity-80">
+              <p className="mb-4">
+                お仕事のご依頼やご相談は以下のフォームよりお気軽にお問い合わせください。
+              </p>
+              <p className="text-slate-500 text-[11px] md:text-[13px]">
+                1〜3日以内にお返事いたします。もし返信がない場合、何らかの理由でメールが受信されていない可能性がありますので、お手数ですがSNSのDMにてその旨をご連絡いただけますと幸いです。
+              </p>
+            </div>
+          </section>
+
+          {/* =================================================
+              2. Form Card
+          ================================================= */}
+          <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass}`}>
+            <form onSubmit={handleSubmit} className="space-y-8">
+              
               {/* お名前 */}
-              <div className="space-y-2">
-                <label
-                  htmlFor="name"
-                  className="block text-sm md:text-base font-bold font-noto text-slate-800"
-                >
-                  お名前 <span className="text-red-400 ml-1">※</span>
+              <div>
+                <label htmlFor="name" className={labelClass}>
+                  お名前 <span className="text-red-400 ml-1 text-xs">●</span>
                 </label>
                 <input
                   type="text"
@@ -106,15 +118,13 @@ export default function Contact() {
                   onChange={handleChange}
                   placeholder="例) 山田 太郎"
                   required
+                  className={inputClass}
                 />
               </div>
 
               {/* 企業名・屋号など */}
-              <div className="space-y-2">
-                <label
-                  htmlFor="company"
-                  className="block text-sm md:text-base font-bold font-noto text-slate-800"
-                >
+              <div>
+                <label htmlFor="company" className={labelClass}>
                   企業名・屋号など
                 </label>
                 <input
@@ -124,16 +134,14 @@ export default function Contact() {
                   value={formData.company}
                   onChange={handleChange}
                   placeholder="例) 株式会社〇〇"
+                  className={inputClass}
                 />
               </div>
 
               {/* メールアドレス */}
-              <div className="space-y-2">
-                <label
-                  htmlFor="email"
-                  className="block text-sm md:text-base font-bold font-noto text-slate-800"
-                >
-                  メールアドレス <span className="text-red-400 ml-1">※</span>
+              <div>
+                <label htmlFor="email" className={labelClass}>
+                  メールアドレス <span className="text-red-400 ml-1 text-xs">●</span>
                 </label>
                 <input
                   type="email"
@@ -143,16 +151,14 @@ export default function Contact() {
                   onChange={handleChange}
                   placeholder="例) xxx@sample.com"
                   required
+                  className={inputClass}
                 />
               </div>
 
               {/* お問い合わせ種別 */}
-              <div className="space-y-2">
-                <label
-                  htmlFor="type"
-                  className="block text-sm md:text-base font-bold font-noto text-slate-800"
-                >
-                  お問い合わせ種別 <span className="text-red-400 ml-1">※</span>
+              <div>
+                <label htmlFor="type" className={labelClass}>
+                  お問い合わせ種別 <span className="text-red-400 ml-1 text-xs">●</span>
                 </label>
                 <div className="relative">
                   <select
@@ -160,7 +166,7 @@ export default function Contact() {
                     name="type"
                     value={formData.type}
                     onChange={handleChange}
-                    className="cursor-pointer text-slate-800"
+                    className={`${inputClass} appearance-none cursor-pointer`}
                     required
                   >
                     <option value="" disabled className="text-slate-300">
@@ -171,31 +177,17 @@ export default function Contact() {
                     <option value="other">その他</option>
                   </select>
                   <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
-                    <svg
-                      width="10"
-                      height="6"
-                      viewBox="0 0 10 6"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M0.5 0.5L5 5L9.5 0.5"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
+                    <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M0.5 0.5L5 5L9.5 0.5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </div>
                 </div>
               </div>
 
               {/* 相談したい内容 */}
-              <div className="space-y-2">
-                <label
-                  htmlFor="message"
-                  className="block text-sm md:text-base font-bold font-noto text-slate-800"
-                >
-                  相談したい内容 <span className="text-red-400 ml-1">※</span>
+              <div>
+                <label htmlFor="message" className={labelClass}>
+                  相談したい内容 <span className="text-red-400 ml-1 text-xs">●</span>
                 </label>
                 <textarea
                   id="message"
@@ -204,7 +196,7 @@ export default function Contact() {
                   onChange={handleChange}
                   rows={8}
                   placeholder="ご要望や参考サイトなどございましたらご記入ください。"
-                  className="resize-none"
+                  className={`${inputClass} resize-none`}
                   required
                 />
               </div>
@@ -214,22 +206,23 @@ export default function Contact() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-[#1a1a1a] text-white font-bold font-noto py-4 rounded-[6px] hover:bg-slate-800 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full bg-[#333] text-white font-bold font-noto py-4 rounded-[8px] hover:bg-black transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-0.5 shadow-sm"
                 >
                   {isSubmitting ? "送信中..." : "送信する"}
                 </button>
               </div>
-            </form>
-          </div>
-        </div>
-        </div>
 
-        {/* Footer (Copyright) */}
-        <footer className="w-full max-w-[1600px] mx-auto px-[20px] md:px-[48px] lg:px-[80px] pb-[88px] md:pb-[120px]">
-          <p className="text-center text-xs text-slate-400 font-inter">
-            ©2025 Ryuta Mukai
-          </p>
-        </footer>
+            </form>
+          </section>
+
+          {/* Footer (Copyright) */}
+          <footer className="mt-12 mb-8 text-center">
+             <p className="font-inter text-[10px] md:text-[12px] opacity-40">
+               ©2025 Ryuta Mukai
+             </p>
+          </footer>
+
+        </div>
       </main>
     </>
   );
