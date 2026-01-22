@@ -80,7 +80,6 @@ export default function ProfilePage() {
         }
       `}</style>
 
-      {/* 修正: Contactページに合わせて下部余白を pb-8 md:pb-10 に設定 */}
       <main className="w-full min-h-screen bg-[#F0F2F5] pt-[72px] pb-8 md:pb-10 transition-colors duration-500">
         
         <div className="max-w-[880px] mx-auto w-full px-5 md:px-20 text-[#333]">
@@ -139,23 +138,28 @@ export default function ProfilePage() {
                 </div>
               </div>
               
-              {/* アクセントカラー適用箇所②: Instagramリンク */}
+              {/* 修正: Instagramリンクはアクセントカラーを削除し、元のグレーに戻す */}
               <a 
                 href="https://www.instagram.com/mutalog_muji/" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="inline-flex items-center gap-2 font-inter font-bold text-[12px] md:text-[14px] hover:opacity-80 transition-opacity"
-                style={{ color: ACCENT_COLOR }}
+                className="inline-flex items-center gap-2 font-inter font-bold text-[12px] md:text-[14px] opacity-60 hover:opacity-100 transition-opacity"
               >
                 View Instagram <span className="text-[14px] md:text-[16px] mb-[2px]">›</span>
               </a>
             </div>
           </section>
 
-          {/* 3. Likes */}
+          {/* 3. Identity (旧 Likes) */}
           <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass}`}>
             <div className="mb-6">
-              <span className={TEXT_STYLES.LABEL}>Likes</span>
+              {/* アクセントカラー適用箇所②: Identityラベル */}
+              <span 
+                className={TEXT_STYLES.LABEL}
+                style={{ color: ACCENT_COLOR, opacity: 0.8 }}
+              >
+                Identity
+              </span>
               <p className={TEXT_STYLES.BODY}>好奇心が旺盛で、食わず嫌いをしないのが自慢です。</p>
             </div>
             
@@ -188,7 +192,7 @@ export default function ProfilePage() {
             </Link>
           </div>
 
-          {/* 5. Copyright (New) */}
+          {/* 5. Copyright */}
           <footer className="mt-10 md:mt-12 text-center">
              <p className="font-inter text-[10px] md:text-[12px] opacity-40">
                ©2025 Ryuta Mukai
@@ -198,7 +202,7 @@ export default function ProfilePage() {
         </div>
       </main>
 
-      {/* Likes Modal */}
+      {/* Identity Modal */}
       {selectedLike && (
         <div 
           className="fixed inset-0 z-[200] flex items-center justify-center px-5"
