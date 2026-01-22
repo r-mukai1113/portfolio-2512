@@ -16,8 +16,11 @@ export default function ThankYou() {
 
       <GlobalHeader />
 
+      {/* relativeを追加（中のabsoluteの基準にするため） */}
       <main className="relative min-h-screen text-[#333]">
-        <div className="flex flex-col items-center justify-center min-h-screen px-[20px]">
+        
+        {/* コンテンツエリア：画面中央に配置 */}
+        <div className="flex flex-col items-center justify-center min-h-screen px-[20px] pb-20">
           <div className="text-center max-w-[600px]">
             
             <h1 className="font-inter font-bold text-[48px] md:text-[80px] leading-none tracking-[-0.02em] mb-[16px]">
@@ -56,10 +59,12 @@ export default function ThankYou() {
               <span className="pb-[1px]">Back to Top</span>
             </Link>
 
-            <Copyright className="mt-20" />
-
           </div>
         </div>
+        <div className="absolute bottom-6 md:bottom-10 left-0 w-full">
+          <Copyright />
+        </div>
+
       </main>
     </>
   );
