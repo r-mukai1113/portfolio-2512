@@ -147,13 +147,12 @@ export const GlobalHeader = () => {
 
         {/* Copyright (Fixed Bottom) */}
         <div
-          className={`absolute bottom-8 left-0 w-full text-center transition-opacity duration-700 delay-500 ${
-            isOpen ? "opacity-40" : "opacity-0"
+          className={`absolute bottom-8 left-0 w-full transition-opacity duration-700 delay-500 ${
+            isOpen ? "opacity-100" : "opacity-0"
           }`}
         >
-          <p className="font-inter text-[10px] tracking-widest text-white">
-            © 2026 R.MUKAI
-          </p>
+          {/* テキスト色が白なので、text-white を追加クラスで渡す */}
+          <Copyright className="text-white mix-blend-difference" />
         </div>
       </div>
     </>
