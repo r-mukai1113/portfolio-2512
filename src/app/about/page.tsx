@@ -36,23 +36,33 @@ export default function ProfilePage() {
 
   const [selectedLike, setSelectedLike] = useState<LikeItem | null>(null);
 
-  // モーダル操作: 次へ
+  // 現在のインデックスを取得
+  const currentIndex = selectedLike
+    ? likesData.findIndex((item) => item.id === selectedLike.id)
+    : -1;
+
+  // モーダル操作: 次へ (ループなし)
   const handleNext = (e: React.MouseEvent) => {
-    e.stopPropagation(); // モーダルが閉じるのを防ぐ
-    if (!selectedLike) return;
-    const currentIndex = likesData.findIndex((item) => item.id === selectedLike.id);
-    const nextIndex = (currentIndex + 1) % likesData.length; // ループ
-    setSelectedLike(likesData[nextIndex]);
+    e.stopPropagation();
+    if (currentIndex !== -1 && currentIndex < likesData.length - 1) {
+      setSelectedLike(likesData[currentIndex + 1]);
+    }
   };
 
-  // モーダル操作: 前へ
+  // モーダル操作: 前へ (ループなし)
   const handlePrev = (e: React.MouseEvent) => {
-    e.stopPropagation(); // モーダルが閉じるのを防ぐ
-    if (!selectedLike) return;
-    const currentIndex = likesData.findIndex((item) => item.id === selectedLike.id);
-    const prevIndex = (currentIndex - 1 + likesData.length) % likesData.length; // ループ
-    setSelectedLike(likesData[prevIndex]);
+    e.stopPropagation();
+    if (currentIndex > 0) {
+      setSelectedLike(likesData[currentIndex - 1]);
+    }
   };
+
+  // モーダルを閉じる
+  const handleClose = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setSelectedLike(null);
+  }
+
 
   // =================================================================
   // デザインシステム
@@ -71,14 +81,18 @@ export default function ProfilePage() {
 
   const navButtonClass = `group flex-1 flex flex-col items-start justify-center ${cardClass} ${cardPaddingClass} hover:-translate-y-1`;
 
+  // モーダル用スタイル
+  const modalTitleClass = "font-noto font-bold text-[16px] md:text-[20px] text-[#333] mb-4 text-center leading-[1.3] tracking-[0.02em]";
+  const modalBodyClass = "font-noto text-sm text-[#666] leading-relaxed opacity-75 text-center";
+  const modalNavButtonClass = "font-inter text-sm font-bold text-gray-400 hover:text-gray-600 transition-colors flex items-center gap-1";
+
+
   return (
     <>
       <GlobalHeader />
 
-      {/* 修正: mainのpxを削除 */}
       <main className="w-full min-h-screen bg-[#F0F2F5] pt-[72px] pb-20 transition-colors duration-500">
         
-        {/* 修正: ここに px-5 md:px-20 を移動 (これで詳細ページと完全に一致) */}
         <div className="max-w-[880px] mx-auto w-full px-5 md:px-20 text-[#333]">
 
           {/* =================================================
@@ -179,7 +193,6 @@ export default function ProfilePage() {
                   onClick={() => setSelectedLike(item)}
                   className="group px-4 py-2 bg-[#F5F5F7] hover:bg-[#E5E5E7] rounded-full text-[#333] flex items-center gap-2 transition-colors duration-200"
                 >
-                  {/* フォントサイズ修正: SP:10px / PC:12px (絵文字は少し大きめに補正) */}
                   <span className="text-[12px] md:text-[14px]">{item.emoji}</span>
                   <span className="font-bold font-noto text-[10px] md:text-[12px]">{item.text}</span>
                   <span className="opacity-40 text-[10px] md:text-[12px] group-hover:scale-110 transition-transform">
@@ -214,61 +227,74 @@ export default function ProfilePage() {
       </main>
 
       {/* =================================================
-          Likes Modal (Overlay)
+          Likes Modal (Overlay) - 新UI
       ================================================= */}
       {selectedLike && (
         <div 
           className="fixed inset-0 z-[200] flex items-center justify-center px-5"
-          onClick={() => setSelectedLike(null)}
+          onClick={handleClose}
         >
+          {/* 背景オーバーレイ */}
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" />
 
+          {/* モーダル本体 */}
           <div 
-            className="relative w-full max-w-[400px] bg-white rounded-[24px] overflow-hidden shadow-2xl transform transition-all animate-in fade-in zoom-in-95 duration-200"
+            className="relative w-full max-w-[500px] bg-white rounded-[24px] p-6 md:p-8 shadow-2xl transform transition-all animate-in fade-in zoom-in-95 duration-200"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Image Area */}
-            <div className="relative w-full aspect-[4/3] bg-gray-100">
-               <img 
-                 src={selectedLike.image} 
-                 alt={selectedLike.text}
-                 className="w-full h-full object-cover"
-               />
-
-               {/* ★追加: ナビゲーションボタン (前へ) */}
-               <button
-                  onClick={handlePrev}
-                  className="absolute top-1/2 left-4 -translate-y-1/2 w-8 h-8 md:w-10 md:h-10 flex items-center justify-center bg-black/20 hover:bg-black/40 backdrop-blur-sm rounded-full text-white transition-colors z-10"
-               >
-                 ‹
-               </button>
-
-               {/* ★追加: ナビゲーションボタン (次へ) */}
-               <button
-                  onClick={handleNext}
-                  className="absolute top-1/2 right-4 -translate-y-1/2 w-8 h-8 md:w-10 md:h-10 flex items-center justify-center bg-black/20 hover:bg-black/40 backdrop-blur-sm rounded-full text-white transition-colors z-10"
-               >
-                 ›
-               </button>
+            {/* ヘッダー: ラベルと閉じるボタン */}
+            <div className="flex justify-between items-center mb-6 md:mb-8">
+              <span className="font-inter text-sm opacity-40 tracking-wider">Likes</span>
+              <button
+                onClick={handleClose}
+                className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-full text-black transition-colors"
+              >
+                ✕
+              </button>
             </div>
 
-            <div className="p-8">
-              <div className="flex items-center gap-3 mb-4">
-                <span className="text-2xl">{selectedLike.emoji}</span>
-                <h3 className="font-bold text-xl text-[#333] font-noto">{selectedLike.text}</h3>
+            {/* メインコンテンツ: 画像、タイトル、本文 */}
+            <div className="flex flex-col items-center mb-8">
+              {/* 画像コンテナ (正方形) */}
+              <div className="w-full max-w-[320px] aspect-square rounded-xl overflow-hidden mb-6 shadow-sm bg-gray-50">
+                <img 
+                  src={selectedLike.image} 
+                  alt={selectedLike.text}
+                  className="w-full h-full object-cover"
+                />
               </div>
-              <p className="font-noto text-[13px] md:text-[14px] leading-[1.8] text-[#666]">
+              {/* タイトル */}
+              <h3 className={modalTitleClass}>
+                <span className="mr-2">{selectedLike.emoji}</span>
+                {selectedLike.text}
+              </h3>
+              {/* 本文 */}
+              <p className={modalBodyClass}>
                 {selectedLike.comment}
               </p>
             </div>
 
-            {/* Close Button */}
-            <button
-              onClick={() => setSelectedLike(null)}
-              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center bg-black/20 hover:bg-black/40 rounded-full text-white backdrop-blur-md transition-colors z-20"
-            >
-              ✕
-            </button>
+            {/* フッター: ナビゲーション (PREV / NEXT) */}
+            <div className="flex justify-between items-center w-full">
+              {/* PREV ボタン (先頭以外で表示) */}
+              {currentIndex > 0 ? (
+                <button onClick={handlePrev} className={modalNavButtonClass}>
+                  <span>←</span> PREV
+                </button>
+              ) : (
+                <div /> /* レイアウト維持用のダミー */
+              )}
+
+              {/* NEXT ボタン (末尾以外で表示) */}
+              {currentIndex < likesData.length - 1 ? (
+                <button onClick={handleNext} className={modalNavButtonClass}>
+                  NEXT <span>→</span>
+                </button>
+              ) : (
+                <div /> /* レイアウト維持用のダミー */
+              )}
+            </div>
+
           </div>
         </div>
       )}
