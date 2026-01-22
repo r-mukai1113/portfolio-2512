@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useThemeColor } from "@/hooks/useThemeColor";
 
 export default function Contact() {
+  // 1. 背景色の引き継ぎ対策 (Aboutなどと同様に固定色を指定)
   useThemeColor("#F0F2F5");
   
   const router = useRouter();
@@ -59,36 +60,36 @@ export default function Contact() {
   // デザインシステム
   // =================================================================
 
+  // アクセントカラー (オレンジ)
+  const ACCENT_COLOR = "#F37022"; 
+
   const glassClass = "bg-white/50 border border-white/60 backdrop-blur-md";
   const cardClass = `rounded-[12px] md:rounded-[16px] w-full transition-colors duration-500 ${glassClass}`;
   const gridGapClass = "mb-2 md:mb-[12px]";
   const cardPaddingClass = "py-[32px] px-[20px] md:py-[56px] md:px-[40px]";
 
-  // フォーム入力欄のスタイル
-  // 修正: SP文字サイズを 12px に変更 (text-[12px])
+  // フォーム入力欄: SP文字サイズ 12px / PC 16px
   const inputClass = "w-full bg-white/60 border border-gray-200 rounded-[8px] px-4 py-3 text-[12px] md:text-base text-[#333] placeholder-gray-400 outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-all font-noto";
   
-  // ラベルのスタイル
-  // 修正: 文字色を #333 に統一、SPサイズを 14px (text-sm) に設定
-  const labelClass = "block text-sm md:text-base font-bold font-noto text-[#333] mb-2";
+  // ラベル: SP文字サイズ 14px / PC 16px
+  const labelClass = "block text-[14px] md:text-base font-bold font-noto text-[#333] mb-2";
 
-  // 必須マークのスタイル
-  // 修正: 黒の米印、小さく表示
-  const requiredMark = <span className="text-[#333] opacity-60 text-[10px] align-top ml-1">※</span>;
+  // 必須マーク: オレンジに変更
+  const requiredMark = <span style={{ color: ACCENT_COLOR }} className="opacity-80 text-[11px] align-top ml-1">※</span>;
 
   return (
     <>
       <GlobalHeader />
 
-      <main className="w-full min-h-screen bg-[#F0F2F5] pt-[72px] pb-20 transition-colors duration-500">
+      {/* Main: 最下部の余白(pb)を32pxに設定 */}
+      <main className="w-full min-h-screen bg-[#F0F2F5] pt-[72px] pb-[32px] transition-colors duration-500">
         <div className="max-w-[880px] mx-auto w-full px-5 md:px-20 text-[#333]">
 
           {/* =================================================
-              1. Header Card (Title & Description)
+              1. Header Card
           ================================================= */}
           <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass}`}>
             <div className="mb-[16px]">
-              {/* 修正: "Form" の文字を削除 */}
               <h1 className="font-inter font-bold text-[32px] md:text-[48px] leading-none mb-6">
                 Contact
               </h1>
@@ -98,7 +99,6 @@ export default function Contact() {
               <p className="mb-4 text-[#333]">
                 お仕事のご依頼やご相談は以下のフォームよりお気軽にお問い合わせください。
               </p>
-              {/* 修正: 補足テキストを黒(opacity-60)に変更 */}
               <p className="text-[#333] opacity-60 text-[11px] md:text-[13px]">
                 1〜3日以内にお返事いたします。もし返信がない場合、何らかの理由でメールが受信されていない可能性がありますので、お手数ですがSNSのDMにてその旨をご連絡いただけますと幸いです。
               </p>
@@ -212,7 +212,8 @@ export default function Contact() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-[#333] text-white font-bold font-noto py-4 rounded-[8px] hover:bg-black transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-0.5 shadow-sm"
+                  style={{ backgroundColor: ACCENT_COLOR }}
+                  className="w-full text-white font-bold font-noto py-4 rounded-[8px] hover:brightness-90 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-0.5 shadow-sm"
                 >
                   {isSubmitting ? "送信中..." : "送信する"}
                 </button>
@@ -222,7 +223,7 @@ export default function Contact() {
           </section>
 
           {/* Footer (Copyright) */}
-          <footer className="mt-12 mb-8 text-center">
+          <footer className="mt-12 text-center">
              <p className="font-inter text-[10px] md:text-[12px] opacity-40">
                ©2025 Ryuta Mukai
              </p>
