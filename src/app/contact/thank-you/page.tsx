@@ -16,10 +16,14 @@ export default function ThankYou() {
 
       <GlobalHeader />
 
-      {/* relativeを追加（中のabsoluteの基準にするため） */}
+      {/* min-h-screen = min-height: 100vh 
+         これで画面の高さいっぱいを確保します 
+      */}
       <main className="relative min-h-screen text-[#333]">
         
-        {/* コンテンツエリア：画面中央に配置 */}
+        {/* コンテンツを上下左右中央に配置 
+           pb-20 は、下のCopyrightと重ならないようにするための余白です
+        */}
         <div className="flex flex-col items-center justify-center min-h-screen px-[20px] pb-20">
           <div className="text-center max-w-[600px]">
             
@@ -61,6 +65,8 @@ export default function ThankYou() {
 
           </div>
         </div>
+
+
         <div className="absolute bottom-6 md:bottom-10 left-0 w-full">
           <Copyright />
         </div>
