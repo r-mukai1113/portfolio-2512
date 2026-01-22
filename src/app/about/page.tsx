@@ -44,8 +44,7 @@ export default function ProfilePage() {
     BODY: "font-noto text-[12px] md:text-[14px] leading-[1.8] tracking-[0.02em] opacity-80",
   };
 
-  // ガラスの質感を少し強める (背景のBlobをきれいに透かすため)
-  const glassClass = "bg-white/60 border border-white/60 backdrop-blur-[12px]";
+  const glassClass = "bg-white/50 border border-white/60 backdrop-blur-md";
   const cardClass = `rounded-[12px] md:rounded-[16px] w-full transition-colors duration-500 ${glassClass}`;
   const gridGapClass = "mb-2 md:mb-[12px]";
   const cardPaddingClass = "py-[32px] px-[20px] md:py-[56px] md:px-[40px]";
@@ -61,74 +60,28 @@ export default function ProfilePage() {
     <>
       <GlobalHeader />
 
-      {/* ★追加: Blobアニメーション用のスタイル */}
-      <style jsx>{`
-        .blob-bg-container {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          pointer-events: none;
-          z-index: 0; /* 最背面 */
-          overflow: hidden;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-        .blob-svg {
-          width: 180vmax; /* 画面からはみ出すくらい大きく */
-          height: 180vmax;
-          opacity: 0.15; /* 薄く表示 */
-          filter: blur(40px); /* 柔らかくぼかす */
-        }
-        .blob-path {
-          /* 落ち着いた色味 (ニュートラルなグレー) */
-          fill: #A3A3A3; 
-          /* 形の変化と回転を組み合わせる */
-          animation: blobAnim 30s linear infinite, rotAnim 120s linear infinite;
-          transform-origin: center;
-        }
-
-        /* CodePenから移植したパスアニメーション */
-        @keyframes blobAnim {
-          0% { d: path("M120,-157.6C152.7,-141.5,174.3,-102.6,194.8,-58.8C215.3,-14.9,234.6,33.8,228.4,80.8C222.2,127.8,190.4,173.1,148.1,184C105.8,195,52.9,171.5,-2.4,174.8C-57.8,178.2,-115.6,208.4,-137.5,190.9C-159.3,173.3,-145.3,108,-153,56.3C-160.7,4.6,-190.2,-33.4,-178.3,-54.2C-166.4,-75.1,-113.2,-78.8,-76.6,-93.6C-40,-108.3,-20,-134.2,11.9,-150.5C43.7,-166.8,87.4,-173.6,120,-157.6Z"); }
-          25% { d: path("M67.8,-97.1C87.8,-78.8,103.8,-58.9,117.4,-34.1C130.9,-9.4,142,20.2,139.5,50.7C137,81.2,120.8,112.6,95.3,150.1C69.8,187.7,34.9,231.3,3.3,226.8C-28.2,222.2,-56.4,169.3,-91.6,134.9C-126.8,100.5,-169,84.6,-179.6,57.1C-190.2,29.7,-169.3,-9.3,-155.2,-49.7C-141,-90.1,-133.7,-132,-109,-148.8C-84.2,-165.6,-42.1,-157.3,-9.1,-144.8C23.9,-132.2,47.8,-115.5,67.8,-97.1Z"); }
-          50% { d: path("M137.1,-191.3C172,-163.4,190.6,-115.7,197.2,-70.1C203.8,-24.4,198.5,19.2,178.9,51.5C159.3,83.9,125.5,105,93.3,129.6C61.1,154.1,30.6,182.1,1.1,180.6C-28.4,179.1,-56.8,148.2,-81.2,121.1C-105.6,94.1,-126.1,70.8,-141.6,41.6C-157.2,12.4,-168,-22.9,-153.9,-45C-139.8,-67,-100.7,-76,-70.9,-105.5C-41.1,-135,-20.6,-185,15.3,-206C51.1,-227.1,102.3,-219.1,137.1,-191.3Z"); }
-          75% { d: path("M123.7,-157.1C162.4,-142.2,197.2,-108.8,202.8,-70.8C208.3,-32.9,184.5,9.7,169,54.2C153.6,98.7,146.4,145.2,119.7,162.7C92.9,180.2,46.4,168.6,-1.9,171.1C-50.2,173.7,-100.3,190.4,-122.2,171.3C-144.1,152.3,-137.7,97.5,-144.1,52.7C-150.6,7.9,-169.9,-26.8,-170.5,-64.8C-171,-102.8,-152.8,-144,-121.3,-161.3C-89.7,-178.5,-44.9,-171.8,-1.2,-170.1C42.5,-168.5,85,-172,123.7,-157.1Z"); }
-          100% { d: path("M120,-157.6C152.7,-141.5,174.3,-102.6,194.8,-58.8C215.3,-14.9,234.6,33.8,228.4,80.8C222.2,127.8,190.4,173.1,148.1,184C105.8,195,52.9,171.5,-2.4,174.8C-57.8,178.2,-115.6,208.4,-137.5,190.9C-159.3,173.3,-145.3,108,-153,56.3C-160.7,4.6,-190.2,-33.4,-178.3,-54.2C-166.4,-75.1,-113.2,-78.8,-76.6,-93.6C-40,-108.3,-20,-134.2,11.9,-150.5C43.7,-166.8,87.4,-173.6,120,-157.6Z"); }
-        }
-
-        @keyframes rotAnim {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-      `}</style>
-      
-      {/* モーダル用スタイル (維持) */}
+      {/* モーダルアニメーション用のスタイル (これだけは残しておきます) */}
       <style jsx global>{`
-        @keyframes modalFadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes modalSlideUp { from { opacity: 0; transform: translateY(20px) scale(0.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        .animate-modal-overlay { animation: modalFadeIn 0.4s ease-out forwards; }
-        .animate-modal-content { animation: modalSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        @keyframes modalFadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        @keyframes modalSlideUp {
+          from { opacity: 0; transform: translateY(20px) scale(0.96); }
+          to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .animate-modal-overlay {
+          animation: modalFadeIn 0.4s ease-out forwards;
+        }
+        .animate-modal-content {
+          animation: modalSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
       `}</style>
 
-
-      {/* ★追加: 背景のBlob SVG構造 */}
-      <div className="blob-bg-container">
-        <svg className="blob-svg" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
-          <g transform="translate(300,300)">
-            <path className="blob-path" d="M120,-157.6C152.7,-141.5,174.3,-102.6,194.8,-58.8C215.3,-14.9,234.6,33.8,228.4,80.8C222.2,127.8,190.4,173.1,148.1,184C105.8,195,52.9,171.5,-2.4,174.8C-57.8,178.2,-115.6,208.4,-137.5,190.9C-159.3,173.3,-145.3,108,-153,56.3C-160.7,4.6,-190.2,-33.4,-178.3,-54.2C-166.4,-75.1,-113.2,-78.8,-76.6,-93.6C-40,-108.3,-20,-134.2,11.9,-150.5C43.7,-166.8,87.4,-173.6,120,-157.6Z" />
-          </g>
-        </svg>
-      </div>
-
-
-      {/* メインコンテンツ (relative と z-10 で背景の上に表示。背景色を少し透過させる) */}
-      <main className="w-full min-h-screen bg-[#F0F2F5]/80 pt-[72px] pb-20 transition-colors duration-500 relative z-10 overflow-hidden">
-        {/* 前回のオーブのコードは削除 */}
+      {/* メインコンテンツ: 背景はシンプルな単色 */}
+      <main className="w-full min-h-screen bg-[#F0F2F5] pt-[72px] pb-20 transition-colors duration-500">
         
-        <div className="max-w-[880px] mx-auto w-full px-5 md:px-20 text-[#333] relative">
+        <div className="max-w-[880px] mx-auto w-full px-5 md:px-20 text-[#333]">
 
           {/* 1. Main Identity */}
           <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass}`}>
