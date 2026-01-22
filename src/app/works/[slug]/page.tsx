@@ -56,7 +56,7 @@ export default function WorkDetail() {
 
   const metaItemGap = "flex flex-col gap-3 md:gap-[12px]";
 
-  // ★追加: Aboutページと共通のボタン用スタイル (高さ固定・パディング統一)
+  // Aboutページと共通のボタン用スタイル
   const navButtonPadding = "px-[20px] md:px-[40px]";
   const baseNavButtonClass = `group flex flex-col items-start justify-center ${cardClass} ${navButtonPadding} h-[72px] md:h-[120px] hover:-translate-y-1`;
 
@@ -166,17 +166,18 @@ export default function WorkDetail() {
           )}
 
           {/* =================================================
-              4. Navigation Footer (Updated to match About page style)
+              4. Navigation Footer
           ================================================= */}
           <div className="flex flex-row gap-[8px] md:gap-[12px] mt-2 md:mt-[12px]">
 
-            {/* TOP Button (flex-1) */}
+            {/* Works Button (flex-1) */}
             <Link
               href="/"
               className={`flex-1 ${baseNavButtonClass}`}
             >
+              {/* テキストを TOP -> Works に変更 */}
               <span className="font-inter font-bold text-[14px] md:text-[20px] tracking-wider group-hover:opacity-60 transition-opacity">
-                ‹ TOP
+                ‹ Works
               </span>
             </Link>
 
@@ -189,7 +190,6 @@ export default function WorkDetail() {
                   <span className="font-inter font-bold text-[14px] md:text-[20px] tracking-wider whitespace-nowrap shrink-0 group-hover:opacity-60 transition-opacity">
                     Next Project <span className="ml-1">›</span>
                   </span>
-                  {/* タイトルが長い場合に備えて truncate を適用 */}
                   <span className="font-inter text-[12px] md:text-[20px] opacity-60 truncate group-hover:opacity-40 transition-opacity">
                     {nextWork.title}
                   </span>
