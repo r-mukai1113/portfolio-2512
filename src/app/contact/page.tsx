@@ -220,11 +220,7 @@ export default function Contact() {
           </section>
 
           {/* Footer (Copyright) */}
-          <footer className="mt-10 md:mt-12 text-center">
-             <p className="font-inter text-[10px] md:text-[12px] opacity-40">
-               ©2025 Ryuta Mukai
-             </p>
-          </footer>
+          <Copyright className="mt-10 md:mt-12" />
 
         </div>
       </main>
