@@ -60,16 +60,22 @@ export default function ProfilePage() {
     <>
       <GlobalHeader />
 
-      <main className="w-full min-h-screen bg-[#F0F2F5] pt-[72px] pb-20 transition-colors duration-500 relative">
+      {/* ★変更: 背景演出をGrainから「ゆっくり動くオーブ」に変更 */}
+      <main className="w-full min-h-screen bg-[#F0F2F5] pt-[72px] pb-20 transition-colors duration-500 relative overflow-hidden">
         
-        {/* Grain (ノイズ) エフェクト */}
-        {/* 修正: Opacityを 0.03 -> 0.07 に上げて視認性を向上 */}
+        {/* 背景の浮遊する光 (オーブ1) */}
         <div 
-          className="fixed inset-0 pointer-events-none z-0 opacity-[0.07]"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`
-          }}
+          className="fixed top-[-20%] left-[-10%] w-[70vw] h-[70vw] bg-gradient-to-br from-white/80 to-transparent rounded-full mix-blend-overlay filter blur-[100px] opacity-70 animate-blob"
         />
+        {/* 背景の浮遊する光 (オーブ2) */}
+        <div 
+          className="fixed bottom-[-20%] right-[-10%] w-[60vw] h-[60vw] bg-gradient-to-tl from-white/80 to-transparent rounded-full mix-blend-overlay filter blur-[100px] opacity-70 animate-blob animation-delay-2000"
+        />
+        {/* 背景の浮遊する光 (オーブ3 - アクセント) */}
+        <div 
+          className="fixed top-[30%] right-[20%] w-[40vw] h-[40vw] bg-gradient-to-bl from-gray-100/50 to-transparent rounded-full mix-blend-overlay filter blur-[80px] opacity-50 animate-blob animation-delay-4000"
+        />
+
 
         <div className="max-w-[880px] mx-auto w-full px-5 md:px-20 text-[#333] relative z-10">
 
@@ -140,8 +146,11 @@ export default function ProfilePage() {
                 <button
                   key={item.id}
                   onClick={() => setSelectedLike(item)}
-                  // ★修正: 背景色を #EEF0F2 (中間色) に変更
-                  className="group px-2 py-2 md:px-4 md:py-2 bg-[#EEF0F2] hover:bg-[#E4E4E7] rounded-full text-[#333] flex items-center gap-1 md:gap-2 transition-colors duration-200"
+                  // ★修正: PaddingとGapをカスタム値で微調整
+                  // px: SP[10px] PC[20px] (+2px/+4px)
+                  // py: [10px] (バランスを見て少し追加)
+                  // gap: SP[3px] PC[7px] (-1px)
+                  className="group px-[10px] py-[10px] md:px-[20px] md:py-[10px] bg-[#EEF0F2] hover:bg-[#E4E4E7] rounded-full text-[#333] flex items-center gap-[3px] md:gap-[7px] transition-colors duration-200"
                 >
                   <span className="text-[12px] md:text-[14px]">{item.emoji}</span>
                   <span className="font-bold font-noto text-[10px] md:text-[12px]">{item.text}</span>
@@ -174,10 +183,12 @@ export default function ProfilePage() {
           className="fixed inset-0 z-[200] flex items-center justify-center px-5"
           onClick={handleClose}
         >
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity animate-in fade-in duration-300" />
+          {/* ★修正: アニメーション時間を duration-700 に延長し、ease-outを追加 */}
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity animate-in fade-in duration-700 ease-out" />
           
+          {/* ★修正: アニメーション時間を duration-700 に延長。スライド距離を slide-in-from-bottom-8 に増加。ease-outを追加 */}
           <div 
-            className="relative w-full max-w-[500px] bg-white rounded-[8px] md:rounded-[12px] px-6 pb-8 md:px-8 md:pb-10 shadow-2xl transform transition-all animate-in fade-in zoom-in-95 slide-in-from-bottom-4 duration-300"
+            className="relative w-full max-w-[500px] bg-white rounded-[8px] md:rounded-[12px] px-6 pb-8 md:px-8 md:pb-10 shadow-2xl transform transition-all animate-in fade-in zoom-in-95 slide-in-from-bottom-8 duration-700 ease-out"
             style={{ paddingTop: "28px" }}
             onClick={(e) => e.stopPropagation()}
           >
@@ -191,7 +202,6 @@ export default function ProfilePage() {
             </div>
 
             <div className="flex flex-col items-center mb-8">
-              {/* 画像 */}
               <div className="w-full max-w-[280px] md:max-w-[320px] aspect-square rounded-[4px] overflow-hidden mb-6 bg-gray-50">
                 <img 
                   src={selectedLike.image} 
@@ -200,7 +210,6 @@ export default function ProfilePage() {
                 />
               </div>
 
-              {/* ★修正: テキストエリアの幅を画像と同じに制限 (w-full max-w-[280px] md:max-w-[320px]) */}
               <div className="w-full max-w-[280px] md:max-w-[320px]">
                 <h3 className={modalTitleClass}>
                   <span className="mr-2">{selectedLike.emoji}</span>
