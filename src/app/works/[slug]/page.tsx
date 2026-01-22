@@ -6,7 +6,6 @@ import { notFound, useParams } from "next/navigation";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useThemeColor } from "@/hooks/useThemeColor";
-// ★追加: 共通Copyrightコンポーネント
 import { Copyright } from "@/components/Copyright";
 
 // ★重要: generateStaticParams が必要な場合はコメントアウトを外してください
@@ -22,16 +21,13 @@ export default function WorkDetail() {
   const params = useParams();
   const slug = params.slug as string;
 
-  // データ取得
   const currentIndex = works.findIndex((work) => work.slug === slug);
   const currentWork = works[currentIndex];
   const nextIndex = (currentIndex + 1) % works.length;
   const nextWork = works[nextIndex];
 
-  // テーマカラーを適用
   useThemeColor(currentWork?.detailTheme?.bg || "");
 
-  // クライアントサイドでのレンダリング待機
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);
@@ -58,6 +54,9 @@ export default function WorkDetail() {
   const textColor = { color: currentWork.detailTheme.text };
   const hasGalleryImages = currentWork.images && currentWork.images.length > 1;
 
+  // ラベルと値の間の余白設定 (SP:12px / PC:12px)
+  const metaItemGap = "flex flex-col gap-3 md:gap-[12px]";
+
   return (
     <>
       <GlobalHeader />
@@ -76,23 +75,26 @@ export default function WorkDetail() {
               {currentWork.title}
             </h1>
 
-            {/* items-end で下揃えにする */}
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 md:gap-20 mb-6 md:mb-8">
               
-              {/* Meta Info: gap-10 -> gap-[12px] に変更 */}
-              <div className="flex flex-col md:flex-row gap-3 md:gap-[12px] w-full">
+              {/* Meta Info */}
+              {/* SP: gap-6(24px) / PC: gap-10(40px・元に戻した) */}
+              <div className="flex flex-col md:flex-row gap-6 md:gap-10 w-full">
+                
                 {/* Category */}
-                <div className="flex flex-col gap-3 md:gap-2">
+                <div className={metaItemGap}>
                   <span className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40">Category</span>
                   <span className="font-inter text-[12px] md:text-[14px] leading-none tracking-[0.02em]">{currentWork.category}</span>
                 </div>
+                
                 {/* Role */}
-                <div className="flex flex-col gap-3 md:gap-2">
+                <div className={metaItemGap}>
                   <span className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40">Role</span>
                   <span className="font-inter text-[12px] md:text-[14px] leading-none tracking-[0.02em]">{currentWork.role}</span>
                 </div>
-                {/* Year (Dateから変更) */}
-                <div className="flex flex-col gap-3 md:gap-2">
+                
+                {/* Year */}
+                <div className={metaItemGap}>
                   <span className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40">Year</span>
                   <span className="font-inter text-[12px] md:text-[14px] leading-none tracking-[0.02em]">{currentWork.year}</span>
                 </div>
@@ -100,12 +102,12 @@ export default function WorkDetail() {
 
               {/* Visit Website Button */}
               {currentWork.url && (
-                <div className="shrink-0 mt-0 md:mt-0">
+                // SP: -mt-2 (-8px) で上に詰める / PC: mt-0 でリセット
+                <div className="shrink-0 -mt-2 md:mt-0">
                   <a
                     href={currentWork.url}
                     target="_blank"
                     rel="noreferrer"
-                    // font-medium を削除し、font-normal (デフォルト) に
                     className="inline-flex items-center gap-1 font-inter font-normal text-[14px] md:text-[16px] leading-none tracking-[0.02em] hover:opacity-60 transition-opacity group"
                     style={{ color: currentWork.detailTheme.text }}
                   >
@@ -197,9 +199,6 @@ export default function WorkDetail() {
           </div>
 
           {/* 5. Copyright */}
-          {/* 背景色に応じて色が変わるように mix-blend-difference を適用 */}
-          {/* または、詳細ページの背景色プロパティ(currentWork.detailTheme.text)に合わせてもOKですが、
-              一番汎用性が高いのは mix-blend-difference で白/黒反転させる方法です。 */}
           <div className="mt-10 md:mt-12 w-full">
             <Copyright className="text-white mix-blend-difference" />
           </div>
