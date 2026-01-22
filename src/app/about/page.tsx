@@ -60,20 +60,54 @@ export default function ProfilePage() {
     <>
       <GlobalHeader />
 
-      {/* ★変更: 背景演出をGrainから「ゆっくり動くオーブ」に変更 */}
+      {/* ★追加: モーダルアニメーション用のスタイル定義 (確実に動かすため) */}
+      <style jsx global>{`
+        @keyframes modalFadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        @keyframes modalSlideUp {
+          from { opacity: 0; transform: translateY(20px) scale(0.96); }
+          to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .animate-modal-overlay {
+          animation: modalFadeIn 0.4s ease-out forwards;
+        }
+        .animate-modal-content {
+          animation: modalSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        /* 背景オーブのアニメーション */
+        @keyframes blobFloat {
+          0% { transform: translate(0px, 0px) scale(1); }
+          33% { transform: translate(30px, -50px) scale(1.1); }
+          66% { transform: translate(-20px, 20px) scale(0.9); }
+          100% { transform: translate(0px, 0px) scale(1); }
+        }
+        .animate-blob {
+          animation: blobFloat 10s infinite;
+        }
+        .animation-delay-2000 {
+          animation-delay: 2s;
+        }
+        .animation-delay-4000 {
+          animation-delay: 4s;
+        }
+      `}</style>
+
       <main className="w-full min-h-screen bg-[#F0F2F5] pt-[72px] pb-20 transition-colors duration-500 relative overflow-hidden">
         
-        {/* 背景の浮遊する光 (オーブ1) */}
+        {/* ★修正: 背景の浮遊する光 (色を濃く、ブレンドモード削除で視認性向上) */}
+        {/* Orb 1: 左上 */}
         <div 
-          className="fixed top-[-20%] left-[-10%] w-[70vw] h-[70vw] bg-gradient-to-br from-white/80 to-transparent rounded-full mix-blend-overlay filter blur-[100px] opacity-70 animate-blob"
+          className="fixed top-[-10%] left-[-10%] w-[70vw] h-[70vw] bg-slate-300 rounded-full filter blur-[80px] opacity-40 animate-blob"
         />
-        {/* 背景の浮遊する光 (オーブ2) */}
+        {/* Orb 2: 右下 */}
         <div 
-          className="fixed bottom-[-20%] right-[-10%] w-[60vw] h-[60vw] bg-gradient-to-tl from-white/80 to-transparent rounded-full mix-blend-overlay filter blur-[100px] opacity-70 animate-blob animation-delay-2000"
+          className="fixed bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] bg-gray-300 rounded-full filter blur-[80px] opacity-40 animate-blob animation-delay-2000"
         />
-        {/* 背景の浮遊する光 (オーブ3 - アクセント) */}
+        {/* Orb 3: アクセント (少し青み) */}
         <div 
-          className="fixed top-[30%] right-[20%] w-[40vw] h-[40vw] bg-gradient-to-bl from-gray-100/50 to-transparent rounded-full mix-blend-overlay filter blur-[80px] opacity-50 animate-blob animation-delay-4000"
+          className="fixed top-[40%] right-[30%] w-[40vw] h-[40vw] bg-blue-100 rounded-full filter blur-[60px] opacity-50 animate-blob animation-delay-4000"
         />
 
 
@@ -146,11 +180,9 @@ export default function ProfilePage() {
                 <button
                   key={item.id}
                   onClick={() => setSelectedLike(item)}
-                  // ★修正: PaddingとGapをカスタム値で微調整
-                  // px: SP[10px] PC[20px] (+2px/+4px)
-                  // py: [10px] (バランスを見て少し追加)
-                  // gap: SP[3px] PC[7px] (-1px)
-                  className="group px-[10px] py-[10px] md:px-[20px] md:py-[10px] bg-[#EEF0F2] hover:bg-[#E4E4E7] rounded-full text-[#333] flex items-center gap-[3px] md:gap-[7px] transition-colors duration-200"
+                  // ★修正: 上下paddingを py-[8px] に変更 (-2px)
+                  // PC/SP内部余白: SP [10px/8px], PC [20px/8px]
+                  className="group px-[10px] py-[8px] md:px-[20px] md:py-[8px] bg-[#EEF0F2] hover:bg-[#E4E4E7] rounded-full text-[#333] flex items-center gap-[3px] md:gap-[7px] transition-colors duration-200"
                 >
                   <span className="text-[12px] md:text-[14px]">{item.emoji}</span>
                   <span className="font-bold font-noto text-[10px] md:text-[12px]">{item.text}</span>
@@ -183,12 +215,12 @@ export default function ProfilePage() {
           className="fixed inset-0 z-[200] flex items-center justify-center px-5"
           onClick={handleClose}
         >
-          {/* ★修正: アニメーション時間を duration-700 に延長し、ease-outを追加 */}
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity animate-in fade-in duration-700 ease-out" />
+          {/* ★修正: CSSクラス 'animate-modal-overlay' を適用 */}
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm animate-modal-overlay" />
           
-          {/* ★修正: アニメーション時間を duration-700 に延長。スライド距離を slide-in-from-bottom-8 に増加。ease-outを追加 */}
+          {/* ★修正: CSSクラス 'animate-modal-content' を適用 */}
           <div 
-            className="relative w-full max-w-[500px] bg-white rounded-[8px] md:rounded-[12px] px-6 pb-8 md:px-8 md:pb-10 shadow-2xl transform transition-all animate-in fade-in zoom-in-95 slide-in-from-bottom-8 duration-700 ease-out"
+            className="relative w-full max-w-[500px] bg-white rounded-[8px] md:rounded-[12px] px-6 pb-8 md:px-8 md:pb-10 shadow-2xl animate-modal-content"
             style={{ paddingTop: "28px" }}
             onClick={(e) => e.stopPropagation()}
           >
