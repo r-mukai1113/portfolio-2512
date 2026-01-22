@@ -51,12 +51,11 @@ export default function ThankYou() {
               className="inline-flex items-center gap-2 font-inter text-[14px] font-medium hover:opacity-70 transition-opacity"
               style={{ color: ACCENT_COLOR }}
             >
-              {/* 矢印を先に記述 */}
+
               <span className="text-[16px] leading-none pb-[2px]">‹</span>
               <span className="pb-[1px]">Back to Top</span>
             </Link>
 
-          {/* 必要であればここに追加 */}
             <Copyright className="mt-20" />
 
           </div>
