@@ -73,10 +73,9 @@ export default function ProfilePage() {
   const gridGapClass = "mb-2 md:mb-[12px]";
   const cardPaddingClass = "py-[32px] px-[20px] md:py-[56px] md:px-[40px]";
 
-  // フッターボタン専用スタイル
-  // 高さ固定 (h-72px / h-120px) のため、pyは削除して pxのみ適用
   const navButtonPadding = "px-[20px] md:px-[40px]";
-  const navButtonClass = `group flex-1 flex flex-col items-start justify-center ${cardClass} ${navButtonPadding} h-[72px] md:h-[120px] hover:-translate-y-1`;
+  // 修正: flex-1 を削除（個別に指定するため）
+  const baseNavButtonClass = `group flex flex-col items-start justify-center ${cardClass} ${navButtonPadding} h-[72px] md:h-[120px] hover:-translate-y-1`;
 
   // モーダル用クラス定義
   const modalTitleClass = "font-noto font-bold text-[16px] md:text-[20px] text-[#333] mb-4 text-center leading-[1.3] tracking-[0.02em]";
@@ -93,14 +92,12 @@ export default function ProfilePage() {
           {/* 1. Main Identity */}
           <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass}`}>
             
-            {/* 修正: 画像下の余白をレスポンシブ対応 (SP:24px / PC:40px) */}
             <div className="w-full aspect-[16/9] rounded-[4px] overflow-hidden mb-[24px] md:mb-[40px]">
               <img src="/images/2026portfolio_profile_2_1.png" alt="RYUTA MUKAI Profile" className="w-full h-full object-cover"/>
             </div>
 
             <div className="mb-[16px]">
-              {/* 修正: SP:12px / PC:16px */}
-              <span className="block font-inter font-bold text-[12px] md:text-[16px] tracking-[0.02em] opacity-80 mb-[16px]">
+              <span className="block font-inter font-bold text-[12px] md:text-[16px] tracking-[0.02em] opacity-80 mb-[12px] md:mb-[16px]">
                 Web Designer
               </span>
               <h1 className="font-inter font-bold text-[32px] md:text-[48px] leading-none">
@@ -129,7 +126,9 @@ export default function ProfilePage() {
               <div>
                 <span className={TEXT_STYLES.LABEL}>Personal Media</span>
                 <h2 className={`${TEXT_STYLES.CARD_TITLE} mb-6 whitespace-nowrap`}>暮らしの記録、ムタログ。</h2>
-                <div className={`${TEXT_STYLES.BODY} mb-8`}>
+                
+                {/* 修正: mb-8 -> mb-6 に変更し、ボタンとの距離を8px縮小 */}
+                <div className={`${TEXT_STYLES.BODY} mb-6`}>
                   <p className="mb-6">
                     生活のノイズを減らし、心に余白を作るためのライフログです。<br className="hidden md:block"/>
                     モノを厳選し、日々の小さな選択を整えることで生まれるエネルギーを大切にしています。
@@ -157,7 +156,6 @@ export default function ProfilePage() {
                 <button
                   key={item.id}
                   onClick={() => setSelectedLike(item)}
-                  // 修正: px-4 -> px-3 にして横幅を縮小
                   className="group px-3 py-2 bg-[#F5F5F7] hover:bg-[#E5E5E7] rounded-full text-[#333] flex items-center gap-2 transition-colors duration-200"
                 >
                   <span className="text-[12px] md:text-[14px]">{item.emoji}</span>
@@ -168,13 +166,17 @@ export default function ProfilePage() {
             </div>
           </section>
 
-          {/* 4. Footer Nav (高さ固定版) */}
+          {/* 4. Footer Nav (1:2 Ratio) */}
           <div className="flex flex-row gap-[8px] md:gap-[12px] mt-2 md:mt-[12px]">
-            <Link href="/" className={navButtonClass}>
+            
+            {/* Works Button: flex-1 (1/3) */}
+            <Link href="/" className={`flex-1 ${baseNavButtonClass}`}>
               <span className="font-inter font-bold text-[14px] md:text-[20px] tracking-wider group-hover:opacity-60 transition-opacity">‹ Works</span>
             </Link>
-            <Link href="/contact" className={navButtonClass}>
-              <div className="flex items-center gap-2 w-full">
+
+            {/* Contact Button: flex-[2] (2/3) */}
+            <Link href="/contact" className={`flex-[2] ${baseNavButtonClass}`}>
+              <div className="flex items-center justify-between w-full">
                 <span className="font-inter font-bold text-[14px] md:text-[20px] tracking-wider">Contact</span>
                 <span className="font-inter text-[14px] md:text-[20px] mb-[2px]">›</span>
               </div>
@@ -190,13 +192,14 @@ export default function ProfilePage() {
           className="fixed inset-0 z-[200] flex items-center justify-center px-5"
           onClick={handleClose}
         >
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" />
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity animate-in fade-in duration-300" />
+          
           <div 
-            className="relative w-full max-w-[500px] bg-white rounded-[8px] md:rounded-[12px] px-6 py-8 md:px-8 md:py-10 shadow-2xl transform transition-all animate-in fade-in zoom-in-95 duration-200"
+            className="relative w-full max-w-[500px] bg-white rounded-[8px] md:rounded-[12px] px-6 pb-8 md:px-8 md:pb-10 shadow-2xl transform transition-all animate-in fade-in zoom-in-95 slide-in-from-bottom-4 duration-300"
+            style={{ paddingTop: "28px" }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex justify-between items-center mb-6 md:mb-8">
-              <span className="font-inter text-sm opacity-40 tracking-wider">Likes</span>
+            <div className="flex justify-end items-center mb-6 md:mb-8">
               <button
                 onClick={handleClose}
                 className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full text-black/40 hover:text-black transition-colors"
@@ -225,14 +228,20 @@ export default function ProfilePage() {
             <div className="flex justify-between items-center w-full min-h-[32px]">
               {currentIndex > 0 ? (
                 <button onClick={handlePrev} className={modalNavButtonClass}>
-                  <span>&lt;</span> PREV
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                  </svg>
+                  PREV
                 </button>
               ) : (
                 <div />
               )}
               {currentIndex < likesData.length - 1 ? (
                 <button onClick={handleNext} className={modalNavButtonClass}>
-                  NEXT <span>&gt;</span>
+                  NEXT
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                  </svg>
                 </button>
               ) : (
                 <div />
