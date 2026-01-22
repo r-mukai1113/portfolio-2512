@@ -71,14 +71,15 @@ export default function WorkDetail() {
               1. Hero Card
           ================================================= */}
           <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass}`}>
-            <h1 className="font-inter font-bold text-[32px] md:text-[72px] leading-[1.1] tracking-[0.04em] mb-6 md:mb-[28px] break-words">
+            
+            {/* ★修正: PCサイズを 72px -> 64px に変更 */}
+            <h1 className="font-inter font-bold text-[32px] md:text-[64px] leading-[1.1] tracking-[0.04em] mb-6 md:mb-[28px] break-words">
               {currentWork.title}
             </h1>
 
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 md:gap-20 mb-6 md:mb-8">
               
               {/* Meta Info */}
-              {/* SP: gap-6(24px) / PC: gap-10(40px・元に戻した) */}
               <div className="flex flex-col md:flex-row gap-6 md:gap-10 w-full">
                 
                 {/* Category */}
@@ -102,7 +103,6 @@ export default function WorkDetail() {
 
               {/* Visit Website Button */}
               {currentWork.url && (
-                // SP: -mt-2 (-8px) で上に詰める / PC: mt-0 でリセット
                 <div className="shrink-0 -mt-2 md:mt-0">
                   <a
                     href={currentWork.url}
