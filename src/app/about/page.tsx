@@ -6,7 +6,7 @@ import { GlobalHeader } from "@/components/GlobalHeader";
 import { useThemeColor } from "@/hooks/useThemeColor";
 
 // ==========================================
-// Data: Likes (モーダル表示用データ)
+// Data: Likes
 // ==========================================
 type LikeItem = {
   id: string;
@@ -16,43 +16,61 @@ type LikeItem = {
   comment: string;
 };
 
-// ダミー画像ですが、実際には public/images/likes/ などに入れると良いです
 const likesData: LikeItem[] = [
   { id: "interior", emoji: "🪑", text: "インテリア", image: "https://placehold.co/600x400/D8C3B5/FFF?text=Interior", comment: "居心地の良い空間を作ることが趣味です。素材感のある家具が好きです。" },
   { id: "simple", emoji: "⬜️", text: "シンプルなもの", image: "https://placehold.co/600x400/eee/333?text=Simple", comment: "ノイズのないデザインに惹かれます。" },
-  { id: "coffee", emoji: "☕️", text: "カフェ・コーヒー", image: "https://placehold.co/600x400/3e3020/fff?text=Coffee", comment: "深煎りのコーヒーで集中力を高めます。" },
-  { id: "sauna", emoji: "🧖", text: "サウナ", image: "https://placehold.co/600x400/aaa/333?text=Sauna", comment: "思考を整理する大切な時間です。" },
-  { id: "baseball", emoji: "⚾️", text: "野球観戦", image: "https://placehold.co/600x400/004d40/fff?text=Baseball", comment: "スタジアムの雰囲気が好きです。" },
   { id: "apple", emoji: "🍎", text: "Apple", image: "https://placehold.co/600x400/000/fff?text=Apple", comment: "製品の箱を開ける体験からデザインされています。" },
+  { id: "sauna", emoji: "🧖", text: "サウナ", image: "https://placehold.co/600x400/aaa/333?text=Sauna", comment: "思考を整理する大切な時間です。" },
+  { id: "running", emoji: "🏃", text: "ランニング", image: "https://placehold.co/600x400/004d40/fff?text=Running", comment: "心身のバランスを整えるための習慣です。" },
+  { id: "baseball", emoji: "⚾️", text: "野球観戦", image: "https://placehold.co/600x400/004d40/fff?text=Baseball", comment: "スタジアムの雰囲気が好きです。" },
+  { id: "soda", emoji: "🥤", text: "炭酸飲料", image: "https://placehold.co/600x400/f00/fff?text=Soda", comment: "リフレッシュしたい時に欠かせません。" },
+  { id: "coffee", emoji: "☕️", text: "コーヒー", image: "https://placehold.co/600x400/3e3020/fff?text=Coffee", comment: "深煎りのコーヒーで集中力を高めます。" },
   { id: "ramen", emoji: "🍜", text: "ラーメン", image: "https://placehold.co/600x400/f00/fff?text=Ramen", comment: "意外と言われますが、ラーメン巡りも好きです。" },
   { id: "omelet", emoji: "🥚", text: "オムライス", image: "https://placehold.co/600x400/ff9/333?text=Omelet", comment: "卵料理には目がありません。" },
   { id: "sweets", emoji: "🍮", text: "甘いもの", image: "https://placehold.co/600x400/c69/fff?text=Sweets", comment: "作業の合間の糖分補給は欠かせません。" },
 ];
 
 export default function ProfilePage() {
-  // 背景色を白に近いグレーに設定
+  // 背景色 (詳細ページのLightモードに近いグレー)
   useThemeColor("#F0F2F5");
 
-  // モーダル用ステート
   const [selectedLike, setSelectedLike] = useState<LikeItem | null>(null);
 
-  // 共通スタイル定義
-  const cardClass = "bg-white rounded-[32px] p-10 shadow-sm w-full"; // 720pxコンテナ内で広がるようにw-full
-  const navButtonClass = "group flex-1 flex flex-col items-start justify-center py-[40px] px-[40px] bg-white rounded-[32px] transition-transform duration-300 hover:-translate-y-1 shadow-sm";
+  // =================================================================
+  // スタイル定義 (詳細ページから踏襲)
+  // =================================================================
+
+  // ガラスの質感 (Light Mode固定)
+  const glassClass = "bg-white/50 border border-white/60 backdrop-blur-md";
+
+  // 共通カードクラス
+  // SP: 12px, PC: 16px
+  const cardClass = `rounded-[12px] md:rounded-[16px] w-full transition-colors duration-500 ${glassClass}`;
+
+  // Gap設定 (Bento Grid ごとの余白)
+  // PC: 12px, SP: 8px
+  const gridGapClass = "mb-2 md:mb-[12px]";
+
+  // Bento Grid 内の余白 (PC: 上下56px 左右40px / SP: 上下32px 左右20px)
+  const cardPaddingClass = "py-[32px] px-[20px] md:py-[56px] md:px-[40px]";
+
+  // ナビゲーションボタン用クラス (カードクラスをベースにホバー効果追加)
+  const navButtonClass = `group flex-1 flex flex-col items-start justify-center ${cardClass} ${cardPaddingClass} hover:-translate-y-1`;
 
   return (
     <>
       <GlobalHeader />
 
-      <main className="w-full min-h-screen bg-[#F0F2F5] pt-[100px] pb-20 px-5 md:px-20">
+      <main className="w-full min-h-screen bg-[#F0F2F5] pt-[72px] pb-20 px-5 md:px-20 transition-colors duration-500">
         
-        {/* コンテナ: 幅720px (スクショのBody幅に合わせる) */}
-        <div className="max-w-[720px] mx-auto flex flex-col gap-4">
+        {/* コンテナ: Max 880px (詳細ページと統一) */}
+        <div className="max-w-[880px] mx-auto w-full text-[#333]">
 
           {/* =================================================
               1. Main Identity (Photo & Bio)
           ================================================= */}
-          <section className={cardClass}>
+          <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass}`}>
+            
             {/* Main Image */}
             <div className="w-full aspect-[16/9] rounded-[4px] overflow-hidden mb-[40px]">
               <img 
@@ -63,12 +81,12 @@ export default function ProfilePage() {
             </div>
 
             {/* Role & Name */}
-            {/* Gap 40px (img -> text) is handled by mb-[40px] above */}
+            {/* Gap 40px (img -> text) は mb-[40px] で確保 */}
             <div className="mb-[16px]">
-              <span className="block font-inter font-bold text-[16px] tracking-[0.02em] text-[#333] mb-[16px]">
+              <span className="block font-inter font-bold text-[16px] tracking-[0.02em] opacity-80 mb-[16px]">
                 Web Designer
               </span>
-              <h1 className="font-inter font-bold text-[48px] leading-none text-[#333]">
+              <h1 className="font-inter font-bold text-[48px] leading-none">
                 RYUTA MUKAI
               </h1>
             </div>
@@ -78,7 +96,7 @@ export default function ProfilePage() {
               <span className="block font-inter text-xs opacity-40 mb-4 tracking-wider">
                 Profile
               </span>
-              <div className="font-noto text-sm leading-[2.0] opacity-80 text-[#333]">
+              <div className="font-noto text-sm leading-[2.0] opacity-80">
                 <p className="mb-6">
                   2000年生まれ、千葉県出身。Webデザイナー。<br />
                   装飾を極限まで削ぎ落とし、情報の「本質」だけを際立たせるミニマルなデザインを追求しています。
@@ -94,16 +112,18 @@ export default function ProfilePage() {
           {/* =================================================
               2. mutalog (Personal Media)
           ================================================= */}
-          <section className={cardClass}>
+          <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass}`}>
             <div className="flex flex-col h-full justify-between">
               <div>
                 <span className="block font-inter text-xs opacity-40 mb-4 tracking-wider">
                   Personal Media
                 </span>
-                <h2 className="font-noto font-bold text-[24px] mb-6 leading-tight text-[#333]">
-                  暮らしを整える記録、ムタログ。
+                {/* 見出し */}
+                <h2 className="font-noto font-bold text-[24px] mb-6 leading-tight">
+                  暮らしを整える記録、<br className="md:hidden" />ムタログ。
                 </h2>
-                <div className="font-noto text-sm leading-[2.0] opacity-80 text-[#333] mb-8">
+                {/* 本文 */}
+                <div className="font-noto text-sm leading-[2.0] opacity-80 mb-8">
                   <p className="mb-6">
                     生活のノイズを減らし、心に余白を作るためのライフログです。<br className="hidden md:block"/>
                     モノを厳選し、日々の小さな選択を整えることで生まれるエネルギーを大切にしています。
@@ -119,7 +139,7 @@ export default function ProfilePage() {
                 href="https://www.instagram.com/mutalog_muji/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 font-inter font-bold text-[14px] text-[#333] hover:opacity-60 transition-opacity"
+                className="inline-flex items-center gap-2 font-inter font-bold text-[14px] hover:opacity-60 transition-opacity"
               >
                 View Instagram 
                 <span className="text-[16px] mb-[2px]">›</span>
@@ -130,12 +150,12 @@ export default function ProfilePage() {
           {/* =================================================
               3. Likes (Interactive Pills)
           ================================================= */}
-          <section className={cardClass}>
+          <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass}`}>
             <div className="mb-6">
               <span className="block font-inter text-xs opacity-40 mb-4 tracking-wider">
                 Likes
               </span>
-              <p className="font-noto text-sm opacity-80 leading-relaxed text-[#333]">
+              <p className="font-noto text-sm opacity-80 leading-relaxed">
                 好奇心が旺盛で、食わず嫌いをしないのが自慢です。
               </p>
             </div>
@@ -159,12 +179,12 @@ export default function ProfilePage() {
           </section>
 
           {/* =================================================
-              4. Footer Navigation
+              4. Navigation Footer
           ================================================= */}
-          <div className="flex flex-row gap-4 mt-4 w-full">
+          <div className="flex flex-col md:flex-row gap-[8px] md:gap-[12px] mt-2 md:mt-[12px]">
             {/* Left: < Works */}
             <Link href="/" className={navButtonClass}>
-              <span className="font-inter font-bold text-[20px] tracking-wider group-hover:opacity-60 transition-opacity text-[#333]">
+              <span className="font-inter font-bold text-[20px] tracking-wider group-hover:opacity-60 transition-opacity">
                 ‹ Works
               </span>
             </Link>
@@ -172,10 +192,10 @@ export default function ProfilePage() {
             {/* Right: Contact > */}
             <Link href="/contact" className={navButtonClass}>
               <div className="flex items-center justify-between w-full">
-                <span className="font-inter font-bold text-[20px] tracking-wider text-[#333]">
+                <span className="font-inter font-bold text-[20px] tracking-wider">
                   Contact
                 </span>
-                <span className="font-inter text-[20px] mb-[2px] text-[#333]">›</span>
+                <span className="font-inter text-[20px] mb-[2px]">›</span>
               </div>
             </Link>
           </div>
@@ -191,8 +211,10 @@ export default function ProfilePage() {
           className="fixed inset-0 z-[200] flex items-center justify-center px-5"
           onClick={() => setSelectedLike(null)}
         >
+          {/* 背景 */}
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" />
 
+          {/* モーダル本体 (角丸などはここの世界観に合わせる) */}
           <div 
             className="relative w-full max-w-[400px] bg-white rounded-[24px] overflow-hidden shadow-2xl transform transition-all animate-in fade-in zoom-in-95 duration-200"
             onClick={(e) => e.stopPropagation()}
