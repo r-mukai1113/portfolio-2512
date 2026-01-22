@@ -80,7 +80,8 @@ export const GlobalHeader = () => {
       <div
         className={`md:hidden fixed inset-0 z-40 flex flex-col justify-center items-center transition-all duration-500 ${
           isOpen
-            ? "opacity-100 visible backdrop-blur-md bg-[#1A1A1A]/75" // ★変更: 80 -> 75 に透明度を変更
+            // ★変更: 背景色を #333333/80 に変更 (墨色っぽい上品なグレー)
+            ? "opacity-100 visible backdrop-blur-md bg-[#333333]/80"
             : "opacity-0 invisible pointer-events-none"
         }`}
       >
@@ -90,15 +91,14 @@ export const GlobalHeader = () => {
           {/* Main Navigation */}
           <nav className="flex flex-col items-center gap-[40px]">
             {navItems.map((item, index) => {
-              // 現在地かどうかを判定
               const isActive = pathname === item.href;
 
               return (
                 <Link
                   key={item.label}
                   href={item.href}
-                  // ★変更: flex items-center gap-1 を追加して横並びに
-                  className={`flex items-center gap-1 font-inter font-medium text-[16px] tracking-[0.05em] text-white transition-all duration-500 transform hover:opacity-60 ${
+                  // ★変更: gap-1.5 (6px) に広げてゆとりを持たせる
+                  className={`flex items-center gap-1.5 font-inter font-medium text-[16px] tracking-[0.05em] text-white transition-all duration-500 transform hover:opacity-60 ${
                     isOpen
                       ? "translate-y-0 opacity-100"
                       : "translate-y-4 opacity-0"
@@ -107,7 +107,7 @@ export const GlobalHeader = () => {
                 >
                   {item.label}
                   
-                  {/* ★追加: Active State (8pxのオレンジ丸) */}
+                  {/* Active State (8pxのオレンジ丸) - 位置は右側のまま維持 */}
                   {isActive && (
                     <span 
                       className="w-2 h-2 rounded-full" 
