@@ -37,17 +37,33 @@ export default function ProfilePage() {
   const [selectedLike, setSelectedLike] = useState<LikeItem | null>(null);
 
   // =================================================================
-  // スタイル定義
+  // デザインシステム (詳細ページと完全統一)
   // =================================================================
 
+  // 1. テキストスタイル定義
+  const TEXT_STYLES = {
+    // セクションラベル (例: Profile, Personal Media)
+    // 詳細ページの "Overview", "Category" ラベルと統一
+    LABEL: "font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40 mb-4 block",
+
+    // カードタイトル (例: ムタログのタイトル)
+    // 詳細ページの "Insight", "Idea" の見出し(H4)と統一
+    CARD_TITLE: "font-noto font-bold text-[16px] md:text-[20px] leading-[1.3] tracking-[0.02em]",
+
+    // 本文 (例: 自己紹介文)
+    // 詳細ページの本文と統一 (SP:12px / PC:14px がポイント！)
+    BODY: "font-noto text-[12px] md:text-[14px] leading-[1.8] tracking-[0.02em] opacity-80",
+  };
+
+  // 2. レイアウトスタイル定義
   const glassClass = "bg-white/50 border border-white/60 backdrop-blur-md";
   const cardClass = `rounded-[12px] md:rounded-[16px] w-full transition-colors duration-500 ${glassClass}`;
   const gridGapClass = "mb-2 md:mb-[12px]";
   const cardPaddingClass = "py-[32px] px-[20px] md:py-[56px] md:px-[40px]";
 
-  // ナビゲーションボタン用クラス
-  // justify-center + items-start で左揃えにしつつ、中身の配置を制御
+  // 3. ナビゲーションボタンスタイル
   const navButtonClass = `group flex-1 flex flex-col items-start justify-center ${cardClass} ${cardPaddingClass} hover:-translate-y-1`;
+
 
   return (
     <>
@@ -77,7 +93,7 @@ export default function ProfilePage() {
               <span className="block font-inter font-bold text-[16px] tracking-[0.02em] opacity-80 mb-[16px]">
                 Web Designer
               </span>
-              {/* SP:32px / PC:48px */}
+              {/* H1: SP 32px / PC 48px */}
               <h1 className="font-inter font-bold text-[32px] md:text-[48px] leading-none">
                 RYUTA MUKAI
               </h1>
@@ -85,10 +101,13 @@ export default function ProfilePage() {
 
             {/* Profile Body */}
             <div className="mt-8">
-              <span className="block font-inter text-xs opacity-40 mb-4 tracking-wider">
+              {/* スタイル適用: LABEL */}
+              <span className={TEXT_STYLES.LABEL}>
                 Profile
               </span>
-              <div className="font-noto text-sm leading-[2.0] opacity-80">
+              
+              {/* スタイル適用: BODY */}
+              <div className={TEXT_STYLES.BODY}>
                 <p className="mb-6">
                   2000年生まれ、千葉県出身。Webデザイナー。<br />
                   装飾を極限まで削ぎ落とし、情報の「本質」だけを際立たせるミニマルなデザインを追求しています。
@@ -107,17 +126,18 @@ export default function ProfilePage() {
           <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass}`}>
             <div className="flex flex-col h-full justify-between">
               <div>
-                <span className="block font-inter text-xs opacity-40 mb-4 tracking-wider">
+                {/* スタイル適用: LABEL */}
+                <span className={TEXT_STYLES.LABEL}>
                   Personal Media
                 </span>
                 
-                {/* 修正: whitespace-nowrapで改行禁止、SPでも1行表示 */}
-                <h2 className="font-noto font-bold text-[16px] md:text-[20px] mb-6 leading-tight whitespace-nowrap">
+                {/* スタイル適用: CARD_TITLE (whitespace-nowrapで改行禁止) */}
+                <h2 className={`${TEXT_STYLES.CARD_TITLE} mb-6 whitespace-nowrap`}>
                   暮らしの記録、ムタログ。
                 </h2>
                 
-                {/* 本文 */}
-                <div className="font-noto text-sm leading-[2.0] opacity-80 mb-8">
+                {/* スタイル適用: BODY */}
+                <div className={`${TEXT_STYLES.BODY} mb-8`}>
                   <p className="mb-6">
                     生活のノイズを減らし、心に余白を作るためのライフログです。<br className="hidden md:block"/>
                     モノを厳選し、日々の小さな選択を整えることで生まれるエネルギーを大切にしています。
@@ -133,7 +153,7 @@ export default function ProfilePage() {
                 href="https://www.instagram.com/mutalog_muji/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                // 修正: text-[12px], opacity-60 を適用
+                // ボタン: text-[12px], opacity-60
                 className="inline-flex items-center gap-2 font-inter font-bold text-[12px] md:text-[14px] opacity-60 hover:opacity-100 transition-opacity"
               >
                 View Instagram 
@@ -147,10 +167,13 @@ export default function ProfilePage() {
           ================================================= */}
           <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass}`}>
             <div className="mb-6">
-              <span className="block font-inter text-xs opacity-40 mb-4 tracking-wider">
+              {/* スタイル適用: LABEL */}
+              <span className={TEXT_STYLES.LABEL}>
                 Likes
               </span>
-              <p className="font-noto text-sm opacity-80 leading-relaxed">
+              
+              {/* スタイル適用: BODY (leading-relaxed等少し調整あってもOKだが基本統一) */}
+              <p className={TEXT_STYLES.BODY}>
                 好奇心が旺盛で、食わず嫌いをしないのが自慢です。
               </p>
             </div>
@@ -176,7 +199,6 @@ export default function ProfilePage() {
           {/* =================================================
               4. Navigation Footer
           ================================================= */}
-          {/* 修正: flex-col を flex-row に変更してSPでも横並びにする */}
           <div className="flex flex-row gap-[8px] md:gap-[12px] mt-2 md:mt-[12px]">
             {/* Left: < Works */}
             <Link href="/" className={navButtonClass}>
@@ -187,7 +209,7 @@ export default function ProfilePage() {
 
             {/* Right: Contact > */}
             <Link href="/contact" className={navButtonClass}>
-              {/* 修正: justify-between を削除し、左揃え（デフォルト）にする */}
+              {/* 左揃え */}
               <div className="flex items-center gap-2 w-full">
                 <span className="font-inter font-bold text-[14px] md:text-[20px] tracking-wider">
                   Contact
@@ -226,7 +248,8 @@ export default function ProfilePage() {
                 <span className="text-2xl">{selectedLike.emoji}</span>
                 <h3 className="font-bold text-xl text-[#333] font-noto">{selectedLike.text}</h3>
               </div>
-              <p className="text-sm text-[#666] leading-relaxed font-noto">
+              {/* Modal Bodyも統一感を出すならTEXT_STYLES.BODYに近いものを使用 */}
+              <p className="font-noto text-[13px] md:text-[14px] leading-[1.8] text-[#666]">
                 {selectedLike.comment}
               </p>
             </div>
