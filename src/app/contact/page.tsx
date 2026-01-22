@@ -4,6 +4,8 @@ import { GlobalHeader } from "@/components/GlobalHeader";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useThemeColor } from "@/hooks/useThemeColor";
+// ★追加: このインポートが必要です！
+import { Copyright } from "@/components/Copyright";
 
 export default function Contact() {
   useThemeColor("#F0F2F5");
@@ -209,7 +211,6 @@ export default function Contact() {
                   type="submit"
                   disabled={isSubmitting}
                   style={{ backgroundColor: ACCENT_COLOR }}
-                  // 修正: text-[14px] md:text-[16px] を追加
                   className="w-full text-white font-bold font-noto text-[14px] md:text-[16px] py-4 rounded-[8px] hover:brightness-90 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-0.5"
                 >
                   {isSubmitting ? "送信中..." : "送信する"}
@@ -220,6 +221,7 @@ export default function Contact() {
           </section>
 
           {/* Footer (Copyright) */}
+          {/* ここで使われている Copyright がインポートされていないのが原因でした */}
           <Copyright className="mt-10 md:mt-12" />
 
         </div>
