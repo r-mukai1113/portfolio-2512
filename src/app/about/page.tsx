@@ -1,37 +1,232 @@
-import { GlobalHeader } from "@/components/GlobalHeader";
+"use client";
 
-export default function About() {
+import { useState } from "react";
+import Link from "next/link";
+import { GlobalHeader } from "@/components/GlobalHeader";
+import { useThemeColor } from "@/hooks/useThemeColor";
+
+// ==========================================
+// Data: Likes (モーダル表示用データ)
+// ==========================================
+type LikeItem = {
+  id: string;
+  emoji: string;
+  text: string;
+  image: string;
+  comment: string;
+};
+
+// ダミー画像ですが、実際には public/images/likes/ などに入れると良いです
+const likesData: LikeItem[] = [
+  { id: "interior", emoji: "🪑", text: "インテリア", image: "https://placehold.co/600x400/D8C3B5/FFF?text=Interior", comment: "居心地の良い空間を作ることが趣味です。素材感のある家具が好きです。" },
+  { id: "simple", emoji: "⬜️", text: "シンプルなもの", image: "https://placehold.co/600x400/eee/333?text=Simple", comment: "ノイズのないデザインに惹かれます。" },
+  { id: "coffee", emoji: "☕️", text: "カフェ・コーヒー", image: "https://placehold.co/600x400/3e3020/fff?text=Coffee", comment: "深煎りのコーヒーで集中力を高めます。" },
+  { id: "sauna", emoji: "🧖", text: "サウナ", image: "https://placehold.co/600x400/aaa/333?text=Sauna", comment: "思考を整理する大切な時間です。" },
+  { id: "baseball", emoji: "⚾️", text: "野球観戦", image: "https://placehold.co/600x400/004d40/fff?text=Baseball", comment: "スタジアムの雰囲気が好きです。" },
+  { id: "apple", emoji: "🍎", text: "Apple", image: "https://placehold.co/600x400/000/fff?text=Apple", comment: "製品の箱を開ける体験からデザインされています。" },
+  { id: "ramen", emoji: "🍜", text: "ラーメン", image: "https://placehold.co/600x400/f00/fff?text=Ramen", comment: "意外と言われますが、ラーメン巡りも好きです。" },
+  { id: "omelet", emoji: "🥚", text: "オムライス", image: "https://placehold.co/600x400/ff9/333?text=Omelet", comment: "卵料理には目がありません。" },
+  { id: "sweets", emoji: "🍮", text: "甘いもの", image: "https://placehold.co/600x400/c69/fff?text=Sweets", comment: "作業の合間の糖分補給は欠かせません。" },
+];
+
+export default function ProfilePage() {
+  // 背景色を白に近いグレーに設定
+  useThemeColor("#F0F2F5");
+
+  // モーダル用ステート
+  const [selectedLike, setSelectedLike] = useState<LikeItem | null>(null);
+
+  // 共通スタイル定義
+  const cardClass = "bg-white rounded-[32px] p-10 shadow-sm w-full"; // 720pxコンテナ内で広がるようにw-full
+  const navButtonClass = "group flex-1 flex flex-col items-start justify-center py-[40px] px-[40px] bg-white rounded-[32px] transition-transform duration-300 hover:-translate-y-1 shadow-sm";
+
   return (
     <>
-      <div className="fixed top-0 left-0 w-full h-full -z-10 bg-[#FCFCFC]" />
-
       <GlobalHeader />
 
-      <main className="relative min-h-screen text-slate-900 overflow-y-auto">
-        <div className="w-full max-w-[1600px] mx-auto px-[20px] md:px-[48px] lg:px-[80px] pt-[88px] md:pt-[120px] pb-[120px] min-h-[calc(100vh-200px)]">
-          {/* ページタイトル */}
-          <div className="flex items-center gap-[12px] md:gap-[16px] mb-12 md:mb-16">
-            <h1 className="font-inter font-normal text-[40px] md:text-[88px] tracking-tight leading-none">
-              Profile
-            </h1>
-            <div className="text-[28px] md:text-[56px] flex items-center mb-[3px] md:mb-0">
-              👟
+      <main className="w-full min-h-screen bg-[#F0F2F5] pt-[100px] pb-20 px-5 md:px-20">
+        
+        {/* コンテナ: 幅720px (スクショのBody幅に合わせる) */}
+        <div className="max-w-[720px] mx-auto flex flex-col gap-4">
+
+          {/* =================================================
+              1. Main Identity (Photo & Bio)
+          ================================================= */}
+          <section className={cardClass}>
+            {/* Main Image */}
+            <div className="w-full aspect-[16/9] rounded-[4px] overflow-hidden mb-[40px]">
+              <img 
+                src="/images/2026portfolio_profile_2_1.png" 
+                alt="RYUTA MUKAI Profile"
+                className="w-full h-full object-cover"
+              />
             </div>
+
+            {/* Role & Name */}
+            {/* Gap 40px (img -> text) is handled by mb-[40px] above */}
+            <div className="mb-[16px]">
+              <span className="block font-inter font-bold text-[16px] tracking-[0.02em] text-[#333] mb-[16px]">
+                Web Designer
+              </span>
+              <h1 className="font-inter font-bold text-[48px] leading-none text-[#333]">
+                RYUTA MUKAI
+              </h1>
+            </div>
+
+            {/* Profile Body */}
+            <div className="mt-8">
+              <span className="block font-inter text-xs opacity-40 mb-4 tracking-wider">
+                Profile
+              </span>
+              <div className="font-noto text-sm leading-[2.0] opacity-80 text-[#333]">
+                <p className="mb-6">
+                  2000年生まれ、千葉県出身。Webデザイナー。<br />
+                  装飾を極限まで削ぎ落とし、情報の「本質」だけを際立たせるミニマルなデザインを追求しています。
+                </p>
+                <p>
+                  私の原点は、エンジニアとしての論理的思考と、機能美への探求心にあります。<br />
+                  デザインとは単なる装飾ではなく、複雑な課題を解決するための「翻訳言語」です。クライアントの想いや価値を整理し、受け取り手にとって最もノイズレスで、心地よい形で届ける。そのための制作を続けています。
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* =================================================
+              2. mutalog (Personal Media)
+          ================================================= */}
+          <section className={cardClass}>
+            <div className="flex flex-col h-full justify-between">
+              <div>
+                <span className="block font-inter text-xs opacity-40 mb-4 tracking-wider">
+                  Personal Media
+                </span>
+                <h2 className="font-noto font-bold text-[24px] mb-6 leading-tight text-[#333]">
+                  暮らしを整える記録、ムタログ。
+                </h2>
+                <div className="font-noto text-sm leading-[2.0] opacity-80 text-[#333] mb-8">
+                  <p className="mb-6">
+                    生活のノイズを減らし、心に余白を作るためのライフログです。<br className="hidden md:block"/>
+                    モノを厳選し、日々の小さな選択を整えることで生まれるエネルギーを大切にしています。
+                  </p>
+                  <p>
+                    無印良品の機能美を通じ、心地よい暮らしのヒントを探究しています。<br className="hidden md:block"/>
+                    部屋を整えることは、毎日を軽くすることだと考えています。
+                  </p>
+                </div>
+              </div>
+              
+              <a 
+                href="https://www.instagram.com/mutalog_muji/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 font-inter font-bold text-[14px] text-[#333] hover:opacity-60 transition-opacity"
+              >
+                View Instagram 
+                <span className="text-[16px] mb-[2px]">›</span>
+              </a>
+            </div>
+          </section>
+
+          {/* =================================================
+              3. Likes (Interactive Pills)
+          ================================================= */}
+          <section className={cardClass}>
+            <div className="mb-6">
+              <span className="block font-inter text-xs opacity-40 mb-4 tracking-wider">
+                Likes
+              </span>
+              <p className="font-noto text-sm opacity-80 leading-relaxed text-[#333]">
+                好奇心が旺盛で、食わず嫌いをしないのが自慢です。
+              </p>
+            </div>
+
+            {/* Tag List */}
+            <div className="flex flex-wrap gap-3">
+              {likesData.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => setSelectedLike(item)}
+                  className="group px-4 py-2 bg-[#F5F5F7] hover:bg-[#E5E5E7] rounded-full text-[13px] text-[#333] flex items-center gap-2 transition-colors duration-200"
+                >
+                  <span className="text-[14px]">{item.emoji}</span>
+                  <span className="font-bold font-noto text-[12px] md:text-[13px]">{item.text}</span>
+                  <span className="opacity-40 text-[14px] group-hover:scale-110 transition-transform">
+                    +
+                  </span>
+                </button>
+              ))}
+            </div>
+          </section>
+
+          {/* =================================================
+              4. Footer Navigation
+          ================================================= */}
+          <div className="flex flex-row gap-4 mt-4 w-full">
+            {/* Left: < Works */}
+            <Link href="/" className={navButtonClass}>
+              <span className="font-inter font-bold text-[20px] tracking-wider group-hover:opacity-60 transition-opacity text-[#333]">
+                ‹ Works
+              </span>
+            </Link>
+
+            {/* Right: Contact > */}
+            <Link href="/contact" className={navButtonClass}>
+              <div className="flex items-center justify-between w-full">
+                <span className="font-inter font-bold text-[20px] tracking-wider text-[#333]">
+                  Contact
+                </span>
+                <span className="font-inter text-[20px] mb-[2px] text-[#333]">›</span>
+              </div>
+            </Link>
           </div>
 
-          {/* コンテンツプレースホルダー */}
-          <div className="max-w-[800px]">
-            {/* ここに将来的にプロフィール内容を追加 */}
+        </div>
+      </main>
+
+      {/* =================================================
+          Likes Modal (Overlay)
+      ================================================= */}
+      {selectedLike && (
+        <div 
+          className="fixed inset-0 z-[200] flex items-center justify-center px-5"
+          onClick={() => setSelectedLike(null)}
+        >
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" />
+
+          <div 
+            className="relative w-full max-w-[400px] bg-white rounded-[24px] overflow-hidden shadow-2xl transform transition-all animate-in fade-in zoom-in-95 duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Image Area */}
+            <div className="w-full aspect-[4/3] bg-gray-100">
+               <img 
+                 src={selectedLike.image} 
+                 alt={selectedLike.text}
+                 className="w-full h-full object-cover"
+               />
+            </div>
+
+            {/* Text Area */}
+            <div className="p-8">
+              <div className="flex items-center gap-3 mb-4">
+                <span className="text-2xl">{selectedLike.emoji}</span>
+                <h3 className="font-bold text-xl text-[#333] font-noto">{selectedLike.text}</h3>
+              </div>
+              <p className="text-sm text-[#666] leading-relaxed font-noto">
+                {selectedLike.comment}
+              </p>
+            </div>
+
+            {/* Close Button */}
+            <button
+              onClick={() => setSelectedLike(null)}
+              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center bg-black/20 hover:bg-black/40 rounded-full text-white backdrop-blur-md transition-colors"
+            >
+              ✕
+            </button>
           </div>
         </div>
-
-        {/* Footer (Copyright) */}
-        <footer className="w-full max-w-[1600px] mx-auto px-[20px] md:px-[48px] lg:px-[80px] pb-[88px] md:pb-[120px]">
-          <p className="text-center text-xs text-slate-400 font-inter">
-            ©2025 Ryuta Mukai
-          </p>
-        </footer>
-      </main>
+      )}
     </>
   );
 }
