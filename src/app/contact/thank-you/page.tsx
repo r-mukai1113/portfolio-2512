@@ -7,7 +7,6 @@ import { useThemeColor } from "@/hooks/useThemeColor";
 export default function ThankYou() {
   useThemeColor("#F0F2F5");
 
-  // アクセントカラー定義
   const ACCENT_COLOR = "#F37022";
 
   return (
@@ -46,14 +45,15 @@ export default function ThankYou() {
               のDMに一言いただけますと幸いです。
             </p>
 
-            {/* Back to Top: ここにアクセントカラーを適用 */}
+            {/* Back to Top: 矢印を左側(‹)に変更 */}
             <Link
               href="/"
               className="inline-flex items-center gap-2 font-inter text-[14px] font-medium hover:opacity-70 transition-opacity"
               style={{ color: ACCENT_COLOR }}
             >
+              {/* 矢印を先に記述 */}
+              <span className="text-[16px] leading-none pb-[2px]">‹</span>
               <span className="pb-[1px]">Back to Top</span>
-              <span className="text-[16px] leading-none pb-[2px]">›</span>
             </Link>
 
           </div>
