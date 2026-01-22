@@ -53,7 +53,6 @@ export default function ProfilePage() {
   const baseNavButtonClass = `group flex flex-col items-start justify-center ${cardClass} ${navButtonPadding} h-[72px] md:h-[120px] hover:-translate-y-1`;
 
   const modalTitleClass = "font-noto font-bold text-[16px] md:text-[20px] text-[#333] mb-4 text-center leading-[1.3] tracking-[0.02em]";
-  // ★変更: モーダル本文サイズを SP:12px / PC:14px に調整
   const modalBodyClass = "font-noto text-[12px] md:text-[14px] text-[#666] leading-relaxed opacity-75 text-center";
   const modalNavButtonClass = "font-inter text-[10px] md:text-[12px] font-bold text-gray-400 hover:text-gray-600 transition-colors flex items-center gap-1 p-2";
 
@@ -63,10 +62,10 @@ export default function ProfilePage() {
 
       <main className="w-full min-h-screen bg-[#F0F2F5] pt-[72px] pb-20 transition-colors duration-500 relative">
         
-        {/* ★追加: Grain (ノイズ) エフェクト */}
-        {/* 画面全体に薄いザラつきを与えて質感を高めるレイヤー */}
+        {/* Grain (ノイズ) エフェクト */}
+        {/* 修正: Opacityを 0.03 -> 0.07 に上げて視認性を向上 */}
         <div 
-          className="fixed inset-0 pointer-events-none z-0 opacity-[0.03]"
+          className="fixed inset-0 pointer-events-none z-0 opacity-[0.07]"
           style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`
           }}
@@ -141,8 +140,8 @@ export default function ProfilePage() {
                 <button
                   key={item.id}
                   onClick={() => setSelectedLike(item)}
-                  // ★変更: 背景色を #E4E4E7 に変更し、ホバーを #D4D4D8 に
-                  className="group px-2 py-2 md:px-4 md:py-2 bg-[#E4E4E7] hover:bg-[#D4D4D8] rounded-full text-[#333] flex items-center gap-1 md:gap-2 transition-colors duration-200"
+                  // ★修正: 背景色を #EEF0F2 (中間色) に変更
+                  className="group px-2 py-2 md:px-4 md:py-2 bg-[#EEF0F2] hover:bg-[#E4E4E7] rounded-full text-[#333] flex items-center gap-1 md:gap-2 transition-colors duration-200"
                 >
                   <span className="text-[12px] md:text-[14px]">{item.emoji}</span>
                   <span className="font-bold font-noto text-[10px] md:text-[12px]">{item.text}</span>
@@ -192,6 +191,7 @@ export default function ProfilePage() {
             </div>
 
             <div className="flex flex-col items-center mb-8">
+              {/* 画像 */}
               <div className="w-full max-w-[280px] md:max-w-[320px] aspect-square rounded-[4px] overflow-hidden mb-6 bg-gray-50">
                 <img 
                   src={selectedLike.image} 
@@ -199,13 +199,17 @@ export default function ProfilePage() {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <h3 className={modalTitleClass}>
-                <span className="mr-2">{selectedLike.emoji}</span>
-                {selectedLike.text}
-              </h3>
-              <p className={modalBodyClass}>
-                {selectedLike.comment}
-              </p>
+
+              {/* ★修正: テキストエリアの幅を画像と同じに制限 (w-full max-w-[280px] md:max-w-[320px]) */}
+              <div className="w-full max-w-[280px] md:max-w-[320px]">
+                <h3 className={modalTitleClass}>
+                  <span className="mr-2">{selectedLike.emoji}</span>
+                  {selectedLike.text}
+                </h3>
+                <p className={modalBodyClass}>
+                  {selectedLike.comment}
+                </p>
+              </div>
             </div>
 
             <div className="flex justify-between items-center w-full min-h-[32px]">
