@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { useThemeColor } from "@/hooks/useThemeColor";
+import { Copyright } from "@/components/Copyright";
 
 export default function ThankYou() {
   useThemeColor("#F0F2F5");
@@ -45,17 +46,17 @@ export default function ThankYou() {
               のDMに一言いただけますと幸いです。
             </p>
 
-            {/* Back to Top: 矢印を左側(‹)に変更 */}
+            {/* Back to Top */}
             <Link
               href="/"
               className="inline-flex items-center gap-2 font-inter text-[14px] font-medium hover:opacity-70 transition-opacity"
               style={{ color: ACCENT_COLOR }}
             >
-
               <span className="text-[16px] leading-none pb-[2px]">‹</span>
               <span className="pb-[1px]">Back to Top</span>
             </Link>
 
+            {/* 配置はここでバッチリです！ */}
             <Copyright className="mt-20" />
 
           </div>
