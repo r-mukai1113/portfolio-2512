@@ -31,30 +31,21 @@ const likesData: LikeItem[] = [
 ];
 
 export default function ProfilePage() {
-  // 背景色 (詳細ページのLightモードに近いグレー)
+  // 背景色
   useThemeColor("#F0F2F5");
 
   const [selectedLike, setSelectedLike] = useState<LikeItem | null>(null);
 
   // =================================================================
-  // スタイル定義 (詳細ページから踏襲)
+  // スタイル定義
   // =================================================================
 
-  // ガラスの質感 (Light Mode固定)
   const glassClass = "bg-white/50 border border-white/60 backdrop-blur-md";
-
-  // 共通カードクラス
-  // SP: 12px, PC: 16px
   const cardClass = `rounded-[12px] md:rounded-[16px] w-full transition-colors duration-500 ${glassClass}`;
-
-  // Gap設定 (Bento Grid ごとの余白)
-  // PC: 12px, SP: 8px
   const gridGapClass = "mb-2 md:mb-[12px]";
-
-  // Bento Grid 内の余白 (PC: 上下56px 左右40px / SP: 上下32px 左右20px)
   const cardPaddingClass = "py-[32px] px-[20px] md:py-[56px] md:px-[40px]";
 
-  // ナビゲーションボタン用クラス (カードクラスをベースにホバー効果追加)
+  // ナビゲーションボタン用クラス (flex-1を追加して均等幅にする)
   const navButtonClass = `group flex-1 flex flex-col items-start justify-center ${cardClass} ${cardPaddingClass} hover:-translate-y-1`;
 
   return (
@@ -63,7 +54,7 @@ export default function ProfilePage() {
 
       <main className="w-full min-h-screen bg-[#F0F2F5] pt-[72px] pb-20 px-5 md:px-20 transition-colors duration-500">
         
-        {/* コンテナ: Max 880px (詳細ページと統一) */}
+        {/* コンテナ */}
         <div className="max-w-[880px] mx-auto w-full text-[#333]">
 
           {/* =================================================
@@ -81,12 +72,12 @@ export default function ProfilePage() {
             </div>
 
             {/* Role & Name */}
-            {/* Gap 40px (img -> text) は mb-[40px] で確保 */}
             <div className="mb-[16px]">
               <span className="block font-inter font-bold text-[16px] tracking-[0.02em] opacity-80 mb-[16px]">
                 Web Designer
               </span>
-              <h1 className="font-inter font-bold text-[48px] leading-none">
+              {/* 修正: SP:32px / PC:48px */}
+              <h1 className="font-inter font-bold text-[32px] md:text-[48px] leading-none">
                 RYUTA MUKAI
               </h1>
             </div>
@@ -118,9 +109,9 @@ export default function ProfilePage() {
                 <span className="block font-inter text-xs opacity-40 mb-4 tracking-wider">
                   Personal Media
                 </span>
-                {/* 見出し */}
-                <h2 className="font-noto font-bold text-[24px] mb-6 leading-tight">
-                  暮らしを整える記録、<br className="md:hidden" />ムタログ。
+                {/* 修正: テキスト変更 & サイズ調整 (SP:16px / PC:20px) */}
+                <h2 className="font-noto font-bold text-[16px] md:text-[20px] mb-6 leading-tight">
+                  暮らしの記録、<br className="md:hidden" />ムタログ。
                 </h2>
                 {/* 本文 */}
                 <div className="font-noto text-sm leading-[2.0] opacity-80 mb-8">
@@ -181,6 +172,7 @@ export default function ProfilePage() {
           {/* =================================================
               4. Navigation Footer
           ================================================= */}
+          {/* 修正: flex-1 を navButtonClass に適用済みのため、ここではそのまま配置 */}
           <div className="flex flex-col md:flex-row gap-[8px] md:gap-[12px] mt-2 md:mt-[12px]">
             {/* Left: < Works */}
             <Link href="/" className={navButtonClass}>
@@ -214,7 +206,7 @@ export default function ProfilePage() {
           {/* 背景 */}
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" />
 
-          {/* モーダル本体 (角丸などはここの世界観に合わせる) */}
+          {/* モーダル本体 */}
           <div 
             className="relative w-full max-w-[400px] bg-white rounded-[24px] overflow-hidden shadow-2xl transform transition-all animate-in fade-in zoom-in-95 duration-200"
             onClick={(e) => e.stopPropagation()}
