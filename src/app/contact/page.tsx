@@ -221,7 +221,6 @@ export default function Contact() {
           </section>
 
           {/* Footer (Copyright) */}
-          {/* ここで使われている Copyright がインポートされていないのが原因でした */}
           <Copyright className="mt-10 md:mt-12" />
 
         </div>
