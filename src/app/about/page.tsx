@@ -92,7 +92,6 @@ export default function ProfilePage() {
             </div>
 
             <div className="mb-[16px]">
-              {/* アクセントカラー適用箇所: Web Designer (ここだけ残す) */}
               <span 
                 className="block font-inter font-bold text-[12px] md:text-[16px] tracking-[0.02em] opacity-80 mb-[12px] md:mb-[16px]"
                 style={{ color: ACCENT_COLOR }}
@@ -138,11 +137,12 @@ export default function ProfilePage() {
                 </div>
               </div>
               
+              {/* 修正: font-bold を削除し、font-medium (標準的な太さ) に変更 */}
               <a 
                 href="https://www.instagram.com/mutalog_muji/" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="inline-flex items-center gap-2 font-inter font-bold text-[12px] md:text-[14px] opacity-60 hover:opacity-100 transition-opacity"
+                className="inline-flex items-center gap-2 font-inter font-medium text-[12px] md:text-[14px] opacity-60 hover:opacity-100 transition-opacity"
               >
                 View Instagram <span className="text-[14px] md:text-[16px] mb-[2px]">›</span>
               </a>
@@ -167,7 +167,6 @@ export default function ProfilePage() {
                 >
                   <span className="text-[12px] md:text-[14px]">{item.emoji}</span>
                   <span className="font-bold font-noto text-[10px] md:text-[12px] tracking-wide">{item.text}</span>
-                  {/* 修正: アクセントカラーを削除 (元のグレーに戻す) */}
                   <span className="opacity-40 text-[10px] md:text-[12px] group-hover:scale-110 transition-transform">
                     +
                   </span>
@@ -182,7 +181,6 @@ export default function ProfilePage() {
               <span className="font-inter font-bold text-[14px] md:text-[20px] tracking-wider group-hover:opacity-60 transition-opacity">‹ Works</span>
             </Link>
 
-            {/* Contact: アクセントカラーを削除 (元の黒/グレーに戻す) */}
             <Link 
               href="/contact" 
               className={`flex-[2] ${baseNavButtonClass}`}
