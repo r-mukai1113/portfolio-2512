@@ -67,11 +67,11 @@ export default function Contact() {
   const gridGapClass = "mb-2 md:mb-[12px]";
   const cardPaddingClass = "py-[32px] px-[20px] md:py-[56px] md:px-[40px]";
 
-  // フォントサイズ (SP:12px / PC:14px)
-  const inputClass = "w-full bg-white/60 border border-gray-200 rounded-[8px] px-4 py-3 text-[12px] md:text-[14px] text-[#333] placeholder-gray-400 outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-all font-noto";
-  
-  // 見出し (SP:12px / PC:14px)
-  const labelClass = "block text-[12px] md:text-[14px] font-bold font-noto text-[#333] mb-2";
+  // shadcn/ui inspired input style
+  const inputClass = "w-full bg-transparent border border-[#D4D4D8] rounded-[6px] px-3 py-2.5 text-[12px] md:text-[14px] text-[#333] placeholder-[#A1A1AA] outline-none focus:ring-2 focus:ring-[#F37022]/20 focus:border-[#F37022] transition-all duration-200 font-noto";
+
+  // shadcn/ui inspired label style
+  const labelClass = "block text-[12px] md:text-[14px] font-medium font-noto text-[#333] mb-2";
 
   const requiredMark = <span style={{ color: ACCENT_COLOR }} className="opacity-80 text-[12px] align-top ml-1">※</span>;
 
@@ -210,7 +210,7 @@ export default function Contact() {
                   type="submit"
                   disabled={isSubmitting}
                   style={{ backgroundColor: ACCENT_COLOR }}
-                  className="w-full text-white font-bold font-noto text-[14px] md:text-[16px] py-4 rounded-[8px] hover:brightness-90 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-0.5"
+                  className="w-full text-white font-medium font-noto text-[14px] md:text-[16px] py-3 rounded-[6px] hover:opacity-90 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md"
                 >
                   {isSubmitting ? "送信中..." : "送信する"}
                 </button>

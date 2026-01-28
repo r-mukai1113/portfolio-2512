@@ -119,7 +119,7 @@ export default function WorkDetail() {
       <GlobalHeader />
 
       <main
-        className="w-full min-h-screen transition-colors duration-500 pt-[72px] pb-20"
+        className="w-full min-h-screen transition-colors duration-500 pt-[72px] pb-[32px] md:pb-[40px]"
         style={{ backgroundColor: currentWork.detailTheme.bg }}
       >
         <div className="max-w-[880px] mx-auto px-5 md:px-20 w-full" style={textColor}>
@@ -185,7 +185,7 @@ export default function WorkDetail() {
 
               {/* PC: Visit Website with underline animation */}
               {showVisitButton && (
-                <div className="hidden md:block shrink-0">
+                <div className="hidden md:block shrink-0 pb-[4px]">
                   <a
                     href={currentWork.url}
                     target="_blank"

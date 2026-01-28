@@ -67,7 +67,7 @@ export default function ThankYou() {
         </div>
 
 
-        <div className="absolute bottom-6 md:bottom-10 left-0 w-full">
+        <div className="absolute bottom-[32px] md:bottom-[40px] left-0 w-full">
           <Copyright />
         </div>
 
