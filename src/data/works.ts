@@ -1,317 +1,360 @@
-// 実績データ
+// src/data/works.ts
 
-// プロセスの型定義
-export interface ProcessItem {
-  title: string;
+export interface ContentBlock {
+  title?: string;
   text: string;
-  image?: string;
+  imageUrl?: string;
 }
 
 export interface Work {
   id: string;
-  slug: string; // URL用ID
+  slug: string; // URLの末尾に使われるID
   title: string;
   category: string;
   year: string;
-  role: string; // 担当領域
+  date: string;
+  role: string;
   url: string;
   thumbnail: string;
+  tools: string[]; // ビルドエラーを防ぐために必須
 
-  // トップページ用テーマ
   theme: {
     bg: string;
     text: string;
     isLight: boolean;
   };
 
-  // 詳細ページ用テーマ (控えめな背景色)
   detailTheme: {
     bg: string;
     text: string;
   };
 
-  // 詳細テキスト (Bento Grid用)
   desc: {
     overview: string;
-    insight: string;      // 課題の見出し
-    insightText: string; // 課題の本文
-    idea: string;        // 解決策の見出し
-    ideaText: string;    // 解決策の本文
+    summary?: {
+      background?: ContentBlock;
+      solution?: ContentBlock;
+      result?: ContentBlock;
+    };
+    sections?: ContentBlock[];
   };
 
-  // 詳細ページ用画像ギャラリー
   images: string[];
-
-  // ★追加: 使用ツール・技術スタック (ここを追加しないとエラーになります)
-  tools?: string[];
-
-  // ★新デザイン用フィールド (Figmaデザイン対応)
-  descV2?: {
-    overview: string;
-    background?: {
-      title: string;
-      text: string;
-      image?: string;
-    };
-    solution?: {
-      title: string;
-      text: string;
-      image?: string;
-    };
-    result?: {
-      title: string;
-      text: string;
-    };
-    processes?: ProcessItem[];
-  };
 }
 
 export const works: Work[] = [
+  // 1. Y-Tag
   {
     id: "ytag",
     slug: "y-tag",
     title: "Y-Tag",
     category: "Online Store",
-    year: "2025.12 (2 Months)",
+    year: "2025",
+    date: "2025.12 (2 Months)",
     role: "Design / Shopify Development",
     url: "https://ytag.jp/",
     thumbnail: "https://placehold.co/800x500/E6E6E6/333?text=Y-Tag",
-
     tools: ["Figma", "Shopify", "Liquid"],
 
-    theme: {
-      bg: "#F0F2F5",
-      text: "#333333",
-      isLight: true,
-    },
-
-    detailTheme: {
-      bg: "#ebebeb",
-      text: "#1e1e1e",
-    },
+    theme: { bg: "#F0F2F5", text: "#333333", isLight: true },
+    detailTheme: { bg: "#E5E7EB", text: "#333333" },
 
     desc: {
-      overview: "「機能美」を追求したスマートトラッカー「Y-Tag」のブランドサイトリニューアル。プロダクト自体が持つ「白」の美しさとミニマルな形状を最大限に引き立てるため、装飾を極限まで削ぎ落とし、余白を大胆に活用したデザインを構築しました。",
-      insight: "支援前の課題",
-      insightText: "従来のデザインはスペック情報の羅列に終始しており、ブランドとしての情緒的価値が伝わっていませんでした。「単なる安価な電子機器」という認識を脱却し、ライフスタイルに馴染むプロダクトとしての再定義が必要でした。",
-      idea: "余白による再定義",
-      ideaText: "情報を詰め込むのではなく、あえて「余白」を多く取ることで、美術館の展示品のようにプロダクトを際立たせる構成を採用。ノイズとなる色や線を排除し、徹底した「白」の世界観でユーザーの視線誘導をスムーズにしました。",
+      overview: "「テック×感性」を掲げ、人生を前へ進めるプロダクトを届けるライフスタイルブランド「Y-Tag」のEC刷新。バックパックやガジェットポーチ等、機能美の本質を追求するプロダクトを展開するブランドです。リブランディングに伴い、「余白を、持ち歩く。」という情緒的価値をデジタル上で体現するため、戦略立案からShopifyによる構築までを一貫して担当しました。",
+      summary: {
+        background: {
+          title: "機能から情緒への価値転換",
+          text: "機能的訴求から「情緒的価値（余白）」へのブランドシフトに伴い、スペック重視ではなく世界観重視の表現への刷新が必要でした。また、従来のPCビューでは商品が羅列され「情報過密」になっており、ブランドの静けさが損なわれていました。",
+          imageUrl: "https://placehold.co/800x450/E6E6E6/333?text=Background"
+        },
+        solution: {
+          title: "「余白」を体現するShopifyリニューアル",
+          text: "拡張性を考慮しShopifyを採用。Figmaで設計したノイズレスなデザインを、Liquidによるコーディングで忠実に再現。ギフト機能の独自開発など、技術面でもブランド体験を支えています。",
+          imageUrl: "https://placehold.co/800x450/E6E6E6/333?text=Solution"
+        },
+        result: {
+          title: "2ヶ月での完遂と、新たな信頼の獲得",
+          text: "戦略立案から公開まで約2ヶ月という短期間でのローンチを実現。公開直後から「世界観が伝わる」と評価され、クライアントからの信頼を獲得しました。",
+        }
+      },
+      sections: [
+        {
+          title: "「静けさ」を宿すUIと、自然な視線誘導",
+          text: "トップページにはあえて商品を縦に並べず、横スクロールで閲覧する形式を導入しました。視覚的なノイズを徹底的に抑えることで、ブランドストーリーや修理対応といった「情緒的な繋がり」を生むコンテンツへ、ユーザーを自然に誘う構成を目指しました。",
+          imageUrl: "https://placehold.co/800x450/E6E6E6/333?text=Process+01"
+        },
+        {
+          title: "Shopify Liquidによる体験拡張",
+          text: "ギフトラッピングの独自実装や、メタフィールドを活用した商品情報の最適化など、Shopifyの標準機能を超えたカスタマイズを行いました。単に見た目を整えるだけでなく、クライアント自身で柔軟に運用できる「自走化」と、顧客体験の向上を両立させています。",
+          imageUrl: "https://placehold.co/800x450/E6E6E6/333?text=Process+02"
+        },
+      ]
     },
-
     images: [
-      "https://placehold.co/1920x1200/c0c0c0/999?text=Main+Visual",
-      "https://placehold.co/1200x848/c0c0c0/999?text=Gallery+1",
-      "https://placehold.co/1920x1200/c0c0c0/999?text=Gallery+2",
+      "https://placehold.co/1200x800/E6E6E6/333?text=Y-Tag+Main",
+      "https://placehold.co/1200x800/E6E6E6/333?text=Y-Tag+Sub1",
     ],
-
-    // 新デザイン用の詳細データ
-    descV2: {
-      overview: "テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト。",
-      background: {
-        title: "◯◯が課題",
-        text: "テキストテキストテキストテキストテキストテキスト、テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト。",
-        image: "https://placehold.co/1600x900/c0c0c0/999?text=Background",
-      },
-      solution: {
-        title: "〇〇をしました。",
-        text: "テキストテキストテキストテキストテキストテキスト、テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト。",
-        image: "https://placehold.co/1600x900/c0c0c0/999?text=Solution",
-      },
-      result: {
-        title: "〇〇を解決をしました。",
-        text: "テキストテキストテキストテキストテキストテキスト、テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト。",
-      },
-      processes: [
-        {
-          title: "プロセス①",
-          text: "テキストテキストテキストテキストテキストテキスト、テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト。",
-          image: "https://placehold.co/1600x900/c0c0c0/999?text=Process+1",
-        },
-        {
-          title: "プロセス②",
-          text: "テキストテキストテキストテキストテキストテキスト、テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト。",
-          image: "https://placehold.co/1600x900/c0c0c0/999?text=Process+2",
-        },
-        {
-          title: "プロセス③",
-          text: "テキストテキストテキストテキストテキストテキスト、テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト。",
-        },
-      ],
-    },
   },
+
+  // 2. #MONOLITH
   {
     id: "monolith",
     slug: "monolith",
     title: "#MONOLITH",
     category: "Online Store",
     year: "2025",
-    role: "Branding / Design",
+    date: "2025.11 (2 Months)",
+    role: "Design / Shopify Development",
     url: "https://monolith-tokyo.jp/",
     thumbnail: "https://placehold.co/800x500/111/FFF?text=Monolith",
-    
-    // ★追加
-    tools: ["Figma", "React", "GSAP"],
+    tools: ["Figma", "Shopify", "Liquid"],
 
-    theme: {
-      bg: "#111111",
-      text: "#FFFFFF",
-      isLight: false,
-    },
-
-    detailTheme: {
-      bg: "#111111", // ダークグレー
-      text: "#FFFFFF",
-    },
+    theme: { bg: "#111111", text: "#FFFFFF", isLight: false },
+    detailTheme: { bg: "#0D0D0D", text: "#FFFFFF" },
 
     desc: {
-      overview: "モノリスのような圧倒的な存在感をWebサイトで表現。デジタルとアナログの境界線を溶かすような、没入感のあるデザインを目指しました。",
-      insight: "市場での埋没",
-      insightText: "競合他社との差別化が難しく、商品自体のユニークさが伝わりきっていない状況でした。視覚的なインパクトと、ブランドが持つ哲学を直感的に伝える手法が求められていました。",
-      idea: "黒の没入感",
-      ideaText: "サイト全体を黒で統一し、商品を浮かび上がらせるライティングのような演出をWeb上で再現。スクロールに合わせて物語が展開するようなインタラクションを実装しました。",
+      overview: "ブランドの成長に伴い、ECサイトの顧客体験と運用基盤を全面的にアップデート。コンクリートプロダクトが持つ「静寂」という世界観をノイズのないレイアウトで視覚化しました。複雑な商品情報をメタフィールドで体系化し、動画マニュアルによる運用支援も実施。美しさと更新性を両立した持続可能なECサイトを構築しました。",
+      summary: {
+        background: {
+          title: "拡大するブランドと運用課題の乖離",
+          text: "ブランドの急速な成長に伴い、既存のシステムでは商品情報の複雑化に対応しきれず、更新作業が属人化していました。「心の余白」というブランド哲学を損なわずに、情報を整理し拡張できる基盤が必要でした。",
+          imageUrl: "https://placehold.co/800x450/111/FFF?text=Background"
+        },
+        solution: {
+          title: "「ノイズ」を削ぎ落とすデザインと実装",
+          text: "徹底的な微調整を繰り返し、商品写真の静けさを際立たせるUIを設計。裏側ではShopifyのメタフィールドを駆使して商品入力欄をテンプレート化し、更新の迷いをなくす設計を行いました。",
+          imageUrl: "https://placehold.co/800x450/111/FFF?text=Solution"
+        },
+        result: {
+          title: "美しさを維持したままの「自走」を実現",
+          text: "複雑なレイアウトもクライアント自身で更新可能になり、新商品リリースのスピードが向上。動画マニュアルによる引継ぎにより、開発者に依存しない持続可能な運用フローが確立されました。",
+        }
+      },
+      sections: [
+        {
+          title: "コンクリートの「静寂」をWebで再現する",
+          text: "Aboutページにある「日々の喧騒から一歩離れ、自分と向き合う」という哲学をUIに落とし込みました。テキストサイズ、線の太さ、余白の取り方一つひとつにおいてノイズを排除し、デジタル空間でありながら、モノリスの前に佇んでいるような没入感を演出しています。",
+          imageUrl: "https://placehold.co/800x450/111/FFF?text=Process+01"
+        },
+        {
+          title: "複雑な情報を体系化するメタフィールド設計",
+          text: "「ガラス製品」「インセンスホルダー」など商品タイプごとに異なる入力項目をメタフィールドで定義。さらに、Googleタグマネージャーの導入やメガメニューの実装など、マーケティングと回遊性を高める機能もミニマルなデザインの中に実装しました。",
+          imageUrl: "https://placehold.co/800x450/111/FFF?text=Process+02"
+        },
+      ]
     },
-
     images: [
       "https://placehold.co/1200x800/111/FFF?text=Monolith+Main",
-      "https://placehold.co/1200x1800/000/333?text=Monolith+Gallery",
+      "https://placehold.co/1200x800/111/FFF?text=Monolith+Sub1",
     ],
   },
+
+  // 3. Lily-r
   {
-    id: "lily-r",
-    slug: "lily",
-    title: "Lily",
+    id: "lily",
+    slug: "lily-r",
+    title: "Lily-r",
     category: "Brand Site",
-    year: "2024",
-    role: "Design",
+    year: "2025",
+    date: "2025.08 (1 Month)",
+    role: "Design / Studio Implementation",
     url: "https://lily-r-braids.studio.site/",
-    thumbnail: "https://placehold.co/800x500/D8C3B5/FFF?text=Lily",
+    thumbnail: "https://placehold.co/800x500/F8F7F7/978B7D?text=Lily-r",
+    tools: ["Figma", "STUDIO"],
 
-    // ★追加
-    tools: ["Figma", "Studio"],
-
-    theme: {
-      bg: "#E8DCCA",
-      text: "#333333",
-      isLight: true,
-    },
-
-    detailTheme: {
-      bg: "#E0D4C2",
-      text: "#333333",
-    },
+    theme: { bg: "#F8F7F7", text: "#978B7D", isLight: true },
+    detailTheme: { bg: "#F5F4F0", text: "#333333" },
 
     desc: {
-      overview: "美しさと柔らかさを表現したブランドサイト。余白を活かした女性らしいデザイン。",
-      insight: "Coming Soon",
-      insightText: "詳細テキストは準備中です。",
-      idea: "Coming Soon",
-      ideaText: "詳細テキストは準備中です。",
+      overview: "「Luxury Braids × No Border」を掲げるヘアサロン「Lily-r」のサイト刷新。自作サイトの更新難易度とデザインの課題に対し、Studioを用いた構築で解決策を提示しました。複雑なメニューや予約導線を整理しつつ、洗練された世界観を表現。ユーザーの利便性と、オーナーの運用負荷軽減を両立した持続可能なサイトを実現しました。",
+      summary: {
+        background: {
+          title: "理想のデザインと更新性のジレンマ",
+          text: "これまでは自作サイトを運用していましたが、「更新作業が難しく、理想のデザインが形にならない」という課題を抱えていました。サロンの持つラグジュアリーな世界観を表現しつつ、専門知識がなくても更新できる環境が求められていました。",
+          imageUrl: "https://placehold.co/800x450/F8F7F7/978B7D?text=Background"
+        },
+        solution: {
+          title: "Studioによる「更新できる」ブランド表現",
+          text: "ノーコードツールStudioを選定し、直感的な更新環境を構築。「Luxury Braids × No Border」のコンセプトを軸に、余白を活かした洗練されたビジュアルへ一新。施術写真やメニュー価格も、オーナー自身で手軽に修正できるCMS設計を行いました。",
+          imageUrl: "https://placehold.co/800x450/F8F7F7/978B7D?text=Solution"
+        },
+        result: {
+          title: "迷わない導線と、手離れの良い運用",
+          text: "多岐にわたるメニューへのアクセス性が向上し、予約に関する問い合わせコストが減少。デザインの刷新によりブランド価値が正しく伝わるようになり、集客と運用の両面で「オーナーが施術に集中できる環境」を提供しました",
+        }
+      },
+      sections: [
+        {
+          title: "情報の迷子を防ぐ「アンカーリンク」設計",
+          text: "ブレイズヘアやコーンロウなど多岐にわたる施術メニューを、ユーザーが直感的に探せるようアンカーリンクを実装。縦に長いページでも、目的のメニューへスムーズに移動できるナビゲーションを設計し、離脱を防ぐ工夫を凝らしました。",
+          imageUrl: "https://placehold.co/800x450/F8F7F7/978B7D?text=Process+01"
+        },
+        {
+          title: "予約導線を「モーダル」へ集約",
+          text: "電話、LINE、Instagramなど分散しがちな予約方法を、一つの「Reservation」ボタンから開くモーダルウィンドウに集約。ユーザーが自分に合った連絡手段をその場で選択できるようにし、予約までの心理的ハードルを下げています。",
+          imageUrl: "https://placehold.co/800x450/F8F7F7/978B7D?text=Process+02"
+        },
+      ]
     },
-
     images: [
-       "https://placehold.co/1200x800/D8C3B5/FFF?text=Lily+Main",
+      "https://placehold.co/1200x800/F8F7F7/978B7D?text=Lily-r+Main",
+      "https://placehold.co/1200x800/F8F7F7/978B7D?text=Lily-r+Sub1",
     ],
   },
+
+  // 4. Online School LP
+  {
+    id: "online-school-lp",
+    slug: "school-lp",
+    title: "Online School LP",
+    category: "Landing Page",
+    year: "2025",
+    date: "2025.03 (1 Month)",
+    role: "Design / Studio Implementation / Logo Design",
+    url: "",
+    thumbnail: "https://placehold.co/800x500/F57F64/FFF?text=School+LP",
+    tools: ["Figma", "STUDIO"],
+
+    theme: { bg: "#F57F64", text: "#FFFFFF", isLight: false },
+    detailTheme: { bg: "#FFEBE5", text: "#333333" },
+
+    desc: {
+      overview: "「スキルを定着させ、新しい働き方へ」を掲げるSNS運用代行スクールの新規会員獲得用LP。20〜30代の女性をメインターゲットに、スクール商材特有の「怪しさ」や「不安」を払拭し、「楽しそう」「私にもできそう」というポジティブな行動変容を促す構成からデザインと実装を担当しました。",
+      summary: {
+        background: {
+          title: "ターゲットの「不安」を払拭する信頼性の担保",
+          text: "「副収入」や「スキル習得」を目指すスクールにおいて、ターゲット層は「本当に稼げるのか」「騙されないか」という心理的な壁を抱きがちです。競合リサーチの結果、デザインによる「安心感の醸成」と、情報の透明性がコンバージョン（申し込み）の鍵であると特定しました。",
+          imageUrl: "https://placehold.co/800x450/F57F64/FFF?text=Background"
+        },
+        solution: {
+          title: "「安心」と「活気」を両立させるデザイン設計",
+          text: "女性に好まれつつ、エネルギッシュな印象を与える「#F57F64（コーラルピンク）」をキーカラーに採用。構成面では、ターゲットが最も懸念する「サポート体制」や「カリキュラム」の情報を厚く設計し、図解を用いることで直感的に理解できるレイアウトを構築しました。",
+          imageUrl: "https://placehold.co/800x450/F57F64/FFF?text=Solution"
+        },
+        result: {
+          title: "1ヶ月での高速立ち上げと完全なデザイン再現",
+          text: "構成、デザインからStudio実装までを約1ヶ月で完遂。画像主体で実装を行うことで、複雑な装飾やフォントのニュアンスをStudio上で100%再現し、クライアントの要望通りのLPを短期間で公開まで導きました。",
+        }
+      },
+      sections: [
+        {
+          title: "ポジティブな行動を促す配色戦略",
+          text: "「活気がある」「楽しそう」という第一印象を形成するため、#F57F64（コーラルピンク）を選定。白背景や黒文字とのコントラスト比を調整し、信頼性を損なわない可読性と、前向きなブランドイメージを両立させました。",
+          imageUrl: "https://placehold.co/800x450/F57F64/FFF?text=Process+01"
+        },
+        {
+          title: "「安心」を可視化するセクション追加",
+          text: "ワイヤーフレームの段階で、ターゲット層のニーズが高い「サポート体制」や「具体的な学習フロー」のセクションを追加提案。テキストだけでなく、実際の受講風景やサポート画面のイメージ画像を配置することで、入会後の未来を具体的に想像させる設計を行いました。",
+          imageUrl: "https://placehold.co/800x450/F57F64/FFF?text=Process+02"
+        },
+      ]
+    },
+    images: [
+      "https://placehold.co/1200x800/F57F64/FFF?text=School+LP+Main",
+    ],
+  },
+
+  // 5. YACHIMATA COFFEE
   {
     id: "yachicro",
     slug: "yachimata",
     title: "YACHIMATA COFFEE",
     category: "Brand Site",
     year: "2024",
-    role: "Design / Coding",
+    date: "2024.11 (1 Month)",
+    role: "Design / Studio Implementation",
     url: "https://www.yachicro.com/",
-    thumbnail: "https://placehold.co/800x500/3E3A39/FFF?text=YACHIMATA",
+    thumbnail: "https://placehold.co/800x500/E9E9E9/1C1C1C?text=YACHIMATA",
+    tools: ["Figma", "STUDIO"],
 
-    // ★追加
-    tools: ["Figma", "VS Code", "WordPress"],
-
-    theme: {
-      bg: "#3E3A39",
-      text: "#FFFFFF",
-      isLight: false,
-    },
-
-    detailTheme: {
-      bg: "#33302F",
-      text: "#FFFFFF",
-    },
+    theme: { bg: "#595959", text: "#FFFFFF", isLight: false },
+    detailTheme: { bg: "#F2F2F2", text: "#333333" },
 
     desc: {
-      overview: "香りと時間を楽しむための、ミニマルで温かいサイト。コーヒーの湯気を感じるような静かな佇まい。",
-      insight: "Coming Soon",
-      insightText: "詳細テキストは準備中です。",
-      idea: "Coming Soon",
-      ideaText: "詳細テキストは準備中です。",
+      overview: "八街十字路に位置する自家焙煎珈琲店「ヤチマタクロス珈琲豆焙煎所」の公式サイトリニューアル。更新が困難だった旧サイトの課題を解決するため、Studioによる実装で運用基盤を再構築しました。店舗のアイデンティティである「十字路（クロス）」と、内装の「グレー」を基調としたグリッドデザインを採用。モバイルファーストを徹底しつつ、PCビューではInstagramへの導線を最適化するなど、実店舗への集客とブランド表現を両立させました。",
+      summary: {
+        background: {
+          title: "更新のブラックボックス化と、ブランド表現の乖離",
+          text: "開店時にWordPressで制作したサイトは、更新手順の複雑さから放置され、新商品や定休日の情報が発信できていませんでした。また、こだわりの内装やパッケージが持つ「グレー×ブラック」の洗練された世界観が、Webサイト上で十分に表現しきれていない課題がありました。",
+          imageUrl: "https://placehold.co/800x450/E9E9E9/1C1C1C?text=Background"
+        },
+        solution: {
+          title: "「交差（Cross）」を体現するグリッドデザイン",
+          text: "店名と所在地（八街十字路）から着想を得た「クロス」をコンセプトに、縦横のラインが交差するグリッドレイアウトを設計。背景色には店舗内装と同じ「#E9E9E9」を採用し、Webサイトを店舗の延長線上にある空間として定義しました。システム面ではStudioへ移行し、直感的な更新環境を整えました。",
+          imageUrl: "https://placehold.co/800x450/E9E9E9/1C1C1C?text=Solution"
+        },
+        result: {
+          title: "Webと店舗、SNSをつなぐハブの完成",
+          text: "店舗、パッケージ、Webサイトのトーンマナーが統一され、ブランドの認知強度が向上しました。オーナー自身でのお知らせ更新が可能になったほか、PC閲覧時にInstagramへ誘導する動線を設けたことで、スマホアプリでのフォロワー獲得フローが確立されました。",
+        }
+      },
+      sections: [
+        {
+          title: "モバイルファースト × PC独自の体験設計",
+          text: "スマホでの閲覧を最優先にUIを設計する一方、PCビューでは画面左側にメニューやアクセス情報を常時固定。右側のコンテンツエリアには、あえてInstagramのQRコードを配置し、PCからスマホ（アプリ）へのスムーズな移行を促すOMO（Online Merges with Offline）施策をデザインに落とし込みました。",
+          imageUrl: "https://placehold.co/800x450/E9E9E9/1C1C1C?text=Process+01"
+        },
+        {
+          title: "ブランドを象徴する「交差」のアニメーション",
+          text: "「ヤチマタクロス」という店名を視覚的に印象付けるため、ページ読み込み時に縦横のラインが交差してグリッドが形成されるオープニングアニメーションを実装しました。無機質になりがちなグレーのデザインに「動き」を持たせることで、静寂の中にもこだわりを感じさせるブランド体験を演出しています。",
+          imageUrl: "https://placehold.co/800x450/E9E9E9/1C1C1C?text=Process+02"
+        },
+      ]
     },
-
     images: [
-      "https://placehold.co/1200x800/3E3A39/FFF?text=Yachimata+Main",
+      "https://placehold.co/1200x800/E9E9E9/1C1C1C?text=Yachimata+Main",
+      "https://placehold.co/1200x800/E9E9E9/1C1C1C?text=Yachimata+Sub1",
     ],
   },
+
+  // 6. R.MUKAI Portfolio (自己紹介サイト用として残しておきます)
   {
-    id: "minz",
-    slug: "minz",
-    title: "Min'z",
-    category: "Online Store",
-    year: "2023",
-    role: "Design / Dev",
-    url: "https://minz.luluvision.jp/",
-    thumbnail: "https://placehold.co/800x500/004D40/FFF?text=Min'z",
+    id: "portfolio",
+    slug: "portfolio",
+    title: "R.MUKAI Portfolio",
+    category: "Portfolio",
+    year: "2026",
+    date: "2026.01 (5 Days)",
+    role: "Design / Front-end Development",
+    url: "",
+    thumbnail: "https://placehold.co/800x500/666/FFF?text=Portfolio",
+    tools: ["Figma", "Next.js", "TypeScript", "Tailwind CSS"],
 
-    theme: {
-      bg: "#004D40",
-      text: "#FFFFFF",
-      isLight: false,
-    },
-
-    detailTheme: {
-      bg: "#003D33",
-      text: "#FFFFFF",
-    },
+    theme: { bg: "#F37022", text: "#FFFFFF", isLight: false },
+    detailTheme: { bg: "#FFEFDE", text: "#333333" },
 
     desc: {
-      overview: "フレッシュで力強い印象を与えるオンラインストア。ユーザーの記憶に残るカラーリング。",
-      insight: "Coming Soon",
-      insightText: "詳細テキストは準備中です。",
-      idea: "Coming Soon",
-      ideaText: "詳細テキストは準備中です。",
+      overview: "デザイナーとしての「感性」とエンジニアとしての「構築力」を表現する自身のポートフォリオサイト。Next.jsとTailwind CSSを用いたモダンな環境で構築し、技術力を証明するプロダクトとして位置付けました。生成AIとのペアプログラミングにより、デザインから実装・公開までをわずか5日間で完遂しました。",
+
+      summary: {
+        background: {
+          title: "既存ツールでは表現しきれない「手触り」への渇望",
+          text: "既存のポートフォリオサービスやNoCodeツールでは、私が大切にしている「マイクロインタラクション」や「ページ遷移の心地よさ」を完全に表現することに限界を感じていました。静的な画像だけでなく、動的な実装スキルを含めて自身の価値を伝える必要がありました。",
+          imageUrl: "https://placehold.co/800x450/666/FFF?text=Background"
+        },
+        solution: {
+          title: "AIをバディにした「超高速」開発の実践",
+          text: "Next.js (App Router) を採用し、SPA特有の滑らかな遷移を実現。開発プロセスにおいてはAIを徹底活用し、コーディングやデバッグの時間を大幅に圧縮しました。「人間が意思決定し、AIが実装する」という次世代のワークフローを自ら実践し、5日間という短期間でのローンチを実現しました。",
+          imageUrl: "https://placehold.co/800x450/666/FFF?text=Solution"
+        },
+        result: {
+          title: "「デザインエンジニア」としての名刺代わりのサイト",
+          text: "ビジュアルの美しさと、エンジニアリングによる機能性が融合したサイトが完成。詳細ページごとのテーマカラー変化やBento Gridによる情報整理など、細部へのこだわりを実装として落とし込むことで、自身のスキルセットを雄弁に語るポートフォリオとなりました。",
+        }
+      },
+      sections: [
+        {
+          title: "没入感を生む「動的な色彩」設計",
+          text: "プロジェクトの個性を際立たせるため、トップページではスライドごとに背景色と文字色が動的に変化する仕様を実装。Framer Motionを駆使し、画像とテキストがシンクロして「めくられる」ような心地よい操作感を追求しました。詳細ページへの遷移もシームレスに設計し、ユーザーの没入感を途切れさせない工夫を凝らしています。",
+          imageUrl: "https://placehold.co/800x450/666/FFF?text=Process+01"
+        },
+        {
+          title: "Bento Gridによる情報の構造化",
+          text: "多岐にわたる制作実績の情報を、直感的に理解できるようBento Grid（弁当箱）レイアウトで整理。制作期間（Period）や使用ツール（Tools）といったスペック情報を視覚的にグループ化し、採用担当者やクライアントが必要な情報に瞬時にアクセスできるUIを目指しました。",
+          imageUrl: "https://placehold.co/800x450/666/FFF?text=Process+02"
+        },
+      ]
     },
-
-    images: [
-      "https://placehold.co/1200x800/004D40/FFF?text=Minz+Main",
-    ],
-  },
-  {
-    id: "frame",
-    slug: "frame",
-    title: "frame",
-    category: "Online Store",
-    year: "2023",
-    role: "Design",
-    url: "https://frameinterior.net/",
-    thumbnail: "https://placehold.co/800x500/000/FFF?text=frame",
-
-    theme: {
-      bg: "#000000",
-      text: "#FFFFFF",
-      isLight: false,
-    },
-
-    detailTheme: {
-      bg: "#111111",
-      text: "#FFFFFF",
-    },
-
-    desc: {
-      overview: "写真を切り取るフレームのような構成。主役となる商品を最大限に引き立てるデザイン。",
-      insight: "Coming Soon",
-      insightText: "詳細テキストは準備中です。",
-      idea: "Coming Soon",
-      ideaText: "詳細テキストは準備中です。",
-    },
-
-    images: [
-      "https://placehold.co/1200x800/000/FFF?text=Frame+Main",
-    ],
+    images: ["https://placehold.co/1200x800/666/FFF?text=Portfolio+Main"],
   },
 ];

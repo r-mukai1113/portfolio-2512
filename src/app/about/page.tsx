@@ -4,38 +4,41 @@ import { useState } from "react";
 import Link from "next/link";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { useThemeColor } from "@/hooks/useThemeColor";
-import { likesData, LikeItem } from "@/data/likes";
+// データファイルをインポート
+import { aboutItems, AboutItem } from "@/data/likes"; 
 import { Copyright } from "@/components/Copyright";
 
 export default function ProfilePage() {
   useThemeColor("#F0F2F5");
 
-  const [selectedLike, setSelectedLike] = useState<LikeItem | null>(null);
+  // 型定義を AboutItem に変更
+  const [selectedItem, setSelectedItem] = useState<AboutItem | null>(null);
   
   // アクセントカラー定義
   const ACCENT_COLOR = "#F37022";
 
-  const currentIndex = selectedLike
-    ? likesData.findIndex((item) => item.id === selectedLike.id)
+  // likesData -> aboutItems に変更
+  const currentIndex = selectedItem
+    ? aboutItems.findIndex((item) => item.id === selectedItem.id)
     : -1;
 
   const handleNext = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (currentIndex !== -1 && currentIndex < likesData.length - 1) {
-      setSelectedLike(likesData[currentIndex + 1]);
+    if (currentIndex !== -1 && currentIndex < aboutItems.length - 1) {
+      setSelectedItem(aboutItems[currentIndex + 1]);
     }
   };
 
   const handlePrev = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (currentIndex > 0) {
-      setSelectedLike(likesData[currentIndex - 1]);
+      setSelectedItem(aboutItems[currentIndex - 1]);
     }
   };
 
   const handleClose = (e?: React.MouseEvent) => {
     e?.stopPropagation();
-    setSelectedLike(null);
+    setSelectedItem(null);
   }
 
   // =================================================================
@@ -93,7 +96,6 @@ export default function ProfilePage() {
             </div>
 
             <div className="mb-[16px]">
-              {/* アクセントカラー適用箇所: Web Designer */}
               <span 
                 className="block font-inter font-bold text-[12px] md:text-[16px] tracking-[0.02em] opacity-80 mb-[12px] md:mb-[16px]"
                 style={{ color: ACCENT_COLOR }}
@@ -160,16 +162,15 @@ export default function ProfilePage() {
             </div>
             
             <div className="flex flex-wrap gap-2 md:gap-[10px]">
-              {likesData.map((item) => (
+              {/* aboutItems をループ表示 */}
+              {aboutItems.map((item) => (
                 <button
                   key={item.id}
-                  onClick={() => setSelectedLike(item)}
-                  // ★修正: groupを追加 (元々ありましたが念のため確認)
+                  onClick={() => setSelectedItem(item)}
                   className="group px-[13px] py-[8px] md:px-[21px] md:py-[8px] bg-[#EEF0F2] hover:bg-[#E4E4E7] rounded-full text-[#333] flex items-center gap-[4px] md:gap-[8px] transition-colors duration-200"
                 >
                   <span className="text-[12px] md:text-[14px]">{item.emoji}</span>
-                  <span className="font-bold font-noto text-[10px] md:text-[12px] tracking-wide">{item.text}</span>
-                  {/* ★修正: group-hover:scale-110 を削除し、group-hover:rotate-90 duration-300 を追加 */}
+                  <span className="font-bold font-noto text-[10px] md:text-[12px] tracking-wide">{item.title}</span>
                   <span className="opacity-40 text-[10px] md:text-[12px] transition-transform duration-300 group-hover:rotate-90">
                     +
                   </span>
@@ -181,7 +182,6 @@ export default function ProfilePage() {
           {/* 4. Footer Nav (1:2 Ratio) */}
           <div className="flex flex-row gap-[8px] md:gap-[12px] mt-2 md:mt-[12px]">
             <Link href="/" className={`flex-1 ${baseNavButtonClass}`}>
-              {/* ★修正: text-[14px] -> text-[12px] に変更 */}
               <span className="font-inter font-bold text-[12px] md:text-[20px] tracking-wider group-hover:opacity-60 transition-opacity">‹ Works</span>
             </Link>
 
@@ -190,7 +190,6 @@ export default function ProfilePage() {
               className={`flex-[2] ${baseNavButtonClass}`}
             >
               <div className="flex items-center gap-1 group-hover:opacity-60 transition-opacity">
-                {/* ★修正: text-[14px] -> text-[12px] に変更 */}
                 <span className="font-inter font-bold text-[12px] md:text-[20px] tracking-wider">Contact</span>
                 <span className="font-inter text-[12px] md:text-[20px] mb-[2px]">›</span>
               </div>
@@ -204,7 +203,7 @@ export default function ProfilePage() {
       </main>
 
       {/* Identity Modal */}
-      {selectedLike && (
+      {selectedItem && (
         <div 
           className="fixed inset-0 z-[200] flex items-center justify-center px-5"
           onClick={handleClose}
@@ -226,21 +225,22 @@ export default function ProfilePage() {
             </div>
 
             <div className="flex flex-col items-center mb-8">
+              {/* 画像の表示 */}
               <div className="w-full max-w-[280px] md:max-w-[320px] aspect-square rounded-[4px] overflow-hidden mb-6 bg-gray-50">
                 <img 
-                  src={selectedLike.image} 
-                  alt={selectedLike.text}
+                  src={selectedItem.image} 
+                  alt={selectedItem.title}
                   className="w-full h-full object-cover"
                 />
               </div>
 
               <div className="w-full max-w-[280px] md:max-w-[320px]">
                 <h3 className={modalTitleClass}>
-                  <span className="mr-2">{selectedLike.emoji}</span>
-                  {selectedLike.text}
+                  <span className="mr-2">{selectedItem.emoji}</span>
+                  {selectedItem.title}
                 </h3>
                 <p className={modalBodyClass}>
-                  {selectedLike.comment}
+                  {selectedItem.text}
                 </p>
               </div>
             </div>
@@ -256,7 +256,7 @@ export default function ProfilePage() {
               ) : (
                 <div />
               )}
-              {currentIndex < likesData.length - 1 ? (
+              {currentIndex < aboutItems.length - 1 ? (
                 <button onClick={handleNext} className={modalNavButtonClass}>
                   NEXT
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4">
