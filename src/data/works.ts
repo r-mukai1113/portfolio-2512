@@ -268,7 +268,7 @@ export const works: Work[] = [
     tools: ["Figma", "STUDIO"],
 
     theme: { bg: "#595959", text: "#FFFFFF", isLight: false },
-    detailTheme: { bg: "#F2F2F2", text: "#333333" },
+    detailTheme: { bg: "#595959", text: "#FFFFFF" },
 
     desc: {
       overview: "八街十字路に位置する自家焙煎珈琲店「ヤチマタクロス珈琲豆焙煎所」の公式サイトリニューアル。更新が困難だった旧サイトの課題を解決するため、Studioによる実装で運用基盤を再構築しました。店舗のアイデンティティである「十字路（クロス）」と、内装の「グレー」を基調としたグリッドデザインを採用。モバイルファーストを徹底しつつ、PCビューではInstagramへの導線を最適化するなど、実店舗への集客とブランド表現を両立させました。",
@@ -320,7 +320,7 @@ export const works: Work[] = [
     thumbnail: "https://placehold.co/800x500/666/FFF?text=Portfolio",
     tools: ["Figma", "Next.js", "TypeScript", "Tailwind CSS"],
 
-    theme: { bg: "#F37022", text: "#FFFFFF", isLight: false },
+    theme: { bg: "#FFF8F3", text: "#F37022", isLight: true },
     detailTheme: { bg: "#FFEFDE", text: "#333333" },
 
     desc: {
