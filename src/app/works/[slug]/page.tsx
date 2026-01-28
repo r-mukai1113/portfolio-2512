@@ -8,15 +8,6 @@ import { useEffect, useState } from "react";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { Copyright } from "@/components/Copyright";
 
-// ★重要: generateStaticParams が必要な場合はコメントアウトを外してください
-/*
-export function generateStaticParams() {
-  return works.map((work) => ({
-    slug: work.slug,
-  }));
-}
-*/
-
 export default function WorkDetail() {
   const params = useParams();
   const slug = params.slug as string;
@@ -41,220 +32,370 @@ export default function WorkDetail() {
   if (!mounted) return null;
 
   // =================================================================
-  // スタイル定義
+  // Figma準拠のスタイル定義
   // =================================================================
 
-  const glassClass = currentWork.theme.isLight
-    ? "bg-white/50 border border-white/60 backdrop-blur-md"
-    : "bg-white/[0.04] border border-white/10 backdrop-blur-[20px]";
+  // 背景色
+  const bgColor = "#ebebeb";
+  const textColor = "#1e1e1e";
+  const textColorMuted = "#333";
 
-  const cardClass = `rounded-[12px] md:rounded-[16px] w-full transition-colors duration-500 ${glassClass}`;
-  const gridGapClass = "mb-2 md:mb-[12px]";
-  const cardPaddingClass = "py-[32px] px-[20px] md:py-[56px] md:px-[40px]";
-  const textColor = { color: currentWork.detailTheme.text };
-  
+  // ガラスカードスタイル
+  const glassCardClass = `
+    rounded-[16px] w-full
+    bg-gradient-to-r from-white/20 to-white/[0.32]
+    border border-white/30
+    backdrop-blur-md
+  `;
+
+  const cardPaddingClass = "py-[56px] px-[20px] md:px-[40px]";
+  const gridGapClass = "mb-[12px]";
+
+  // descV2がある場合はそちらを使用、なければdescから生成
+  const descV2 = currentWork.descV2 || {
+    overview: currentWork.desc?.overview || "",
+    background: currentWork.desc?.insight ? {
+      title: currentWork.desc.insight,
+      text: currentWork.desc.insightText || "",
+      image: currentWork.images?.[1]
+    } : undefined,
+    solution: currentWork.desc?.idea ? {
+      title: currentWork.desc.idea,
+      text: currentWork.desc.ideaText || "",
+      image: currentWork.images?.[2]
+    } : undefined,
+  };
+
   const hasGalleryImages = currentWork.images && currentWork.images.length > 1;
-
-  const metaItemGap = "flex flex-col gap-3 md:gap-[12px]";
-  const navButtonPadding = "px-[20px] md:px-[40px]";
-  const baseNavButtonClass = `group flex flex-col items-start justify-center ${cardClass} ${navButtonPadding} h-[72px] md:h-[120px] hover:-translate-y-1`;
-
-  // 表示ロジック
-  const showInsight = currentWork.desc?.insight || currentWork.desc?.insightText;
-  const showIdea = currentWork.desc?.idea || currentWork.desc?.ideaText;
-  
-  // Tools がある場合のみ、下部のカードを表示する
-  const showToolsCard = currentWork.tools && currentWork.tools.length > 0;
 
   return (
     <>
       <GlobalHeader />
 
       <main
-        className="w-full min-h-screen transition-colors duration-500 pt-[72px] pb-20"
-        style={{ backgroundColor: currentWork.detailTheme.bg }}
+        className="w-full min-h-screen pt-[72px] pb-[40px]"
+        style={{ backgroundColor: bgColor }}
       >
-        <div className="max-w-[880px] mx-auto px-5 md:px-20 w-full" style={textColor}>
+        <div className="max-w-[880px] mx-auto px-5 md:px-20 w-full relative">
+
+          {/* =================================================
+              TOPへ戻るボタン（左上に配置）
+          ================================================= */}
+          <Link
+            href="/"
+            className="absolute left-5 md:left-0 top-0 -translate-x-0 md:-translate-x-full flex items-center gap-1 font-noto font-bold text-[14px] tracking-[0.02em] text-black hover:opacity-60 transition-opacity"
+          >
+            <span className="rotate-180 text-[12px]">›</span>
+            <span>TOP</span>
+          </Link>
 
           {/* =================================================
               1. Hero Card
           ================================================= */}
-          <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass}`}>
-            <h1 className="font-inter font-bold text-[32px] md:text-[64px] leading-[1.1] tracking-[0.04em] mb-6 md:mb-[28px] break-words">
-              {currentWork.title}
-            </h1>
+          <section className={`${glassCardClass} ${cardPaddingClass} ${gridGapClass}`}>
+            <div className="flex flex-col gap-[28px]">
+              {/* Title */}
+              <h1
+                className="font-inter font-semibold text-[32px] md:text-[48px] leading-[1.1] tracking-[0.04em]"
+                style={{ color: textColor }}
+              >
+                {currentWork.title}
+              </h1>
 
-            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 md:gap-20 mb-6 md:mb-8">
-              
-              <div className="flex flex-col md:flex-row gap-6 md:gap-10 w-full">
-                {/* Category */}
-                <div className={metaItemGap}>
-                  <span className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40">Category</span>
-                  <span className="font-inter text-[12px] md:text-[14px] leading-none tracking-[0.02em]">{currentWork.category}</span>
+              {/* Meta Info + Visit Button */}
+              <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 md:gap-10 max-w-[640px]">
+                {/* Meta Items */}
+                <div className="flex flex-wrap gap-6 md:gap-8 font-inter font-medium" style={{ color: textColorMuted }}>
+                  {/* Category */}
+                  <div className="flex flex-col gap-3">
+                    <span className="text-[14px] leading-none tracking-[-0.01em] opacity-40">Category</span>
+                    <span className="text-[12px] leading-none tracking-[0.02em]">{currentWork.category}</span>
+                  </div>
+                  {/* Date */}
+                  <div className="flex flex-col gap-3">
+                    <span className="text-[14px] leading-none tracking-[-0.01em] opacity-40">Date</span>
+                    <span className="text-[12px] leading-none tracking-[0.02em]">{currentWork.year}</span>
+                  </div>
+                  {/* Role */}
+                  <div className="flex flex-col gap-3 flex-1 min-w-[120px]">
+                    <span className="text-[14px] leading-none tracking-[-0.01em] opacity-40">Role</span>
+                    <span className="text-[12px] leading-[1.3] tracking-[0.02em]">{currentWork.role}</span>
+                  </div>
                 </div>
-                {/* Role */}
-                <div className={metaItemGap}>
-                  <span className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40">Role</span>
-                  <span className="font-inter text-[12px] md:text-[14px] leading-none tracking-[0.02em]">{currentWork.role}</span>
-                </div>
-                {/* Year */}
-                <div className={metaItemGap}>
-                  <span className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40">Year</span>
-                  <span className="font-inter text-[12px] md:text-[14px] leading-none tracking-[0.02em]">{currentWork.year}</span>
-                </div>
-              </div>
 
-              {/* Visit Website Button (Hero Card) */}
-              {currentWork.url && (
-                <div className="shrink-0 -mt-2 md:mt-0">
+                {/* Visit Website Button */}
+                {currentWork.url && (
                   <a
                     href={currentWork.url}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-1 font-inter font-normal text-[14px] md:text-[16px] leading-none tracking-[0.02em] hover:opacity-60 transition-opacity group"
-                    style={{ color: currentWork.detailTheme.text }}
+                    className="flex items-center gap-[2px] font-inter font-medium text-[14px] leading-none tracking-[0.02em] hover:opacity-60 transition-opacity shrink-0"
+                    style={{ color: textColor }}
                   >
                     Visit Website
-                    <span className="group-hover:translate-x-1 transition-transform">›</span>
+                    <span className="text-[16px]">›</span>
                   </a>
-                </div>
-              )}
+                )}
+              </div>
             </div>
 
-            {/* Main Visual */}
-            <div className="mt-[24px] md:mt-[32px] w-full">
-               {currentWork.images && currentWork.images[0] && (
-                  <img
-                    src={currentWork.images[0]}
-                    alt="Main Visual"
-                    className="block w-full aspect-[16/10] object-cover rounded-sm"
-                  />
-               )}
+            {/* Main Thumbnail */}
+            <div className="mt-[32px]">
+              {currentWork.images && currentWork.images[0] ? (
+                <img
+                  src={currentWork.images[0]}
+                  alt="Main Visual"
+                  className="block w-full aspect-[1920/1200] object-cover bg-[#c0c0c0]"
+                />
+              ) : (
+                <div className="w-full aspect-[1920/1200] bg-[#c0c0c0]" />
+              )}
             </div>
           </section>
 
           {/* =================================================
-              2. Context Card
+              2. Content Card (Overview, Background, Solution, Result)
           ================================================= */}
-          {currentWork.desc && (
-            <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass} font-noto`}>
-              <div className="max-w-[720px] mx-auto">
-                <div className="mb-6 md:mb-[40px]">
-                   <h3 className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40 mb-[12px] md:mb-[16px]">Overview</h3>
-                   <p className="text-[12px] md:text-[14px] leading-[1.8] tracking-[0.02em] opacity-75 whitespace-pre-wrap">{currentWork.desc.overview}</p>
+          <section className={`${glassCardClass} ${cardPaddingClass} ${gridGapClass}`}>
+            <div className="flex flex-col gap-[40px]">
+
+              {/* Overview */}
+              {descV2.overview && (
+                <div className="flex flex-col gap-3">
+                  <span
+                    className="font-inter font-medium text-[14px] leading-none tracking-[-0.01em] opacity-40"
+                    style={{ color: textColorMuted }}
+                  >
+                    Overview
+                  </span>
+                  <p
+                    className="font-noto font-medium text-[14px] md:text-[16px] leading-[1.8] tracking-[0.02em] opacity-75"
+                    style={{ color: textColor }}
+                  >
+                    {descV2.overview}
+                  </p>
                 </div>
+              )}
 
-                {showInsight && (
-                  <div className="mb-6 md:mb-[40px]">
-                    <h3 className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40 mb-[12px] md:mb-[16px]">Insight</h3>
-                    {currentWork.desc.insight && (
-                      <h4 className="text-[16px] md:text-[20px] leading-[1.3] tracking-[0.02em] font-medium mb-[12px] md:mb-[16px]">{currentWork.desc.insight}</h4>
-                    )}
-                    {currentWork.desc.insightText && (
-                      <p className="text-[12px] md:text-[14px] leading-[1.8] tracking-[0.02em] opacity-75 whitespace-pre-wrap">{currentWork.desc.insightText}</p>
+              {/* Background */}
+              {descV2.background && (
+                <div className="flex flex-col gap-4">
+                  <div className="flex flex-col gap-3">
+                    <span
+                      className="font-inter font-medium text-[14px] leading-none tracking-[-0.01em] opacity-40"
+                      style={{ color: textColorMuted }}
+                    >
+                      Background
+                    </span>
+                    <h3
+                      className="font-noto font-bold text-[18px] md:text-[20px] leading-[1.3] tracking-[0.02em]"
+                      style={{ color: textColor }}
+                    >
+                      {descV2.background.title}
+                    </h3>
+                    {descV2.background.image && (
+                      <img
+                        src={descV2.background.image}
+                        alt="Background"
+                        className="w-full aspect-[1600/900] object-cover bg-[#c0c0c0]"
+                      />
                     )}
                   </div>
-                )}
+                  <p
+                    className="font-noto font-medium text-[14px] md:text-[16px] leading-[1.8] tracking-[0.02em] opacity-75"
+                    style={{ color: textColor }}
+                  >
+                    {descV2.background.text}
+                  </p>
+                </div>
+              )}
 
-                {showIdea && (
-                  <div>
-                    <h3 className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40 mb-[12px] md:mb-[16px]">Idea</h3>
-                    {currentWork.desc.idea && (
-                      <h4 className="text-[16px] md:text-[20px] leading-[1.3] tracking-[0.02em] font-medium mb-[12px] md:mb-[16px]">{currentWork.desc.idea}</h4>
-                    )}
-                    {currentWork.desc.ideaText && (
-                      <p className="text-[12px] md:text-[14px] leading-[1.8] tracking-[0.02em] opacity-75 whitespace-pre-wrap">{currentWork.desc.ideaText}</p>
+              {/* Solution */}
+              {descV2.solution && (
+                <div className="flex flex-col gap-4">
+                  <div className="flex flex-col gap-3">
+                    <span
+                      className="font-inter font-medium text-[14px] leading-none tracking-[-0.01em] opacity-40"
+                      style={{ color: textColorMuted }}
+                    >
+                      Solution
+                    </span>
+                    <h3
+                      className="font-noto font-bold text-[18px] md:text-[20px] leading-[1.3] tracking-[0.02em]"
+                      style={{ color: textColor }}
+                    >
+                      {descV2.solution.title}
+                    </h3>
+                    {descV2.solution.image && (
+                      <img
+                        src={descV2.solution.image}
+                        alt="Solution"
+                        className="w-full aspect-[1600/900] object-cover bg-[#c0c0c0]"
+                      />
                     )}
                   </div>
-                )}
+                  <p
+                    className="font-noto font-medium text-[14px] md:text-[16px] leading-[1.8] tracking-[0.02em] opacity-75"
+                    style={{ color: textColor }}
+                  >
+                    {descV2.solution.text}
+                  </p>
+                </div>
+              )}
+
+              {/* Result */}
+              {descV2.result && (
+                <div className="flex flex-col gap-4">
+                  <div className="flex flex-col gap-3">
+                    <span
+                      className="font-inter font-medium text-[14px] leading-none tracking-[-0.01em] opacity-40"
+                      style={{ color: textColorMuted }}
+                    >
+                      Result
+                    </span>
+                    <h3
+                      className="font-noto font-bold text-[18px] md:text-[20px] leading-[1.3] tracking-[0.02em]"
+                      style={{ color: textColor }}
+                    >
+                      {descV2.result.title}
+                    </h3>
+                  </div>
+                  <p
+                    className="font-noto font-medium text-[14px] md:text-[16px] leading-[1.8] tracking-[0.02em] opacity-75"
+                    style={{ color: textColor }}
+                  >
+                    {descV2.result.text}
+                  </p>
+                </div>
+              )}
+            </div>
+          </section>
+
+          {/* =================================================
+              3. Process Card
+          ================================================= */}
+          {descV2.processes && descV2.processes.length > 0 && (
+            <section className={`${glassCardClass} ${cardPaddingClass} ${gridGapClass}`}>
+              <span
+                className="font-inter font-medium text-[14px] leading-none tracking-[-0.01em] opacity-40 block mb-3"
+                style={{ color: textColorMuted }}
+              >
+                Process
+              </span>
+              <div className="flex flex-col gap-[40px]">
+                {descV2.processes.map((process, idx) => (
+                  <div key={idx} className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-3">
+                      <h3
+                        className="font-noto font-bold text-[18px] md:text-[20px] leading-[1.3] tracking-[0.02em]"
+                        style={{ color: textColor }}
+                      >
+                        {process.title}
+                      </h3>
+                      {process.image && (
+                        <img
+                          src={process.image}
+                          alt={process.title}
+                          className="w-full aspect-[1600/900] object-cover bg-[#c0c0c0]"
+                        />
+                      )}
+                    </div>
+                    <p
+                      className="font-noto font-bold text-[14px] md:text-[16px] leading-[1.8] tracking-[0.02em] opacity-75"
+                      style={{ color: textColor }}
+                    >
+                      {process.text}
+                    </p>
+                  </div>
+                ))}
               </div>
             </section>
           )}
 
           {/* =================================================
-              3. Gallery Cards
+              4. Gallery Card
           ================================================= */}
           {hasGalleryImages && (
-            <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass}`}>
-               <div className="flex flex-col gap-[24px] md:gap-[40px]">
-                 {currentWork.images.slice(1, 6).map((imgUrl, idx) => (
-                   <img key={idx} src={imgUrl} alt={`Gallery ${idx + 1}`} className="w-full h-auto rounded-sm" />
-                 ))}
-               </div>
-            </section>
-          )}
-
-          {/* =================================================
-              4. Tools Card (Revised Layout)
-          ================================================= */}
-          {showToolsCard && (
-            <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass}`}>
-              <div className="flex flex-col gap-3 md:gap-4">
-                
-                {/* Label */}
-                <h3 className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40">
-                  Tools
-                </h3>
-
-                {/* Content: SP=Column, PC=Row(Justify Between) */}
-                <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-6 md:gap-0">
-                   {/* Tools List */}
-                   {currentWork.tools && currentWork.tools.length > 0 && (
-                     <p className="font-inter text-[12px] md:text-[14px] leading-relaxed tracking-[0.02em]">
-                        {currentWork.tools.join(", ")}
-                     </p>
-                   )}
-
-                   {/* Visit Website Link */}
-                   {currentWork.url && (
-                     <a
-                        href={currentWork.url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center gap-1 font-inter font-normal text-[14px] md:text-[16px] leading-none tracking-[0.02em] hover:opacity-60 transition-opacity group md:translate-y-[2px]"
-                        style={{ color: currentWork.detailTheme.text }}
-                      >
-                        Visit Website
-                        <span className="group-hover:translate-x-1 transition-transform">›</span>
-                      </a>
-                   )}
-                </div>
-
+            <section className={`${glassCardClass} ${cardPaddingClass} ${gridGapClass}`}>
+              <div className="flex flex-col gap-[40px]">
+                {currentWork.images.slice(1, 6).map((imgUrl, idx) => (
+                  <img
+                    key={idx}
+                    src={imgUrl}
+                    alt={`Gallery ${idx + 1}`}
+                    className="w-full h-auto object-cover bg-[#c0c0c0]"
+                  />
+                ))}
               </div>
             </section>
           )}
 
           {/* =================================================
-              5. Navigation Footer
+              5. Tools Card
           ================================================= */}
-          <div className="flex flex-row gap-[8px] md:gap-[12px] mt-2 md:mt-[12px]">
+          {currentWork.tools && currentWork.tools.length > 0 && (
+            <section className={`${glassCardClass} ${cardPaddingClass} ${gridGapClass}`}>
+              <div className="flex flex-col gap-3">
+                <span
+                  className="font-inter font-medium text-[14px] leading-none tracking-[-0.01em] opacity-40"
+                  style={{ color: textColorMuted }}
+                >
+                  Tools
+                </span>
+                <p
+                  className="font-noto font-bold text-[14px] leading-[1.8] tracking-[0.02em] opacity-75"
+                  style={{ color: textColor }}
+                >
+                  {currentWork.tools.join(" / ")}
+                </p>
+              </div>
+            </section>
+          )}
+
+          {/* =================================================
+              6. Navigation Footer
+          ================================================= */}
+          <div className="flex flex-row gap-[12px] mt-0">
+            {/* Works Button */}
             <Link
               href="/"
-              className={`flex-1 ${baseNavButtonClass}`}
+              className={`${glassCardClass} flex items-center gap-1 px-[20px] md:px-[40px] py-[32px] md:py-[48px] w-[180px] md:w-[284px] hover:-translate-y-1 transition-transform`}
             >
-              <span className="font-inter font-bold text-[12px] md:text-[20px] tracking-wider group-hover:opacity-60 transition-opacity">
-                ‹ Works
+              <span className="rotate-180 text-[24px]" style={{ color: textColor }}>›</span>
+              <span
+                className="font-inter font-bold text-[16px] md:text-[20px] leading-none tracking-[0.02em]"
+                style={{ color: textColor }}
+              >
+                Works
               </span>
             </Link>
 
+            {/* Next Project Button */}
             <Link
               href={`/works/${nextWork.slug}`}
-              className={`flex-[2] ${baseNavButtonClass}`}
+              className={`${glassCardClass} flex items-center gap-2 md:gap-4 px-[20px] md:px-[40px] py-[32px] md:py-[48px] flex-1 hover:-translate-y-1 transition-transform`}
             >
-              <div className="flex flex-row items-center gap-2 md:gap-4 w-full overflow-hidden">
-                  <span className="font-inter font-bold text-[12px] md:text-[20px] tracking-wider whitespace-nowrap shrink-0 group-hover:opacity-60 transition-opacity">
-                    Next Project <span className="ml-1">›</span>
-                  </span>
-                  <span className="font-inter text-[10px] md:text-[20px] opacity-60 truncate group-hover:opacity-40 transition-opacity">
-                    {nextWork.title}
-                  </span>
-              </div>
+              <span
+                className="font-inter font-bold text-[14px] md:text-[20px] leading-none tracking-[0.02em] whitespace-nowrap"
+                style={{ color: textColor }}
+              >
+                Next Project
+              </span>
+              <span className="text-[24px]" style={{ color: textColor }}>›</span>
+              <span
+                className="font-inter font-semibold text-[14px] md:text-[20px] leading-none tracking-[0.02em] opacity-60 truncate"
+                style={{ color: textColor }}
+              >
+                #{nextWork.title}
+              </span>
             </Link>
           </div>
 
-          {/* 6. Copyright */}
+          {/* =================================================
+              7. Copyright
+          ================================================= */}
           <div className="mt-10 md:mt-12 w-full">
-            <Copyright className="text-white mix-blend-difference" />
+            <Copyright className="text-[#8c959f]" />
           </div>
 
         </div>

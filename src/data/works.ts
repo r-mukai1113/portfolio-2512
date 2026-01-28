@@ -1,5 +1,12 @@
 // 実績データ
 
+// プロセスの型定義
+export interface ProcessItem {
+  title: string;
+  text: string;
+  image?: string;
+}
+
 export interface Work {
   id: string;
   slug: string; // URL用ID
@@ -37,6 +44,26 @@ export interface Work {
 
   // ★追加: 使用ツール・技術スタック (ここを追加しないとエラーになります)
   tools?: string[];
+
+  // ★新デザイン用フィールド (Figmaデザイン対応)
+  descV2?: {
+    overview: string;
+    background?: {
+      title: string;
+      text: string;
+      image?: string;
+    };
+    solution?: {
+      title: string;
+      text: string;
+      image?: string;
+    };
+    result?: {
+      title: string;
+      text: string;
+    };
+    processes?: ProcessItem[];
+  };
 }
 
 export const works: Work[] = [
@@ -45,13 +72,12 @@ export const works: Work[] = [
     slug: "y-tag",
     title: "Y-Tag",
     category: "Online Store",
-    year: "2025",
-    role: "Design / Implementation",
+    year: "2025.12 (2 Months)",
+    role: "Design / Shopify Development",
     url: "https://ytag.jp/",
     thumbnail: "https://placehold.co/800x500/E6E6E6/333?text=Y-Tag",
-    
-    // ★追加: サンプルとして入れています。必要に応じて書き換えてください。
-    tools: ["Figma", "Next.js", "Tailwind CSS"],
+
+    tools: ["Figma", "Shopify", "Liquid"],
 
     theme: {
       bg: "#F0F2F5",
@@ -60,8 +86,8 @@ export const works: Work[] = [
     },
 
     detailTheme: {
-      bg: "#E5E7EB", // 少し濃いグレー
-      text: "#333333",
+      bg: "#ebebeb",
+      text: "#1e1e1e",
     },
 
     desc: {
@@ -73,10 +99,45 @@ export const works: Work[] = [
     },
 
     images: [
-      "https://placehold.co/1200x800/E6E6E6/333?text=Main+Visual",
-      "https://placehold.co/1200x1800/F0F0F0/DDD?text=Gallery+1",
-      "https://placehold.co/1200x800/333/FFF?text=Gallery+2",
+      "https://placehold.co/1920x1200/c0c0c0/999?text=Main+Visual",
+      "https://placehold.co/1200x848/c0c0c0/999?text=Gallery+1",
+      "https://placehold.co/1920x1200/c0c0c0/999?text=Gallery+2",
     ],
+
+    // 新デザイン用の詳細データ
+    descV2: {
+      overview: "テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト。",
+      background: {
+        title: "◯◯が課題",
+        text: "テキストテキストテキストテキストテキストテキスト、テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト。",
+        image: "https://placehold.co/1600x900/c0c0c0/999?text=Background",
+      },
+      solution: {
+        title: "〇〇をしました。",
+        text: "テキストテキストテキストテキストテキストテキスト、テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト。",
+        image: "https://placehold.co/1600x900/c0c0c0/999?text=Solution",
+      },
+      result: {
+        title: "〇〇を解決をしました。",
+        text: "テキストテキストテキストテキストテキストテキスト、テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト。",
+      },
+      processes: [
+        {
+          title: "プロセス①",
+          text: "テキストテキストテキストテキストテキストテキスト、テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト。",
+          image: "https://placehold.co/1600x900/c0c0c0/999?text=Process+1",
+        },
+        {
+          title: "プロセス②",
+          text: "テキストテキストテキストテキストテキストテキスト、テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト。",
+          image: "https://placehold.co/1600x900/c0c0c0/999?text=Process+2",
+        },
+        {
+          title: "プロセス③",
+          text: "テキストテキストテキストテキストテキストテキスト、テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト。",
+        },
+      ],
+    },
   },
   {
     id: "monolith",
