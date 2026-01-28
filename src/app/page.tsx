@@ -182,7 +182,7 @@ export default function Home() {
               <span>{currentWork.year}</span>
             </div>
 
-            <p className="font-noto text-[14px] leading-[2.0] tracking-[0.04em] opacity-80 mb-10 font-normal break-words">
+            <p className="font-noto text-[16px] leading-[2.0] tracking-[0.04em] opacity-80 mb-10 font-normal break-words">
               {currentWork.desc.overview}
             </p>
 
@@ -289,7 +289,7 @@ export default function Home() {
                   {work.category} | {work.year}
                 </div>
 
-                <p className="font-noto text-[12px] opacity-80 leading-[1.8] mb-4 break-words">
+                <p className="font-noto text-[14px] opacity-80 leading-[1.8] mb-4 break-words">
                   {work.desc.overview}
                 </p>
 

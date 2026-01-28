@@ -15,7 +15,7 @@ const SingleContentBlock = ({ block, headerMbClass }: { block: ContentBlock, hea
   if (!block) return null;
 
   return (
-    <div className="flex flex-col gap-6 md:gap-10">
+    <div className="flex flex-col gap-4">
       {block.title && (
          <h4 className={`text-[16px] md:text-[20px] leading-[1.3] tracking-[0.02em] font-medium`}>
            {block.title}
@@ -26,7 +26,7 @@ const SingleContentBlock = ({ block, headerMbClass }: { block: ContentBlock, hea
           <img src={block.imageUrl} alt={block.title || "Image"} className="w-full h-auto rounded-sm object-cover" />
         </div>
       )}
-      <p className="text-[12px] md:text-[14px] leading-[1.8] tracking-[0.02em] opacity-75 whitespace-pre-wrap">
+      <p className="text-[14px] md:text-[16px] leading-[1.8] tracking-[0.02em] opacity-75 whitespace-pre-wrap">
         {block.text}
       </p>
     </div>
@@ -39,7 +39,7 @@ const MultiContentBlocks = ({ blocks, headerMbClass }: { blocks: ContentBlock[],
   return (
     <div className="flex flex-col gap-10 md:gap-14">
       {blocks.map((block, idx) => (
-        <div key={idx} className="flex flex-col gap-6 md:gap-10">
+        <div key={idx} className="flex flex-col gap-4">
           {block.title && (
              <h4 className={`text-[16px] md:text-[20px] leading-[1.3] tracking-[0.02em] font-medium`}>
                {block.title}
@@ -50,7 +50,7 @@ const MultiContentBlocks = ({ blocks, headerMbClass }: { blocks: ContentBlock[],
               <img src={block.imageUrl} alt={block.title || "Image"} className="w-full h-auto rounded-sm object-cover" />
             </div>
           )}
-          <p className="text-[12px] md:text-[14px] leading-[1.8] tracking-[0.02em] opacity-75 whitespace-pre-wrap">
+          <p className="text-[14px] md:text-[16px] leading-[1.8] tracking-[0.02em] opacity-75 whitespace-pre-wrap">
             {block.text}
           </p>
         </div>
@@ -182,11 +182,10 @@ export default function WorkDetail() {
                 {currentWork.desc.overview && (
                   <div className="mb-3 md:mb-5">
                      <h3 className={`font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40 ${headerMbClass}`}>Overview</h3>
-                     <p className="text-[12px] md:text-[14px] leading-[1.8] tracking-[0.02em] opacity-75 whitespace-pre-wrap">{currentWork.desc.overview}</p>
+                     <p className="text-[14px] md:text-[16px] leading-[1.8] tracking-[0.02em] opacity-75 whitespace-pre-wrap">{currentWork.desc.overview}</p>
                   </div>
                 )}
                 {summary && (
-                  // ★修正: border-t border-white/10 を削除し、余計な線を消しました
                   <div className="flex flex-col gap-6 md:gap-10 pt-3 md:pt-5">
                     {hasBackground && summary.background && (
                       <div><h3 className={`font-inter text-[12px] md:text-[14px] opacity-40 ${headerMbClass}`}>Background</h3><SingleContentBlock block={summary.background} headerMbClass={headerMbClass} /></div>
