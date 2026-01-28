@@ -130,16 +130,15 @@ export default function WorkDetail() {
               {currentWork.title}
             </h1>
 
-            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 md:gap-10 mb-6 md:mb-8">
-              
-              {/* ★修正: md:gap-8 (32px) に変更 */}
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 md:gap-10 mb-6 md:mb-8">
+
               <div className="flex flex-col md:flex-row gap-6 md:gap-8 w-full">
-                
+
                 <div className={metaItemGap}>
                   <span className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40">Category</span>
                   <span className="font-inter text-[12px] md:text-[14px] leading-none tracking-[0.02em] whitespace-nowrap">{currentWork.category}</span>
                 </div>
-                
+
                 <div className={metaItemGap}>
                   <span className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40">Date</span>
                   <span className="font-inter text-[12px] md:text-[14px] leading-none tracking-[0.02em] whitespace-nowrap">{currentWork.date}</span>
@@ -150,19 +149,39 @@ export default function WorkDetail() {
                   <span className="font-inter text-[12px] md:text-[14px] leading-none tracking-[0.02em]">{currentWork.role}</span>
                 </div>
 
+                {/* SP: URLをメタ情報として表示 */}
+                {showVisitButton && (
+                  <div className={`${metaItemGap} md:hidden`}>
+                    <span className="font-inter text-[12px] leading-none tracking-[-0.01em] opacity-40">URL</span>
+                    <a
+                      href={currentWork.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="font-inter text-[12px] leading-none tracking-[0.02em] underline"
+                      style={{ color: currentWork.detailTheme.text }}
+                    >
+                      {currentWork.url}
+                    </a>
+                  </div>
+                )}
+
               </div>
 
+              {/* PC: Visit Website with underline animation */}
               {showVisitButton && (
-                <div className="shrink-0 -mt-2 md:mt-0">
+                <div className="hidden md:block shrink-0">
                   <a
                     href={currentWork.url}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-1 font-inter font-normal text-[14px] md:text-[16px] leading-none tracking-[0.02em] hover:opacity-60 transition-opacity group"
+                    className="relative font-inter font-normal text-[16px] leading-none tracking-[0.02em] group"
                     style={{ color: currentWork.detailTheme.text }}
                   >
-                    Visit Website
-                    <span className="group-hover:translate-x-1 transition-transform">›</span>
+                    <span>Visit Website</span>
+                    <span
+                      className="absolute left-0 bottom-[-4px] h-[1px] w-0 group-hover:w-full transition-all duration-300 ease-out"
+                      style={{ backgroundColor: currentWork.detailTheme.text }}
+                    />
                   </a>
                 </div>
               )}
