@@ -128,7 +128,11 @@ export default function ProfilePage() {
               <div>
                 <span className={TEXT_STYLES.LABEL}>Personal Media</span>
                 <h2 className={`${TEXT_STYLES.CARD_TITLE} mb-6 whitespace-nowrap`}>暮らしの記録、ムタログ。</h2>
-                
+
+                <div className="w-full rounded-[4px] overflow-hidden mb-6">
+                  <img src="/images/Personal-Media_img.png" alt="mutalog" className="w-full h-auto object-cover" />
+                </div>
+
                 <div className={`${TEXT_STYLES.BODY} mb-6`}>
                   <p className="mb-6">
                     生活のノイズを減らし、心に余白を作るためのライフログです。<br className="hidden md:block"/>
