@@ -68,7 +68,7 @@ export default function Contact() {
   const cardPaddingClass = "py-[32px] px-[20px] md:py-[56px] md:px-[40px]";
 
   // shadcn/ui inspired input style
-  const inputClass = "w-full bg-transparent border border-[#D4D4D8] rounded-[6px] px-3 py-2.5 text-[12px] md:text-[14px] text-[#333] placeholder-[#A1A1AA] outline-none focus:border-[#F37022] focus:shadow-[0_0_0_3px_rgba(243,112,34,0.08)] transition-all duration-200 font-noto";
+  const inputClass = "w-full bg-transparent border border-[#D4D4D8] rounded-[6px] px-3 py-2.5 text-[12px] md:text-[14px] text-[#333] placeholder-[#A1A1AA] outline-none focus:border-[#F37022] transition-all duration-200 font-noto";
 
   // shadcn/ui inspired label style
   const labelClass = "block text-[12px] md:text-[14px] font-medium font-noto text-[#333] mb-2";
