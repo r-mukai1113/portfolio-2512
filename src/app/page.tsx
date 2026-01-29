@@ -170,19 +170,19 @@ export default function Home() {
         // ★ここが重要: 全体の文字色をテーマカラーに連動させる
         style={{ color: textColor }}
       >
-        <div className="w-[600px] shrink-0 h-full flex items-center pl-20 pr-12 relative z-10">
+        <div className="w-[380px] xl:w-[600px] shrink-0 h-full flex items-center pl-10 xl:pl-20 pr-8 xl:pr-12 relative z-10">
           <div key={currentWork.id} className="w-full break-words animate-slide-up-fade">
-            <h1 className="font-inter text-[72px] leading-[1.1] tracking-[0.04em] font-bold mb-8 break-words">
+            <h1 className="font-inter text-[48px] xl:text-[72px] leading-[1.1] tracking-[0.04em] font-bold mb-5 xl:mb-8 break-words">
               {currentWork.title}
             </h1>
 
-            <div className="font-inter text-[14px] leading-[1.0] tracking-[0.02em] opacity-60 mb-6">
+            <div className="font-inter text-[13px] xl:text-[14px] leading-[1.0] tracking-[0.02em] opacity-60 mb-4 xl:mb-6">
               <span>{currentWork.category}</span>
               <span className="mx-2">|</span>
               <span>{currentWork.year}</span>
             </div>
 
-            <p className="font-noto text-[16px] leading-[2.0] tracking-[0.04em] opacity-80 mb-10 font-normal break-words">
+            <p className="font-noto text-[14px] xl:text-[16px] leading-[2.0] tracking-[0.04em] opacity-80 mb-7 xl:mb-10 font-normal break-words">
               {currentWork.desc.overview}
             </p>
 
@@ -198,7 +198,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="flex-1 h-full flex pr-20 relative min-w-0">
+        <div className="flex-1 h-full flex pr-10 xl:pr-20 relative min-w-0">
           <div className="flex-1 h-full relative overflow-hidden">
             <div
               className="absolute left-0 w-full transition-transform duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
@@ -230,7 +230,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="ml-8 h-full flex flex-col justify-center items-center gap-4 z-10 w-2 shrink-0">
+          <div className="ml-4 xl:ml-8 h-full flex flex-col justify-center items-center gap-4 z-10 w-2 shrink-0">
             {works.map((work, index) => (
               <button
                 key={work.id}
