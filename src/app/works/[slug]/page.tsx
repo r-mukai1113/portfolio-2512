@@ -190,11 +190,11 @@ export default function WorkDetail() {
                     href={currentWork.url}
                     target="_blank"
                     rel="noreferrer"
-                    className="relative inline-flex items-center gap-2 font-inter font-medium text-[14px] leading-none tracking-[0.02em] group"
+                    className="relative inline-flex items-end gap-2 font-inter font-medium text-[14px] leading-none tracking-[0.02em] group"
                     style={{ color: currentWork.detailTheme.text }}
                   >
                     <span>Visit Website</span>
-                    <span className="text-[16px] leading-none pb-[2px]">›</span>
+                    <span className="text-[16px] leading-none">›</span>
                     <span
                       className="absolute left-0 bottom-[-4px] h-[1px] w-0 group-hover:w-full transition-all duration-300 ease-out"
                       style={{ backgroundColor: currentWork.detailTheme.text }}

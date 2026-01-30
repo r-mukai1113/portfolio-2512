@@ -111,7 +111,7 @@ export const works: Work[] = [
     date: "2025.11 (2 Months)",
     role: "Design / Shopify Development",
     url: "https://monolith-tokyo.jp/",
-    thumbnail: "https://placehold.co/800x500/111/FFF?text=Monolith",
+    thumbnail: "/images/projects/monolith/MONOLITH_thumbnail.png",
     tools: ["Figma", "Shopify", "Liquid"],
 
     theme: { bg: "#111111", text: "#FFFFFF", isLight: false },
