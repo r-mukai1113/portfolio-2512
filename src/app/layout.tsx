@@ -28,7 +28,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja" className={`${inter.variable} ${notoSansJP.variable}`}>
-      <body className="font-sans antialiased">{children}</body>
+      <body className="font-sans antialiased">
+        <div className="mx-auto max-w-[1600px]">{children}</div>
+      </body>
     </html>
   );
 }

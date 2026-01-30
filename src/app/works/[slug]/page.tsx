@@ -185,7 +185,7 @@ export default function WorkDetail() {
 
               {/* PC: Visit Website with underline animation */}
               {showVisitButton && (
-                <div className="hidden md:block shrink-0 pb-[4px]">
+                <div className="hidden md:block shrink-0">
                   <a
                     href={currentWork.url}
                     target="_blank"
@@ -205,8 +205,8 @@ export default function WorkDetail() {
             </div>
 
             <div className="mt-[24px] md:mt-[32px] w-full">
-               {currentWork.images && currentWork.images[0] && (
-                  <img src={currentWork.images[0]} alt="Main Visual" className="block w-full aspect-[16/10] object-cover rounded-sm" />
+               {currentWork.thumbnail && (
+                  <img src={currentWork.thumbnail} alt="Main Visual" className="block w-full aspect-[16/10] object-cover rounded-sm" />
                )}
             </div>
           </section>
