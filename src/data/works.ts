@@ -164,7 +164,7 @@ export const works: Work[] = [
     date: "2025.08 (1 Month)",
     role: "Design / Studio Implementation",
     url: "https://lily-r-braids.studio.site/",
-    thumbnail: "https://placehold.co/800x500/F8F7F7/978B7D?text=Lily-r",
+    thumbnail: "/images/projects/lily-r/Lily-r_thumbnail.png",
     tools: ["Figma", "STUDIO"],
 
     theme: { bg: "#F8F7F7", text: "#978B7D", isLight: true },
@@ -269,7 +269,7 @@ export const works: Work[] = [
     date: "2024.11 (1 Month)",
     role: "Design / Studio Implementation",
     url: "https://www.yachicro.com/",
-    thumbnail: "https://placehold.co/800x500/E9E9E9/1C1C1C?text=YACHIMATA",
+    thumbnail: "/images/projects/yachimata/Yachicro_thumbnail.png",
     tools: ["Figma", "STUDIO"],
 
     theme: { bg: "#595959", text: "#FFFFFF", isLight: false },

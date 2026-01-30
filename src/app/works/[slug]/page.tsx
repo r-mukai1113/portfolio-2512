@@ -130,7 +130,7 @@ export default function WorkDetail() {
               {currentWork.title}
             </h1>
 
-            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 md:gap-10 mb-6 md:mb-8">
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 md:gap-10 mb-6 md:mb-[24px]">
 
               <div className="flex flex-col md:flex-row gap-6 md:gap-8 w-full">
 
@@ -204,7 +204,7 @@ export default function WorkDetail() {
               )}
             </div>
 
-            <div className="mt-[24px] md:mt-[32px] w-full">
+            <div className="mt-[24px] md:mt-[40px] w-full">
                {currentWork.thumbnail && (
                   <img src={currentWork.thumbnail} alt="Main Visual" className="block w-full aspect-[16/10] object-cover rounded-sm" />
                )}
