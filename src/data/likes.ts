@@ -41,14 +41,14 @@ export const aboutItems: AboutItem[] = [
     id: "apple",
     title: "Apple",
     emoji: "🍏",
-    text: "箱を開ける瞬間から始まる「体験のデザイン」の虜。気づけば身の回りはリンゴだらけ。もう完全に入信。",
+    text: "箱を開ける瞬間から始まる「体験のデザイン」のとりこ。気づけば身の回りはリンゴまみれに。",
     image: "/images/identity/Apple.png",
   },
   {
     id: "fragrance",
     title: "Fragrance",
     emoji: "🪵",
-    text: "無印のお香を、癒やしや集中のスイッチとして使い分けています。ロウリュで香りがあると静かに喜ぶ。",
+    text: "無印のお香は癒しや、やる気スイッチに。ロウリュで香りがあるとテンションが2上がります。",
     image: "/images/identity/Fragrance.png",
   },
   {
@@ -62,14 +62,14 @@ export const aboutItems: AboutItem[] = [
     id: "cooking",
     title: "Cooking",
     emoji: "🍳",
-    text: "ふわトロなオムライスづくりを夢に、週7オムライスを食べ続けたこともある卵好きです。",
+    text: "ふわトロなオムライスづくりを夢に、週7オムライスを食べ続けたこともある卵好き。",
     image: "/images/identity/Cooking.png",
   },
   {
     id: "running",
     title: "Running",
     emoji: "🏃",
-    text: "「食べても走れば許される」で走り始め、気づけば累計1,000km突破。フルマラソンも完走！",
+    text: "「どんだけ食べても走ればゼロカロリー」を胸に、累計1,000kmを突破。フルマラソンもサブ4で完走！",
     image: "/images/identity/Running.png",
   },
   {
