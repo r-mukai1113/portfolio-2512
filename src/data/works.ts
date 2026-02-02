@@ -53,7 +53,7 @@ export const works: Work[] = [
     date: "2025.12 (2 Months)",
     role: "Design / Shopify Development",
     url: "https://ytag.jp/",
-    thumbnail: "/images/projects/y-tag/Y-Tag_thumbnail.png",
+    thumbnail: "/images/projects/y-tag/Y-Tag_thumbnail_02.png",
     tools: ["Figma", "Shopify", "Liquid"],
 
     theme: { bg: "#F0F2F5", text: "#333333", isLight: true },
@@ -111,7 +111,7 @@ export const works: Work[] = [
     date: "2025.11 (2 Months)",
     role: "Design / Shopify Development",
     url: "https://monolith-tokyo.jp/",
-    thumbnail: "/images/projects/monolith/MONOLITH_thumbnail.png",
+    thumbnail: "/images/projects/monolith/MONOLITH_thumbnail_02.png",
     tools: ["Figma", "Shopify", "Liquid"],
 
     theme: { bg: "#111111", text: "#FFFFFF", isLight: false },
@@ -164,7 +164,7 @@ export const works: Work[] = [
     date: "2025.08 (1 Month)",
     role: "Design / Studio Implementation",
     url: "https://lily-r-braids.studio.site/",
-    thumbnail: "/images/projects/lily-r/Lily-r_thumbnail.png",
+    thumbnail: "/images/projects/lily-r/Lily-r_thumbnail_02.png",
     tools: ["Figma", "STUDIO"],
 
     theme: { bg: "#F8F7F7", text: "#978B7D", isLight: true },
@@ -217,7 +217,7 @@ export const works: Work[] = [
     date: "2025.03 (1 Month)",
     role: "Design / Studio Implementation / Logo Design",
     url: "",
-    thumbnail: "https://placehold.co/800x500/F57F64/FFF?text=School+LP",
+    thumbnail: "/images/projects/school-lp/Skill-on-lp_thumbnail.png",
     tools: ["Figma", "STUDIO"],
 
     theme: { bg: "#F57F64", text: "#FFFFFF", isLight: false },
@@ -269,7 +269,7 @@ export const works: Work[] = [
     date: "2024.11 (1 Month)",
     role: "Design / Studio Implementation",
     url: "https://www.yachicro.com/",
-    thumbnail: "/images/projects/yachimata/Yachicro_thumbnail.png",
+    thumbnail: "/images/projects/yachimata/Yachicro_thumbnail_02.png",
     tools: ["Figma", "STUDIO"],
 
     theme: { bg: "#595959", text: "#FFFFFF", isLight: false },
