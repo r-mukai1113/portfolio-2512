@@ -215,7 +215,7 @@ export const works: Work[] = [
     category: "Landing Page",
     year: "2025",
     date: "2025.03 (1 Month)",
-    role: "Design / Studio Implementation / Logo Design",
+    role: "Design / Studio Implementation",
     url: "",
     thumbnail: "/images/projects/school-lp/Skill-on-lp_thumbnail.png",
     tools: ["Figma", "STUDIO"],
@@ -229,12 +229,10 @@ export const works: Work[] = [
         background: {
           title: "構成・ライティングまで担ったLP制作",
           text: "オンラインスクールの新規会員獲得LPの制作依頼。自身のSNS発信の経験があったため、デザインだけでなく競合リサーチ・構成設計・ライティングまで担当しました。ターゲット層が「本当に身につくのか」「騙されないか」という心理的な壁を抱きやすい領域のため、競合サイトを約30サイト調査し、デザインによる安心感の醸成と情報の透明性が申し込みの鍵であると判断しました。",
-          imageUrl: "https://placehold.co/800x450/F57F64/FFF?text=Background"
         },
         solution: {
           title: "30サイトのリサーチから導いた構成",
           text: "競合リサーチを踏まえ、ターゲットが最も懸念するサポート体制や学習フローのセクションを厚く設計。図解を用いて体系的に学べるカリキュラムを可視化し、入会後のイメージを具体的に持てる構成にしました。キーカラーにはコーラルピンク（#F57F64）を採用。活気がありつつ信頼感も損なわない配色で、前向きな行動を促すデザインにしています。Studioでの実装は画像主体で行い、複雑な装飾やフォントのニュアンスを再現しました。",
-          imageUrl: "https://placehold.co/800x450/F57F64/FFF?text=Solution"
         },
         result: {
           title: "リサーチから実装まで1ヶ月で完遂",
@@ -269,7 +267,6 @@ export const works: Work[] = [
         background: {
           title: "更新が止まったWordPressと、伝わらない世界観",
           text: "開店時にWordPressで制作されたサイトは、更新手順の複雑さから放置され、新商品や定休日の情報が発信できていない状態でした。また、こだわりの内装やパッケージが持つグレー×ブラックの洗練された世界観が、Webサイト上では表現しきれていませんでした。",
-          imageUrl: "https://placehold.co/800x450/E9E9E9/1C1C1C?text=Background"
         },
         solution: {
           title: "店名の由来から導いた「クロス」のコンセプト",
@@ -285,12 +282,10 @@ export const works: Work[] = [
         {
           title: "PCビューでInstagramへ誘導する設計",
           text: "モバイルでの閲覧を最優先にUIを設計する一方、PCビューでは画面左側にメニューやアクセス情報を常時固定。右側のコンテンツエリアにはInstagramのQRコードを配置し、PCからスマホ（アプリ）へのスムーズな移行を促す導線を設計しました。",
-          imageUrl: "https://placehold.co/800x450/E9E9E9/1C1C1C?text=Process+01"
         },
         {
           title: "「交差」を視覚化するオープニングアニメーション",
           text: "店名の由来を視覚的に印象付けるため、ページ読み込み時に縦横のラインが交差してグリッドが形成されるオープニングアニメーションを実装。グレー基調のデザインに動きを持たせることで、ブランドのコンセプトをサイトを開いた瞬間に伝える演出にしています。",
-          imageUrl: "https://placehold.co/800x450/E9E9E9/1C1C1C?text=Process+02"
         },
       ]
     },

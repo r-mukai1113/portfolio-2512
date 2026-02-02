@@ -270,7 +270,7 @@ export default function Home() {
                   ? "bg-white/50 border border-white/60"
                   : "bg-white/[0.04] backdrop-blur-[20px] border border-white/10"
               }`}
-              style={{ color: work.theme.isLight ? "#333" : "#FFF" }}
+              style={{ color: work.theme.text }}
             >
               <Link href={`/works/${work.slug}`} className="block mb-8">
                 <img
@@ -296,7 +296,7 @@ export default function Home() {
                 <Link
                   href={`/works/${work.slug}`}
                   className="text-[14px] flex items-center gap-2 font-medium no-underline hover:opacity-70 transition-opacity"
-                  style={{ color: work.theme.isLight ? "#333" : "#FFF" }}
+                  style={{ color: work.theme.text }}
                 >
                   View Project
                   <span className="text-[16px] leading-none pb-[2px]">›</span>
