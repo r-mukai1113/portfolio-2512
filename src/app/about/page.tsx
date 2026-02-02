@@ -61,7 +61,7 @@ export default function ProfilePage() {
   const baseNavButtonClass = `group flex flex-col items-start justify-center ${cardClass} ${navButtonPadding} h-[72px] md:h-[120px] hover:-translate-y-1`;
 
   const modalTitleClass = "font-noto font-bold text-[16px] md:text-[20px] text-[#333] mb-4 text-center leading-[1.3] tracking-[0.02em]";
-  const modalBodyClass = "font-noto text-[14px] md:text-[16px] text-[#666] leading-relaxed opacity-75";
+  const modalBodyClass = "font-noto text-[14px] md:text-[16px] text-[#666] leading-relaxed opacity-75 text-center whitespace-pre-line";
   const modalNavButtonClass = "font-inter text-[10px] md:text-[12px] font-bold text-gray-400 hover:text-gray-600 transition-colors flex items-center gap-1 p-2";
 
   return (
