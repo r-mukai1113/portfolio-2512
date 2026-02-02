@@ -34,7 +34,7 @@ export const aboutItems: AboutItem[] = [
     id: "muji",
     title: "MUJI",
     emoji: "🏡",
-    text: "「やわポリ」と「バナナバウム」は\n生活の必需品！聞かれる度に\nベストバイが変わっています笑",
+    text: "やわポリとバナナバウムは必需品！\n聞かれる度にベストバイは変わります笑",
     image: "/images/identity/MUJI.png",
   },
   {
@@ -48,7 +48,7 @@ export const aboutItems: AboutItem[] = [
     id: "fragrance",
     title: "Fragrance",
     emoji: "🪵",
-    text: "無印のお香は癒しや、やる気スイッチに。\nロウリュで香りがあると\nテンションが2上がる。",
+    text: "無印のお香は癒しや、やる気スイッチに。\nアロマロウリュでテンション3上がる。",
     image: "/images/identity/Fragrance.png",
   },
   {
@@ -111,14 +111,14 @@ export const aboutItems: AboutItem[] = [
     id: "sweets",
     title: "Sweets",
     emoji: "🍮",
-    text: "「デザートは別腹」スキル習得済みの\n生粋の甘党。プロテインや白湯には\nハチミツを入れる自称上級者です。",
+    text: "「デザートは別腹」スキル習得済み。\nプロテインや白湯にはハチミツを入れる\n自称甘党上級者です。",
     image: "/images/identity/Sweets.png",
   },
   {
     id: "pet",
     title: "Pet",
     emoji: "🐇",
-    text: "ストーブの前で温まった後、涼しい場所で\n整う術を知っている賢い子が実家にいます。\n隙があるともふります。",
+    text: "ストーブの前で温まった後、涼しい場所で\n整う術を知っている賢い子が実家にいます。\n隙あればもふります。",
     image: "/images/identity/Pet.png",
   },
 ];
