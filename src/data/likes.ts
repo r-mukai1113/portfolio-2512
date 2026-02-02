@@ -21,7 +21,7 @@ export const aboutItems: AboutItem[] = [
     title: "Minimalism",
     emoji: "⚪️",
     text: "流行より、長く愛せるものを。日々の小さな決断を減らすことで生まれる「心の余白」を大切にしています。",
-    image: "/images/identity/Minimalism.png",
+    image: "/images/identity/Minimalism_02.png",
   },
   {
     id: "tidying",
