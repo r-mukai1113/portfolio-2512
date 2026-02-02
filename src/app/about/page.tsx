@@ -60,7 +60,7 @@ export default function ProfilePage() {
   const navButtonPadding = "px-[20px] md:px-[40px]";
   const baseNavButtonClass = `group flex flex-col items-start justify-center ${cardClass} ${navButtonPadding} h-[72px] md:h-[120px] hover:-translate-y-1`;
 
-  const modalTitleClass = "font-noto font-bold text-[16px] md:text-[20px] text-[#333] mb-4 leading-[1.3] tracking-[0.02em]";
+  const modalTitleClass = "font-noto font-bold text-[16px] md:text-[20px] text-[#333] mb-4 text-center leading-[1.3] tracking-[0.02em]";
   const modalBodyClass = "font-noto text-[14px] md:text-[16px] text-[#666] leading-relaxed opacity-75";
   const modalNavButtonClass = "font-inter text-[10px] md:text-[12px] font-bold text-gray-400 hover:text-gray-600 transition-colors flex items-center gap-1 p-2";
 
@@ -112,7 +112,7 @@ export default function ProfilePage() {
               <span className={TEXT_STYLES.LABEL}>Profile</span>
               <div className={TEXT_STYLES.BODY}>
                 <p>
-                  2000年生まれ、千葉県出身。複雑な課題をシンプルに整理し、受け取り手にとって心地よい形で届ける。それが私の考えるデザインです。余白を大切にした暮らしの中で感性を磨き、クライアントの想いや価値を、最も伝わる形に翻訳する制作を続けています。
+                  2000年生まれ、千葉県出身。<br />複雑な課題をシンプルに整理し、受け取り手にとって心地よい形で届ける。それが私の考えるデザインです。余白を大切にした暮らしの中で感性を磨き、クライアントの想いや価値を、最も伝わる形に翻訳する制作を続けています。
                 </p>
               </div>
             </div>
@@ -144,7 +144,7 @@ export default function ProfilePage() {
                     モノを厳選し、日々の小さな選択を整えることで、心に余白を作るためのライフログです。その余白が、仕事や新しい挑戦に向かうエネルギーになっています。
                   </p>
                   <p>
-                    無印良品の「これでいい」—— 妥協ではなく、余計なものを省いた先にある心地よさ。その考え方を通じ、暮らしのヒントを探究しています。部屋を整えることは、毎日を軽くすること。
+                    無印良品の「これでいい」—— 妥協ではなく、余計なものを省いた先にある心地よさ。その考え方を通じ、暮らしのヒントを探究しています。部屋を整えると、毎日がすこし軽くなる。
                   </p>
                 </div>
               </div>
