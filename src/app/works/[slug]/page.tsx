@@ -132,7 +132,7 @@ export default function WorkDetail() {
 
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 md:gap-10 mb-6 md:mb-[24px]">
 
-              <div className="flex flex-col md:flex-row gap-6 md:gap-8 w-full md:translate-y-[-4px]">
+              <div className="flex flex-col md:flex-row gap-6 md:gap-8 w-full md:translate-y-[-3px]">
 
                 <div className={metaItemGap}>
                   <span className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40">Category</span>
@@ -263,7 +263,7 @@ export default function WorkDetail() {
           <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass}`}>
             <div className="max-w-[720px] mx-auto">
                <h3 className="font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40 mb-4">Tools</h3>
-               <p className="font-inter text-[14px] md:text-[16px] leading-[1.6] tracking-[0.02em] opacity-75">
+               <p className="font-inter text-[12px] md:text-[14px] leading-[1.6] tracking-[0.02em] opacity-75">
                  {currentWork.tools.join(" / ")}
                </p>
             </div>

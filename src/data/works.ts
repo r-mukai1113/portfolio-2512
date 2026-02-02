@@ -167,7 +167,7 @@ export const works: Work[] = [
     thumbnail: "/images/projects/lily-r/Lily-r_thumbnail_02.png",
     tools: ["Figma", "STUDIO"],
 
-    theme: { bg: "#F8F7F7", text: "#978B7D", isLight: true },
+    theme: { bg: "#F0EDEB", text: "#978B7D", isLight: true },
     detailTheme: { bg: "#F5F4F0", text: "#333333" },
 
     desc: {
@@ -224,7 +224,7 @@ export const works: Work[] = [
     detailTheme: { bg: "#FFEBE5", text: "#333333" },
 
     desc: {
-      overview: "オンラインスクールの新規会員獲得LP。自身のSNS発信経験を活かし、20〜30代の女性をメインターゲットに、スクール商材特有の「怪しさ」や「不安」を払拭するため競合約30サイトをリサーチ。安心感と行動変容を促すデザイン・構成設計・ライティングから実装までを一貫して担当しました。",
+      overview: "オンラインスクールの新規会員獲得LP。20〜30代の女性をメインターゲットに、スクール商材特有の「怪しさ」や「不安」を払拭するため競合約30サイトをリサーチ。安心感と行動変容を促すデザイン・構成設計・ライティングから実装まで担当しました。",
       summary: {
         background: {
           title: "構成・ライティングまで担ったLP制作",
@@ -262,7 +262,7 @@ export const works: Work[] = [
     detailTheme: { bg: "#595959", text: "#FFFFFF" },
 
     desc: {
-      overview: "自家焙煎珈琲店「ヤチマタクロス珈琲豆焙煎所」の公式サイトリニューアル。更新が困難だったWordPressからStudioへ移行し、運用基盤を再構築しました。店名の由来である「十字路（クロス）」から着想した、交差するグリッドレイアウトで、店舗の世界観をWebサイトに忠実に表現しています。",
+      overview: "自家焙煎珈琲店「ヤチマタクロス珈琲豆焙煎所」の公式サイトリニューアル。WordPressからStudioへ移行し運用基盤を再構築。店名の由来「十字路（クロス）」から着想した交差するグリッドレイアウトで、店舗の世界観を表現しています。",
       summary: {
         background: {
           title: "更新が止まったWordPressと、伝わらない世界観",
@@ -308,7 +308,7 @@ export const works: Work[] = [
     thumbnail: "/images/projects/portfolio/portfolio_thumbnail.png",
     tools: ["Figma", "Next.js", "TypeScript", "Tailwind CSS"],
 
-    theme: { bg: "#FFF8F3", text: "#F37022", isLight: true },
+    theme: { bg: "#FFEFDE", text: "#F37022", isLight: true },
     detailTheme: { bg: "#FFEFDE", text: "#333333" },
 
     desc: {
