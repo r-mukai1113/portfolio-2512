@@ -111,14 +111,22 @@ export default function ProfilePage() {
               <span className={TEXT_STYLES.LABEL}>Profile</span>
               <div className={TEXT_STYLES.BODY}>
                 <p className="mb-6">
-                  2000年生まれ、千葉県出身。Webデザイナー。<br />
-                  装飾を極限まで削ぎ落とし、情報の「本質」だけを際立たせるミニマルなデザインを追求しています。
+                  2000年生まれ、千葉県出身。Webデザイナー。
                 </p>
                 <p>
-                  私の原点は、エンジニアとしての論理的思考と、機能美への探求心にあります。<br />
-                  デザインとは単なる装飾ではなく、複雑な課題を解決するための「翻訳言語」です。クライアントの想いや価値を整理し、受け取り手にとって最もノイズレスで、心地よい形で届ける。そのための制作を続けています。
+                  複雑な課題をシンプルに整理し、受け取り手にとって心地よい形で届ける。それが私の考えるデザインです。余白を大切にした暮らしの中で感性を磨き、クライアントの想いや価値を、最も伝わる形に翻訳する制作を続けています。
                 </p>
               </div>
+            </div>
+          </section>
+
+          {/* 1.5. Career */}
+          <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass}`}>
+            <span className={TEXT_STYLES.LABEL}>Career</span>
+            <div className={TEXT_STYLES.BODY}>
+              <p>
+                エンジニア出身のWebデザイナー。大学時代からSNS・ブログで情報をわかりやすく届ける発信を続ける中で、「伝え方」次第で届き方が変わるデザインの力を実感し、この道へ。ShopifyによるEC構築からStudioでのブランドサイト制作まで対応。SNS総フォロワー5万人・Yahoo!ニュース エキスパート年間1,200万PVの発信経験を持ち、「作る」だけでなく「届ける」までを見据えた制作を行っています。
+              </p>
             </div>
           </section>
 
@@ -135,10 +143,10 @@ export default function ProfilePage() {
 
                 <div className={`${TEXT_STYLES.BODY} mb-6`}>
                   <p className="mb-6">
-                    生活のノイズを減らし、心に余白を作るためのライフログです。モノを厳選し、日々の小さな選択を整えることで生まれるエネルギーを大切にしています。
+                    モノを厳選し、日々の小さな選択を整えることで、心に余白を作るためのライフログです。その余白が、仕事や新しい挑戦に向かうエネルギーになっています。
                   </p>
                   <p>
-                    無印良品の機能美を通じ、心地よい暮らしのヒントを探究しています。部屋を整えることは、毎日を軽くすることだと考えています。
+                    無印良品の「これでいい」—— 妥協ではなく、余計なものを省いた先にある心地よさ。その考え方を通じ、暮らしのヒントを探究しています。部屋を整えることは、毎日を軽くすることだと考えています。
                   </p>
                 </div>
               </div>
@@ -160,7 +168,7 @@ export default function ProfilePage() {
               <span className={TEXT_STYLES.LABEL}>
                 Identity
               </span>
-              <p className={TEXT_STYLES.BODY}>好奇心が旺盛で、食わず嫌いをしないのが自慢です。</p>
+              <p className={TEXT_STYLES.BODY}>好奇心旺盛で、食わず嫌いをしない性格です。</p>
             </div>
             
             <div className="flex flex-wrap gap-2 md:gap-[10px]">
@@ -228,13 +236,15 @@ export default function ProfilePage() {
 
             <div className="flex flex-col items-center mb-8">
               {/* 画像の表示 */}
-              <div className="w-full max-w-[280px] md:max-w-[320px] aspect-square rounded-[4px] overflow-hidden mb-6 bg-gray-50">
-                <img 
-                  src={selectedItem.image} 
-                  alt={selectedItem.title}
-                  className="w-full h-full object-cover"
-                />
-              </div>
+              {selectedItem.image && (
+                <div className="w-full max-w-[280px] md:max-w-[320px] aspect-square rounded-[4px] overflow-hidden mb-6 bg-gray-50">
+                  <img
+                    src={selectedItem.image}
+                    alt={selectedItem.title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              )}
 
               <div className="w-full max-w-[280px] md:max-w-[320px]">
                 <h3 className={modalTitleClass}>
