@@ -60,7 +60,7 @@ export const works: Work[] = [
     detailTheme: { bg: "#E5E7EB", text: "#333333" },
 
     desc: {
-      overview: "「テック×感性」を掲げるライフスタイルブランド「Y-Tag」のEC刷新。リブランディングに伴い、「余白を、持ち歩く。」という情緒的価値をデジタル上で体現するため、デザインからShopify Liquidでの構築までを一貫して担当。ノイズレスなレイアウトで、12点の商品が映えるブランドの世界観を忠実に表現しました。",
+      overview: "「テック×感性」を掲げるライフスタイルブランド「Y-Tag」のEC刷新。リブランディングに伴い、「余白を、持ち歩く。」という情緒的価値をデジタル上で体現するため、デザインからShopify Liquidでの構築までを一貫して担当。ノイズレスなレイアウトでブランドの世界観を表現し、ギフトラッピングのLiquid独自実装で運用コストも削減しました。",
       summary: {
         background: {
           title: "スペック訴求の限界と、新コンセプトとの乖離",
@@ -91,15 +91,12 @@ export const works: Work[] = [
         },
         {
           title: "「入力するだけで完成する」商品ページの仕組み化",
-          text: "Y-Tagの商品は、独自素材「TagTex」を使用しているかどうかで大きく2タイプに分類されます。この特性を活かし、メタフィールドで2パターンのテンプレートを設計。TagTexを選択すると、生地紹介ページへのリンクや折りたたみの詳細ボックスが一括で表示される仕組みを構築しました。入力がなければ自動的に非表示となる設計により、クライアントは既存の入力項目を埋めるだけで商品ページが完成。運用者の負担を最小限に抑えつつ、ブランドの一貫性を維持できる仕組みを実現しています。",
+          text: "Y-Tagの商品を独自素材「TagTex」を使用しているかどうかで大きく2タイプに分類しました。この特性を活かし、メタフィールドで2パターンのテンプレートを設計。TagTexを選択すると、生地紹介ページへのリンクや折りたたみの詳細ボックスが一括で表示される仕組みを構築しました。入力がなければ自動的に非表示となる設計により、クライアントは既存の入力項目を埋めるだけで商品ページが完成。運用者の負担を最小限に抑えつつ、ブランドの一貫性を維持できる仕組みを実現しています。",
           imageUrl: "/images/projects/y-tag/Y-Tag_process03.png"
         },
       ]
     },
-    images: [
-      "https://placehold.co/1200x800/E6E6E6/333?text=Y-Tag+Main",
-      "https://placehold.co/1200x800/E6E6E6/333?text=Y-Tag+Sub1",
-    ],
+    images: [],
   },
 
   // 2. #MONOLITH
@@ -149,10 +146,7 @@ export const works: Work[] = [
         },
       ]
     },
-    images: [
-      "https://placehold.co/1200x800/111/FFF?text=Monolith+Main",
-      "https://placehold.co/1200x800/111/FFF?text=Monolith+Sub1",
-    ],
+    images: [],
   },
 
   // 3. Lily-r
@@ -202,10 +196,7 @@ export const works: Work[] = [
         },
       ]
     },
-    images: [
-      "https://placehold.co/1200x800/F8F7F7/978B7D?text=Lily-r+Main",
-      "https://placehold.co/1200x800/F8F7F7/978B7D?text=Lily-r+Sub1",
-    ],
+    images: [],
   },
 
   // 4. Online School LP
@@ -241,9 +232,7 @@ export const works: Work[] = [
         }
       },
     },
-    images: [
-      "https://placehold.co/1200x800/F57F64/FFF?text=School+LP+Main",
-    ],
+    images: [],
   },
 
   // 5. YACHIMATA COFFEE
@@ -290,10 +279,7 @@ export const works: Work[] = [
         },
       ]
     },
-    images: [
-      "https://placehold.co/1200x800/E9E9E9/1C1C1C?text=Yachimata+Main",
-      "https://placehold.co/1200x800/E9E9E9/1C1C1C?text=Yachimata+Sub1",
-    ],
+    images: [],
   },
 
   // 6. R.MUKAI Portfolio (自己紹介サイト用として残しておきます)
@@ -349,6 +335,6 @@ export const works: Work[] = [
         },
       ]
     },
-    images: ["https://placehold.co/1200x800/666/FFF?text=Portfolio+Main"],
+    images: [],
   },
 ];
