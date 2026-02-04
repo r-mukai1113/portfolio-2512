@@ -22,7 +22,7 @@ const SingleContentBlock = ({ block, headerMbClass }: { block: ContentBlock, hea
          </h4>
       )}
       {block.imageUrl && (
-        <div className="">
+        <div className="md:mb-2">
           <img src={block.imageUrl} alt={block.title || "Image"} className="w-full h-auto rounded-[8px] md:rounded-[12px] object-cover" />
         </div>
       )}
@@ -46,7 +46,7 @@ const MultiContentBlocks = ({ blocks, headerMbClass }: { blocks: ContentBlock[],
              </h4>
           )}
           {block.imageUrl && (
-            <div className="">
+            <div className="md:mb-2">
               <img src={block.imageUrl} alt={block.title || "Image"} className="w-full h-auto rounded-[8px] md:rounded-[12px] object-cover" />
             </div>
           )}

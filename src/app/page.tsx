@@ -18,9 +18,11 @@ export default function Home() {
   // SP用タッチ操作
   const touchStartY = useRef<number>(0);
   const touchEndY = useRef<number>(0);
+  const [swipeOffset, setSwipeOffset] = useState(0);
 
   const CARD_GAP = 80;
   const SWIPE_THRESHOLD = 50;
+  const MAX_SWIPE_OFFSET = 100;
 
   useThemeColor(bgColor);
 
@@ -106,14 +108,22 @@ export default function Home() {
   // SP: タッチ操作（スワイプ）
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartY.current = e.touches[0].clientY;
+    touchEndY.current = e.touches[0].clientY;
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
     touchEndY.current = e.touches[0].clientY;
+    // リアルタイムでオフセットを更新（上限あり）
+    const diff = touchStartY.current - touchEndY.current;
+    const clampedOffset = Math.max(-MAX_SWIPE_OFFSET, Math.min(MAX_SWIPE_OFFSET, diff));
+    setSwipeOffset(clampedOffset);
   };
 
   const handleTouchEnd = () => {
-    if (isScrolling) return;
+    if (isScrolling) {
+      setSwipeOffset(0);
+      return;
+    }
 
     const diff = touchStartY.current - touchEndY.current;
 
@@ -126,6 +136,9 @@ export default function Home() {
       }
       setTimeout(() => setIsScrolling(false), 600);
     }
+
+    // オフセットをリセット
+    setSwipeOffset(0);
   };
 
   const currentWork = works[currentIndex];
@@ -274,7 +287,11 @@ export default function Home() {
                 ? "bg-white/50 border border-white/60"
                 : "bg-white/[0.04] backdrop-blur-[20px] border border-white/10"
             }`}
-            style={{ color: currentWork.theme.text }}
+            style={{
+              color: currentWork.theme.text,
+              transform: `translateY(${-swipeOffset * 0.3}px)`,
+              transition: swipeOffset === 0 ? "transform 0.3s ease-out, background-color 0.5s, border-color 0.5s" : "none"
+            }}
           >
             <Link href={`/works/${currentWork.slug}`} className="block mb-8">
               <img
