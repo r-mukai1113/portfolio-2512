@@ -257,52 +257,54 @@ export default function Home() {
           SP View (状態ベース + スワイプでループ)
       ============================================== */}
       <main
-        className="md:hidden h-screen overflow-hidden pt-[72px] pb-5 px-5"
+        className="md:hidden h-screen pt-[72px] pb-5"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        <div
-          key={currentWork.id}
-          className={`w-full h-auto rounded-[12px] flex flex-col transition-all duration-500 py-10 px-5 animate-fade-only ${
-            currentWork.theme.isLight
-              ? "bg-white/50 border border-white/60"
-              : "bg-white/[0.04] backdrop-blur-[20px] border border-white/10"
-          }`}
-          style={{ color: currentWork.theme.text }}
-        >
-          <Link href={`/works/${currentWork.slug}`} className="block mb-8">
-            <img
-              src={currentWork.thumbnail}
-              alt={currentWork.title}
-              className="w-full aspect-[16/10] object-cover rounded-[8px]"
-            />
-          </Link>
-
-          <div className="break-words">
-            <h2 className="font-inter text-[32px] leading-[1.05] font-bold mb-6">
-              {currentWork.title}
-            </h2>
-
-            <div className="font-inter text-[12px] opacity-60 mb-4 tracking-[0.02em]">
-              {currentWork.category} | {currentWork.year}
-            </div>
-
-            <p className="font-noto text-[14px] opacity-80 leading-[1.8] mb-4 break-words">
-              {currentWork.desc.overview}
-            </p>
-
-            <Link
-              href={`/works/${currentWork.slug}`}
-              className="text-[14px] flex items-center gap-2 font-medium no-underline hover:opacity-70 transition-opacity"
-              style={{ color: currentWork.theme.text }}
-            >
-              View Project
-              <span className="text-[16px] leading-none pb-[2px]">›</span>
+        {/* ヘッダー下のクリップ領域 */}
+        <div className="h-full w-full overflow-hidden px-5">
+          <div
+            key={currentWork.id}
+            className={`w-full h-auto rounded-[12px] flex flex-col transition-all duration-500 py-10 px-5 animate-fade-only ${
+              currentWork.theme.isLight
+                ? "bg-white/50 border border-white/60"
+                : "bg-white/[0.04] backdrop-blur-[20px] border border-white/10"
+            }`}
+            style={{ color: currentWork.theme.text }}
+          >
+            <Link href={`/works/${currentWork.slug}`} className="block mb-8">
+              <img
+                src={currentWork.thumbnail}
+                alt={currentWork.title}
+                className="w-full aspect-[16/10] object-cover rounded-[8px]"
+              />
             </Link>
+
+            <div className="break-words">
+              <h2 className="font-inter text-[32px] leading-[1.05] font-bold mb-6">
+                {currentWork.title}
+              </h2>
+
+              <div className="font-inter text-[12px] opacity-60 mb-4 tracking-[0.02em]">
+                {currentWork.category} | {currentWork.year}
+              </div>
+
+              <p className="font-noto text-[14px] opacity-80 leading-[1.8] mb-4 break-words">
+                {currentWork.desc.overview}
+              </p>
+
+              <Link
+                href={`/works/${currentWork.slug}`}
+                className="text-[14px] flex items-center gap-2 font-medium no-underline hover:opacity-70 transition-opacity"
+                style={{ color: currentWork.theme.text }}
+              >
+                View Project
+                <span className="text-[16px] leading-none pb-[2px]">›</span>
+              </Link>
+            </div>
           </div>
         </div>
-
       </main>
     </div>
   );
