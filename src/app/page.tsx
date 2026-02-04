@@ -120,9 +120,9 @@ export default function Home() {
     if (Math.abs(diff) > SWIPE_THRESHOLD) {
       setIsScrolling(true);
       if (diff > 0) {
-        goPrev();
-      } else {
         goNext();
+      } else {
+        goPrev();
       }
       setTimeout(() => setIsScrolling(false), 600);
     }
@@ -246,14 +246,14 @@ export default function Home() {
           SP View (状態ベース + スワイプでループ)
       ============================================== */}
       <main
-        className="md:hidden h-screen overflow-hidden pt-[72px] pb-5 px-5 flex flex-col"
+        className="md:hidden h-screen overflow-hidden pt-[72px] pb-5 px-5"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
         <div
           key={currentWork.id}
-          className={`w-full flex-1 rounded-[12px] flex flex-col transition-all duration-500 py-10 px-5 animate-slide-up-fade ${
+          className={`w-full h-auto rounded-[12px] flex flex-col transition-all duration-500 py-10 px-5 animate-slide-up-fade ${
             currentWork.theme.isLight
               ? "bg-white/50 border border-white/60"
               : "bg-white/[0.04] backdrop-blur-[20px] border border-white/10"
@@ -268,7 +268,7 @@ export default function Home() {
             />
           </Link>
 
-          <div className="break-words flex-1 flex flex-col">
+          <div className="break-words">
             <h2 className="font-inter text-[32px] leading-[1.05] font-bold mb-6">
               {currentWork.title}
             </h2>
@@ -283,7 +283,7 @@ export default function Home() {
 
             <Link
               href={`/works/${currentWork.slug}`}
-              className="text-[14px] flex items-center gap-2 font-medium no-underline hover:opacity-70 transition-opacity mt-auto"
+              className="text-[14px] flex items-center gap-2 font-medium no-underline hover:opacity-70 transition-opacity"
               style={{ color: currentWork.theme.text }}
             >
               View Project
