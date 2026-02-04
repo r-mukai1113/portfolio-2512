@@ -23,7 +23,7 @@ const SingleContentBlock = ({ block, headerMbClass }: { block: ContentBlock, hea
       )}
       {block.imageUrl && (
         <div className="">
-          <img src={block.imageUrl} alt={block.title || "Image"} className="w-full h-auto rounded-[8px] md:rounded-[12px] object-cover" />
+          <img src={block.imageUrl} alt={block.title || "Image"} className="w-full h-auto rounded-[10px] md:rounded-[14px] object-cover" />
         </div>
       )}
       <p className="text-[14px] md:text-[18px] leading-[2.0] tracking-[0.02em] opacity-75 whitespace-pre-wrap">
@@ -47,7 +47,7 @@ const MultiContentBlocks = ({ blocks, headerMbClass }: { blocks: ContentBlock[],
           )}
           {block.imageUrl && (
             <div className="">
-              <img src={block.imageUrl} alt={block.title || "Image"} className="w-full h-auto rounded-[8px] md:rounded-[12px] object-cover" />
+              <img src={block.imageUrl} alt={block.title || "Image"} className="w-full h-auto rounded-[10px] md:rounded-[14px] object-cover" />
             </div>
           )}
           <p className="text-[14px] md:text-[18px] leading-[2.0] tracking-[0.02em] opacity-75 whitespace-pre-wrap">
@@ -206,7 +206,7 @@ export default function WorkDetail() {
 
             <div className="mt-[24px] md:mt-[40px] w-full">
                {currentWork.thumbnail && (
-                  <img src={currentWork.thumbnail} alt="Main Visual" className="block w-full aspect-[16/10] object-cover rounded-[8px] md:rounded-[12px]" />
+                  <img src={currentWork.thumbnail} alt="Main Visual" className="block w-full aspect-[16/10] object-cover rounded-[10px] md:rounded-[14px]" />
                )}
             </div>
           </section>
@@ -253,7 +253,7 @@ export default function WorkDetail() {
             <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass}`}>
                <div className="flex flex-col gap-[24px] md:gap-[40px]">
                  {currentWork.images.slice(1, 6).map((imgUrl, idx) => (
-                   <img key={idx} src={imgUrl} alt={`Gallery ${idx + 1}`} className="w-full h-auto rounded-[8px] md:rounded-[12px]" />
+                   <img key={idx} src={imgUrl} alt={`Gallery ${idx + 1}`} className="w-full h-auto rounded-[10px] md:rounded-[14px]" />
                  ))}
                </div>
             </section>

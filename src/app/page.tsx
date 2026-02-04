@@ -218,7 +218,7 @@ export default function Home() {
                       ref={index === 0 ? imgRef : null}
                       src={work.thumbnail}
                       alt={work.title}
-                      className={`block w-full aspect-[16/10] object-cover rounded-[8px] md:rounded-[16px] transition-all duration-[800ms] ${
+                      className={`block w-full aspect-[16/10] object-cover rounded-[10px] md:rounded-[20px] transition-all duration-[800ms] ${
                         index === currentIndex
                           ? "opacity-100 grayscale-0 scale-100"
                           : "opacity-30 grayscale scale-95"
@@ -276,7 +276,7 @@ export default function Home() {
                 <img
                   src={work.thumbnail}
                   alt={work.title}
-                  className="w-full aspect-[16/10] object-cover rounded-[8px]"
+                  className="w-full aspect-[16/10] object-cover rounded-[10px]"
                 />
               </Link>
 
