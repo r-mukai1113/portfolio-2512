@@ -49,7 +49,7 @@ export default function ProfilePage() {
   const TEXT_STYLES = {
     LABEL: "font-inter text-[12px] md:text-[14px] leading-none tracking-[-0.01em] opacity-40 mb-4 block",
     CARD_TITLE: "font-noto font-bold text-[16px] md:text-[20px] leading-[1.3] tracking-[0.02em]",
-    BODY: "font-noto text-[14px] md:text-[16px] leading-[1.8] tracking-[0.02em] opacity-80",
+    BODY: "font-noto text-[14px] md:text-[18px] leading-[2.0] tracking-[0.02em] opacity-80",
   };
 
   const glassClass = "bg-white/50 border border-white/60 backdrop-blur-md";
@@ -92,7 +92,7 @@ export default function ProfilePage() {
           {/* 1. Main Identity */}
           <section className={`${cardClass} ${cardPaddingClass} ${gridGapClass}`}>
             
-            <div className="w-full aspect-[16/9] rounded-[4px] overflow-hidden mb-[24px] md:mb-[40px]">
+            <div className="w-full aspect-[16/9] rounded-[8px] md:rounded-[12px] overflow-hidden mb-[24px] md:mb-[40px]">
               <img src="/images/2026portfolio_profile_2_1.png" alt="RYUTA MUKAI Profile" className="w-full h-full object-cover"/>
             </div>
 
@@ -135,7 +135,7 @@ export default function ProfilePage() {
                 <span className={TEXT_STYLES.LABEL}>Personal Media</span>
                 <h2 className={`${TEXT_STYLES.CARD_TITLE} mb-6 whitespace-nowrap`}>暮らしの記録、ムタログ。</h2>
 
-                <div className="w-full rounded-[4px] overflow-hidden mb-6">
+                <div className="w-full rounded-[8px] md:rounded-[12px] overflow-hidden mb-6">
                   <img src="/images/Personal-Media_img.png" alt="mutalog" className="w-full h-auto object-cover" />
                 </div>
 
@@ -219,7 +219,7 @@ export default function ProfilePage() {
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm animate-modal-overlay" />
           
           <div 
-            className="relative w-full max-w-[500px] bg-white rounded-[8px] md:rounded-[12px] px-6 pb-8 md:px-8 md:pb-10 shadow-2xl animate-modal-content"
+            className="relative w-full max-w-[500px] bg-white rounded-[12px] md:rounded-[16px] px-6 pb-8 md:px-8 md:pb-10 shadow-2xl animate-modal-content"
             style={{ paddingTop: "28px" }}
             onClick={(e) => e.stopPropagation()}
           >
@@ -235,7 +235,7 @@ export default function ProfilePage() {
             <div className="flex flex-col items-center mb-8">
               {/* 画像の表示 */}
               {selectedItem.image && (
-                <div className="relative w-full max-w-[280px] md:max-w-[320px] aspect-square rounded-[4px] overflow-hidden mb-6 bg-gray-50">
+                <div className="relative w-full max-w-[280px] md:max-w-[320px] aspect-square rounded-[8px] md:rounded-[12px] overflow-hidden mb-6 bg-gray-50">
                   <Image
                     src={selectedItem.image}
                     alt={selectedItem.title}

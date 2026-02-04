@@ -182,7 +182,7 @@ export default function Home() {
               <span>{currentWork.year}</span>
             </div>
 
-            <p className="font-noto text-[14px] xl:text-[16px] leading-[2.0] tracking-[0.04em] opacity-80 mb-7 xl:mb-10 font-normal break-words">
+            <p className="font-noto text-[14px] xl:text-[18px] leading-[2.0] tracking-[0.04em] opacity-80 mb-7 xl:mb-10 font-normal break-words">
               {currentWork.desc.overview}
             </p>
 
@@ -218,7 +218,7 @@ export default function Home() {
                       ref={index === 0 ? imgRef : null}
                       src={work.thumbnail}
                       alt={work.title}
-                      className={`block w-full aspect-[16/10] object-cover rounded-sm transition-all duration-[800ms] ${
+                      className={`block w-full aspect-[16/10] object-cover rounded-[8px] md:rounded-[12px] transition-all duration-[800ms] ${
                         index === currentIndex
                           ? "opacity-100 grayscale-0 scale-100"
                           : "opacity-30 grayscale scale-95"
@@ -276,7 +276,7 @@ export default function Home() {
                 <img
                   src={work.thumbnail}
                   alt={work.title}
-                  className="w-full aspect-[16/10] object-cover rounded"
+                  className="w-full aspect-[16/10] object-cover rounded-[8px] md:rounded-[12px]"
                 />
               </Link>
 

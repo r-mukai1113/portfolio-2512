@@ -98,8 +98,7 @@ export const GlobalHeader = () => {
                 <Link
                   key={item.label}
                   href={item.href}
-                  // ★変更: gap-1.5 (6px) に広げてゆとりを持たせる
-                  className={`flex items-center gap-1.5 font-inter font-medium text-[16px] tracking-[0.05em] text-white transition-all duration-500 transform hover:opacity-60 ${
+                  className={`relative font-inter font-medium text-[16px] tracking-[0.05em] text-white transition-all duration-500 transform hover:opacity-60 ${
                     isOpen
                       ? "translate-y-0 opacity-100"
                       : "translate-y-4 opacity-0"
@@ -107,11 +106,11 @@ export const GlobalHeader = () => {
                   style={{ transitionDelay: `${index * 100}ms` }}
                 >
                   {item.label}
-                  
-                  {/* Active State (8pxのオレンジ丸) - 位置は右側のまま維持 */}
+
+                  {/* Active State (8pxのオレンジ丸) - absolute配置でテキスト中央揃えを維持 */}
                   {isActive && (
-                    <span 
-                      className="w-2 h-2 rounded-full" 
+                    <span
+                      className="absolute -right-4 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full"
                       style={{ backgroundColor: ACCENT_COLOR }}
                     />
                   )}
