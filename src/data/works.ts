@@ -295,7 +295,7 @@ export const works: Work[] = [
     date: "2026.01 (10 Days)",
     role: "Design / Front-end Development",
     url: "",
-    thumbnail: "/images/projects/portfolio/portfolio_thumbnail.png",
+    thumbnail: "/images/projects/portfolio/Portfolio_thumbnail_02.png",
     tools: ["Figma", "Next.js", "TypeScript", "Tailwind CSS"],
 
     theme: { bg: "#FFEFDE", text: "#F37022", isLight: true },
@@ -316,20 +316,24 @@ export const works: Work[] = [
         result: {
           title: "制作の意図まで伝わるサイトの完成",
           text: "口頭での説明に頼っていた制作意図を、サイト上で完結して伝えられるようになりました。各作品の詳細ページにBackground・Solution・Result・Processの構成を設け、「何を考え、なぜそうしたか」を言語化。AIを活用したワークフローにより10日間で公開まで到達。営業時のポートフォリオとして、また名刺に掲載するサイトとして活用していきます。",
+          imageUrl: "/images/projects/portfolio/Portfolio_Result.png"
         }
       },
       sections: [
         {
           title: "作品を「主役」にする100vhの設計",
           text: "「作品が主役」というコンセプトを最も体現しているのが、トップページの設計です。初期のFigma段階から、1作品＝1画面（100vh）のレイアウトを構想。スクロールごとに画面が切り替わり、背景色と文字色が作品のテーマに合わせて動的に変化する仕様を実装しました。作品をめくるように閲覧でき、1画面ごとにその作品の印象が残る構成を目指しています。ポートフォリオサイト自体は目立たせず、ミニマルに徹することで、作品のビジュアルとコンセプトに視線が集中する設計にしています。",
+          imageUrl: "/images/projects/portfolio/Portfolio_process01.png"
         },
         {
           title: "3項目に絞る、Bento Gridの情報設計",
           text: "詳細ページでは、制作実績の情報をBento Gridで整理しました。Appleの影響を受けたこのレイアウトは、情報の区切りを無意識に感じさせ、ミニマルな印象を保ちながら必要な情報を伝えられる点で採用。掲載する情報は、Webサイトのカテゴリー・制作での役割・日時の3項目を最大値と決め、意図的に制限しました。情報を足すことは簡単ですが、削ぎ落とすことでクライアントの視線を作品そのものに向ける設計判断です。",
+          imageUrl: "/images/projects/portfolio/Portfolio_process02.png"
         },
         {
           title: "Date表記に期間を集約する工夫",
           text: "日時の表記は試行錯誤を重ねました。当初はYear（年のみ）としていましたが、情報として粗すぎるためDate（公開月）に変更。さらに、クライアントが少なからず気にする「どのくらいの期間で制作できるのか？」という情報を載せる必要があると判断。しかし、「期間」というプロパティを新たに作ると、3項目の上限を超えてしまう。そこで、Dateの中に括弧で期間を添える形（2025.12（2 Months））に着地しました。プロパティを増やさず、1項目の中で情報密度を上げるという工夫です。",
+          imageUrl: "/images/projects/portfolio/Portfolio_process03.png"
         },
       ]
     },
