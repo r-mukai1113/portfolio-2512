@@ -257,7 +257,8 @@ export default function Home() {
           SP View (状態ベース + スワイプでループ)
       ============================================== */}
       <main
-        className="md:hidden h-screen flex flex-col"
+        className="md:hidden fixed inset-0 flex flex-col"
+        style={{ touchAction: "none" }}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
@@ -266,7 +267,7 @@ export default function Home() {
         <div className="h-[72px] shrink-0" />
 
         {/* コンテンツ領域（ここでクリップ） */}
-        <div className="flex-1 overflow-hidden px-5 pb-5">
+        <div className="flex-1 overflow-hidden px-5 pb-5 relative">
           <div
             className={`w-full h-auto rounded-[12px] flex flex-col py-10 px-5 transition-colors duration-500 ${
               currentWork.theme.isLight
