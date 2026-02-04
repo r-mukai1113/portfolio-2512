@@ -1,27 +1,38 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { works } from "@/data/works";
 import Link from "next/link";
 import { useThemeColor } from "@/hooks/useThemeColor";
-import { Copyright } from "@/components/Copyright";
 
 export default function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isScrolling, setIsScrolling] = useState(false);
   const [bgColor, setBgColor] = useState(works[0].theme.bg);
-  // ★追加: テキストカラーの状態管理
   const [textColor, setTextColor] = useState(works[0].theme.text);
-  
+
   const [imgHeight, setImgHeight] = useState(0);
   const imgRef = useRef<HTMLImageElement>(null);
-  
-  const spContainerRef = useRef<HTMLDivElement>(null);
+
+  // SP用タッチ操作
+  const touchStartY = useRef<number>(0);
+  const touchEndY = useRef<number>(0);
 
   const CARD_GAP = 80;
+  const SWIPE_THRESHOLD = 50;
 
   useThemeColor(bgColor);
+
+  // 次へ進む
+  const goNext = useCallback(() => {
+    setCurrentIndex((prev) => (prev + 1) % works.length);
+  }, []);
+
+  // 前へ戻る
+  const goPrev = useCallback(() => {
+    setCurrentIndex((prev) => (prev - 1 + works.length) % works.length);
+  }, []);
 
   // 画像高さ取得
   useEffect(() => {
@@ -50,17 +61,9 @@ export default function Home() {
       setIsScrolling(true);
 
       if (e.deltaY > 0) {
-        if (currentIndex < works.length - 1) {
-          setCurrentIndex((prev) => prev + 1);
-        } else {
-          setCurrentIndex(0);
-        }
+        goNext();
       } else {
-        if (currentIndex > 0) {
-          setCurrentIndex((prev) => prev - 1);
-        } else {
-          setCurrentIndex(works.length - 1);
-        }
+        goPrev();
       }
 
       setTimeout(() => setIsScrolling(false), 800);
@@ -68,7 +71,7 @@ export default function Home() {
 
     window.addEventListener("wheel", handleWheel);
     return () => window.removeEventListener("wheel", handleWheel);
-  }, [isScrolling, currentIndex]);
+  }, [isScrolling, goNext, goPrev]);
 
   // キーボード操作 (PC)
   useEffect(() => {
@@ -79,28 +82,20 @@ export default function Home() {
       if (e.key === "ArrowDown" || e.key === "ArrowRight") {
         e.preventDefault();
         setIsScrolling(true);
-        if (currentIndex < works.length - 1) {
-          setCurrentIndex((prev) => prev + 1);
-        } else {
-          setCurrentIndex(0);
-        }
+        goNext();
         setTimeout(() => setIsScrolling(false), 800);
-      } 
+      }
       else if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
         e.preventDefault();
         setIsScrolling(true);
-        if (currentIndex > 0) {
-          setCurrentIndex((prev) => prev - 1);
-        } else {
-          setCurrentIndex(works.length - 1);
-        }
+        goPrev();
         setTimeout(() => setIsScrolling(false), 800);
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isScrolling, currentIndex]);
+  }, [isScrolling, goNext, goPrev]);
 
   // テーマカラー更新
   useEffect(() => {
@@ -108,32 +103,30 @@ export default function Home() {
     setTextColor(works[currentIndex].theme.text);
   }, [currentIndex]);
 
-  // SP: スクロール検知
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!spContainerRef.current) return;
-      const scrollCenter =
-        spContainerRef.current.scrollTop + window.innerHeight / 2;
+  // SP: タッチ操作（スワイプ）
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartY.current = e.touches[0].clientY;
+  };
 
-      const sections =
-        spContainerRef.current.querySelectorAll(".sp-card-section");
-      sections.forEach((sec, i) => {
-        const element = sec as HTMLElement;
-        const top = element.offsetTop;
-        const bottom = top + element.offsetHeight;
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndY.current = e.touches[0].clientY;
+  };
 
-        if (scrollCenter >= top && scrollCenter < bottom) {
-          setBgColor(works[i].theme.bg);
-        }
-      });
-    };
+  const handleTouchEnd = () => {
+    if (isScrolling) return;
 
-    const container = spContainerRef.current;
-    if (container) {
-      container.addEventListener("scroll", handleScroll);
-      return () => container.removeEventListener("scroll", handleScroll);
+    const diff = touchStartY.current - touchEndY.current;
+
+    if (Math.abs(diff) > SWIPE_THRESHOLD) {
+      setIsScrolling(true);
+      if (diff > 0) {
+        goNext();
+      } else {
+        goPrev();
+      }
+      setTimeout(() => setIsScrolling(false), 600);
     }
-  }, []);
+  };
 
   const currentWork = works[currentIndex];
 
@@ -250,65 +243,71 @@ export default function Home() {
       </main>
 
       {/* ==============================================
-          SP View (元のデザインを維持)
+          SP View (状態ベース + スワイプでループ)
       ============================================== */}
       <main
-        ref={spContainerRef}
-        className="md:hidden h-screen overflow-y-scroll snap-y snap-mandatory"
-        style={{
-          WebkitOverflowScrolling: "touch",
-        }}
+        className="md:hidden h-screen overflow-hidden pt-[72px] pb-5 px-5 flex flex-col"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
       >
-        {works.map((work, index) => (
-          <div
-            key={work.id}
-            className="sp-card-section w-full snap-start pt-[72px] pb-5 px-5"
-          >
-            <div
-              className={`w-full h-auto rounded-[12px] flex flex-col transition-all duration-500 py-10 px-5 ${
-                work.theme.isLight
-                  ? "bg-white/50 border border-white/60"
-                  : "bg-white/[0.04] backdrop-blur-[20px] border border-white/10"
-              }`}
-              style={{ color: work.theme.text }}
-            >
-              <Link href={`/works/${work.slug}`} className="block mb-8">
-                <img
-                  src={work.thumbnail}
-                  alt={work.title}
-                  className="w-full aspect-[16/10] object-cover rounded-[8px]"
-                />
-              </Link>
+        <div
+          key={currentWork.id}
+          className={`w-full flex-1 rounded-[12px] flex flex-col transition-all duration-500 py-10 px-5 animate-slide-up-fade ${
+            currentWork.theme.isLight
+              ? "bg-white/50 border border-white/60"
+              : "bg-white/[0.04] backdrop-blur-[20px] border border-white/10"
+          }`}
+          style={{ color: currentWork.theme.text }}
+        >
+          <Link href={`/works/${currentWork.slug}`} className="block mb-8">
+            <img
+              src={currentWork.thumbnail}
+              alt={currentWork.title}
+              className="w-full aspect-[16/10] object-cover rounded-[8px]"
+            />
+          </Link>
 
-              <div className="break-words">
-                <h2 className="font-inter text-[32px] leading-[1.05] font-bold mb-6">
-                  {work.title}
-                </h2>
+          <div className="break-words flex-1 flex flex-col">
+            <h2 className="font-inter text-[32px] leading-[1.05] font-bold mb-6">
+              {currentWork.title}
+            </h2>
 
-                <div className="font-inter text-[12px] opacity-60 mb-4 tracking-[0.02em]">
-                  {work.category} | {work.year}
-                </div>
-
-                <p className="font-noto text-[14px] opacity-80 leading-[1.8] mb-4 break-words">
-                  {work.desc.overview}
-                </p>
-
-                <Link
-                  href={`/works/${work.slug}`}
-                  className="text-[14px] flex items-center gap-2 font-medium no-underline hover:opacity-70 transition-opacity"
-                  style={{ color: work.theme.text }}
-                >
-                  View Project
-                  <span className="text-[16px] leading-none pb-[2px]">›</span>
-                </Link>
-              </div>
+            <div className="font-inter text-[12px] opacity-60 mb-4 tracking-[0.02em]">
+              {currentWork.category} | {currentWork.year}
             </div>
 
-            {index === works.length - 1 && (
-              <Copyright className="mt-8 mb-4 text-white mix-blend-difference" />
-            )}
+            <p className="font-noto text-[14px] opacity-80 leading-[1.8] mb-4 break-words">
+              {currentWork.desc.overview}
+            </p>
+
+            <Link
+              href={`/works/${currentWork.slug}`}
+              className="text-[14px] flex items-center gap-2 font-medium no-underline hover:opacity-70 transition-opacity mt-auto"
+              style={{ color: currentWork.theme.text }}
+            >
+              View Project
+              <span className="text-[16px] leading-none pb-[2px]">›</span>
+            </Link>
           </div>
-        ))}
+        </div>
+
+        {/* SPインジケーター */}
+        <div className="flex justify-center items-center gap-2 mt-4">
+          {works.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentIndex(index)}
+              className={`transition-all duration-300 rounded-full ${
+                index === currentIndex
+                  ? "w-6 h-1.5"
+                  : "w-1.5 h-1.5 opacity-40"
+              }`}
+              style={{ backgroundColor: currentWork.theme.text }}
+              aria-label={`Go to work ${index + 1}`}
+            />
+          ))}
+        </div>
       </main>
     </div>
   );
