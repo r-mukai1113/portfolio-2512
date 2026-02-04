@@ -120,9 +120,9 @@ export default function Home() {
     if (Math.abs(diff) > SWIPE_THRESHOLD) {
       setIsScrolling(true);
       if (diff > 0) {
-        goNext();
-      } else {
         goPrev();
+      } else {
+        goNext();
       }
       setTimeout(() => setIsScrolling(false), 600);
     }
@@ -292,22 +292,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* SPインジケーター */}
-        <div className="flex justify-center items-center gap-2 mt-4">
-          {works.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentIndex(index)}
-              className={`transition-all duration-300 rounded-full ${
-                index === currentIndex
-                  ? "w-6 h-1.5"
-                  : "w-1.5 h-1.5 opacity-40"
-              }`}
-              style={{ backgroundColor: currentWork.theme.text }}
-              aria-label={`Go to work ${index + 1}`}
-            />
-          ))}
-        </div>
       </main>
     </div>
   );
