@@ -109,7 +109,7 @@ export const works: Work[] = [
     date: "2025.11 (2 Months)",
     role: "Design / Shopify Development",
     url: "https://monolith-tokyo.jp/",
-    thumbnail: "/images/projects/monolith/MONOLITH_thumbnail_02.png",
+    thumbnail: "/images/projects/monolith/MONOLITH_thumbnail_03.png",
     tools: ["Figma", "Shopify", "Liquid"],
 
     theme: { bg: "#111111", text: "#FFFFFF", isLight: false },
@@ -121,12 +121,12 @@ export const works: Work[] = [
         background: {
           title: "1年半の伴走から見えた、次の課題",
           text: "#MONOLITHはブランド開始から約半年の時点で最初のご依頼をいただき、2年ほど継続的に部分的なリニューアルに携わっています。今回のプロジェクトでは、商品数が20点まで拡大する中で、商品ページの更新作業が集中していたことが課題でした。オーナーだけでなくEC管理者も操作する体制のため、誰が更新してもブランドの世界観が崩れない仕組みが必要でした。",
-          imageUrl: "/images/projects/monolith/MONOLITH_background.png"
+          imageUrl: "/images/projects/monolith/MONOLITH_background_02.png"
         },
         solution: {
           title: "更新しても崩れない、テンプレート設計",
           text: "商品ページをメタフィールドでテンプレート化。導入事例の写真やYouTube動画の有無による分類、ガラス製品専用のオプション導線など、商品タイプごとに異なるレイアウトを設計しました。デザイン面では、クライアントの「余白・余裕感を大事にしたい」という要望を軸に、テキストサイズ・線の太さ・余白を全ページで統一的に調整。更新後には各機能のLoom動画マニュアルを作成し、EC管理者でも迷わず更新できる体制を整えました。",
-          imageUrl: "/images/projects/monolith/MONOLITH_solution.png"
+          imageUrl: "/images/projects/monolith/MONOLITH_solution_02.png"
         },
         result: {
           title: "2ヶ月で自走できる運用体制へ",
@@ -137,12 +137,12 @@ export const works: Work[] = [
         {
           title: "20商品を整理するカテゴリー設計",
           text: "商品数が20点に拡大する中で、トップページからの回遊性を高めるためにカテゴリー設計を提案しました。Incense Holder・Plate・Flower Vaseの人気カテゴリーに加え、全商品を見る「All」を追加。トップページには丸アイコンで横1列4つのカテゴリーセクションを配置し、各カテゴリーページも作成。ヘッダーメニューもメガメニューに変更し、どのページからでもカテゴリーにアクセスできる導線を整えました。",
-          imageUrl: "/images/projects/monolith/MONOLITH_process01.png"
+          imageUrl: "/images/projects/monolith/MONOLITH_process01_02.png"
         },
         {
           title: "誰が更新しても崩れない、商品ページのテンプレート設計",
           text: "属人化していた商品ページの更新作業を解消するため、メタフィールドで商品ページをテンプレート化。導入事例の写真、YouTube動画、ガラス製品のオプション導線など、商品タイプによって異なる表示項目をテンプレートで切り替える設計にしました。EC管理者が実際にテンプレート移行作業を行い、各機能の編集方法はLoom動画マニュアルで共有。実装だけでなく、運用体制まで含めた納品をしています。",
-          imageUrl: "/images/projects/monolith/MONOLITH_process02.png"
+          imageUrl: "/images/projects/monolith/MONOLITH_process02_02.png"
         },
       ]
     },

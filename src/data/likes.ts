@@ -13,7 +13,7 @@ export const aboutItems: AboutItem[] = [
     id: "isfj",
     title: "ISFJ-A",
     emoji: "🌿",
-    text: "「安心感がある」と言われる\n温厚な平和主義。丁寧に頼まれると\nつい877%で返してしまいます。",
+    text: "「安心感がある」と言われる\n温厚な平和主義。丁寧に頼まれると\nつい、877%で返してしまいます。",
     image: "/images/identity/ISFJ-A.png",
   },
   {
@@ -27,21 +27,21 @@ export const aboutItems: AboutItem[] = [
     id: "tidying",
     title: "Tidying",
     emoji: "📐",
-    text: "整理収納アドバイザー1級。\n整理は得意でも、\nいつも部屋が綺麗とは言わない..。",
+    text: "整理収納アドバイザー1級。\n整理は得意でも、\nいつも部屋が綺麗とは言わない..",
     image: "/images/identity/Tidying.png",
   },
   {
     id: "muji",
     title: "MUJI",
     emoji: "🏡",
-    text: "やわポリとバナナバウムは必需品！\n聞かれる度にベストバイは変わります笑",
+    text: "やわポリとバナナバウムは必需品！\n聞かれる度にベストバイは変わります。",
     image: "/images/identity/MUJI.png",
   },
   {
     id: "apple",
     title: "Apple",
     emoji: "🍏",
-    text: "箱を開ける瞬間から始まる\n「体験のデザイン」のとりこ。\n気づけばリンゴまみれ。",
+    text: "箱を開ける瞬間から始まる\n体験のデザインのとりこ。\n気づけばリンゴまみれ。",
     image: "/images/identity/Apple.png",
   },
   {
@@ -69,7 +69,7 @@ export const aboutItems: AboutItem[] = [
     id: "running",
     title: "Running",
     emoji: "🏃",
-    text: "「どんだけ食べてもゼロカロリー!!」を\n原動力に、累計1,000kmを突破。\nフルマラソンもサブ4で完走！",
+    text: "「どんだけ食べてもゼロカロリー!!」\nを原動力に、累計1,000kmを突破。\nフルマラソンもサブ4で完走。",
     image: "/images/identity/Running.png",
   },
   {
@@ -97,7 +97,7 @@ export const aboutItems: AboutItem[] = [
     id: "baseball",
     title: "Baseball",
     emoji: "⚾️",
-    text: "生粋のロッテファン！高校まで白球を\n追いかけた元・脳筋坊主です。",
+    text: "生粋のロッテファン。高校まで白球を\n追いかけた元・脳筋坊主です。",
     image: "/images/identity/Baseball.png",
   },
   {
@@ -118,7 +118,7 @@ export const aboutItems: AboutItem[] = [
     id: "pet",
     title: "Pet",
     emoji: "🐇",
-    text: "ストーブの前で温まった後、涼しい場所で\n整う術を知る賢い主が実家に。\n隙あらば丁重にもふらせていただきます！",
+    text: "ストーブの前で温まった後、涼しい場所で\n整う術を知る賢い主が実家に。\n隙あらば丁重にもふらせていただきます。",
     image: "/images/identity/Pet.png",
   },
 ];
