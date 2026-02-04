@@ -262,6 +262,7 @@ export const works: Work[] = [
         solution: {
           title: "「クロス」を軸にしたコンセプト設計",
           text: "店名と所在地（八街十字路）から着想を得た「クロス（交差）」をコンセプトとして提案。縦横のラインが交差するグリッドレイアウトを設計し、背景色には店舗内装と同じ#E9E9E9を採用することで、Webサイトを店舗の延長線上にある空間として設計しました。システム面ではStudioへ移行し、更新環境を整えています。",
+          imageUrl: "/images/projects/yachimata/Yachicro_solution.png"
         },
         result: {
           title: "店舗・パッケージ・Webのトーン統一",
@@ -271,11 +272,13 @@ export const works: Work[] = [
       sections: [
         {
           title: "PCビューでInstagramへ誘導する設計",
-          text: "モバイルでの閲覧を最優先にUIを設計する一方、PCビューでは画面左側にメニューやアクセス情報を常時固定。右側のコンテンツエリアにはInstagramのQRコードを配置し、PCからスマホ（アプリ）へのスムーズな移行を促す導線を設計しました。",
+          text: "モバイルでの閲覧を最優先にUIを設計する一方、PCビューでは画面左側にメニューやアクセス情報を常時固定。右側のコンテンツエリアにはInstagramのQRコードを配置しました。ストーリーズやフィード投稿で最新情報を発信しているため、PCからスマホ（アプリ）へスムーズに移行できる導線を設計しています。",
+          imageUrl: "/images/projects/yachimata/Yachicro_process01.png"
         },
         {
           title: "交差を視覚化するアニメーション",
           text: "店名の由来を視覚的に印象付けるため、ページ読み込み時に縦横のラインが交差してグリッドが形成されるオープニングアニメーションを実装。グレー基調のデザインに動きを持たせることで、ブランドのコンセプトをサイトを開いた瞬間に伝える演出にしています。",
+          imageUrl: "/images/projects/yachimata/Yachicro_process02.png"
         },
       ]
     },
