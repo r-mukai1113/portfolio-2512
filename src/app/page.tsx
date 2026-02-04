@@ -279,8 +279,8 @@ export default function Home() {
         {/* ヘッダー分のスペーサー（実体のある空要素） */}
         <div className="h-[72px] shrink-0" />
 
-        {/* コンテンツ領域（スワイプ中は見切れ許可、それ以外はクリップ） */}
-        <div className={`flex-1 px-5 pb-5 relative ${swipeOffset === 0 ? "overflow-hidden" : "overflow-visible"}`}>
+        {/* コンテンツ領域 */}
+        <div className="flex-1 px-5 pb-5 relative overflow-visible">
           <div
             className={`w-full h-auto rounded-[12px] flex flex-col py-10 px-5 transition-colors duration-500 ${
               currentWork.theme.isLight
