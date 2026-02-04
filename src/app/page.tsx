@@ -265,8 +265,7 @@ export default function Home() {
         {/* ヘッダー下のクリップ領域 */}
         <div className="h-full w-full overflow-hidden px-5">
           <div
-            key={currentWork.id}
-            className={`w-full h-auto rounded-[12px] flex flex-col transition-all duration-500 py-10 px-5 animate-fade-only ${
+            className={`w-full h-auto rounded-[12px] flex flex-col py-10 px-5 transition-colors duration-500 ${
               currentWork.theme.isLight
                 ? "bg-white/50 border border-white/60"
                 : "bg-white/[0.04] backdrop-blur-[20px] border border-white/10"
