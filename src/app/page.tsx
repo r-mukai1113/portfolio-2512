@@ -146,6 +146,17 @@ export default function Home() {
         .animate-slide-up-fade {
           animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
+        @keyframes fadeOnly {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+        .animate-fade-only {
+          animation: fadeOnly 0.5s ease-out forwards;
+        }
       `}</style>
 
       <div
@@ -253,7 +264,7 @@ export default function Home() {
       >
         <div
           key={currentWork.id}
-          className={`w-full h-auto rounded-[12px] flex flex-col transition-all duration-500 py-10 px-5 animate-slide-up-fade ${
+          className={`w-full h-auto rounded-[12px] flex flex-col transition-all duration-500 py-10 px-5 animate-fade-only ${
             currentWork.theme.isLight
               ? "bg-white/50 border border-white/60"
               : "bg-white/[0.04] backdrop-blur-[20px] border border-white/10"
